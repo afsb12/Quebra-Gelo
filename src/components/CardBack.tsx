@@ -4,7 +4,7 @@ import { StyleSheet, Text, View } from 'react-native';
 
 import type { Category } from '../data/types';
 import { tokens, type CategoryVisual } from '../theme';
-import { CategoryPattern } from './CategoryPattern';
+import { Vignette } from './Vignette';
 
 type IconName = ComponentProps<typeof MaterialCommunityIcons>['name'];
 
@@ -30,7 +30,7 @@ export const titleLines = (title: string): string[] => {
   return lines;
 };
 
-/** Face-down side: category color, geometric pattern, big icon and bold name. Never shows a question. */
+/** Face-down side: flat category color, edge vignette, big icon and bold name. Never shows a question. */
 export const CardBack = memo(function CardBack({ category, visual, width, variant }: CardBackProps) {
   const height = width / tokens.card.ratio;
   const radius = width * tokens.card.radiusRatio;
@@ -42,8 +42,8 @@ export const CardBack = memo(function CardBack({ category, visual, width, varian
 
   return (
     <View style={[styles.frame, { width, height, borderRadius: radius, padding: frame }]}>
-      <View style={[styles.face, { borderRadius: radius - frame, backgroundColor: visual.color }]}>
-        <CategoryPattern kind={visual.pattern} color={visual.color} onColor={visual.onColor} width={innerWidth} height={innerHeight} />
+      <View testID="card-back-face" style={[styles.face, { borderRadius: radius - frame, backgroundColor: visual.color }]}>
+        <Vignette width={innerWidth} height={innerHeight} tint="#000000" strength={0.16} />
         <View style={styles.iconArea}>
           <MaterialCommunityIcons name={visual.icon as IconName} size={Math.round(width * 0.3)} color={visual.onColor} />
         </View>

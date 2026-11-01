@@ -48,6 +48,9 @@ installed `node_modules/**/*.d.ts` instead of relying on memory.
 - **App icons** live in `Assets/app/` (Expo's default `assets/` collides with `Assets/` on
   Windows). The other images in `Assets/` are commercial games used **only** as style
   references — never copy their text, names, layout, branding or typefaces.
+- **Regenerating the app icon**: `npm run icons` writes `Assets/app/icon-source.svg` and every
+  icon/splash PNG from the parameters in `scripts/icon/symbol.ts` (deterministic, no deps).
+  Edit the parameters there and rerun; never hand-edit the generated files.
 
 ## Spec-driven workflow (Spec Kit)
 

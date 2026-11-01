@@ -8,7 +8,8 @@
     "ios": "expo run:ios",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
-    "test": "jest"
+    "test": "jest",
+    "icons": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/generate-icons.ts"
   },
   "dependencies": {
     "@expo-google-fonts/outfit": "^0.4.3",

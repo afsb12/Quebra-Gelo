@@ -19,14 +19,13 @@ questionBaseSize(text: string): 26 | 23 | 21
 ## Components (`src/components/`)
 
 ```ts
-interface CategoryPatternProps {        // SVG, tone-on-tone, static
-  kind: PatternKind; color: string; onColor: string; width: number; height: number;
-}
+// CategoryPatternProps / PatternKind: REMOVED by 003, card backs are now flat color + vignette.
+// See ../../003-app-icon-plain-backs/contracts/card-back.md
 
 interface CardBackProps {               // face-down side
   category: Category; visual: CategoryVisual; width: number; variant: 'full' | 'mini';
 }
-// Renders: cream outer frame, color background, CategoryPattern, vignette, big icon,
+// Renders: cream outer frame, color background, vignette (pattern removed by 003), big icon,
 // category name (display font, uppercase, onColor). MUST NOT render any question text.
 // variant 'mini' scales icon/name for the Home grid; same geometry ratio.
 
@@ -52,6 +51,6 @@ for its two faces. `FavoriteListItem` and `DeckComplete` (001) receive `visual` 
 
 - Category is always identifiable without color: name + icon on back, front footer + icon,
   mini card, favorites list (FR-013).
-- No decorative element animates; patterns are static (reduced motion).
+- No decorative element animates (reduced motion).
 - Every text/icon color pair used by these components is one of the pairs validated in
   [data-model.md](../data-model.md#validation-rules).

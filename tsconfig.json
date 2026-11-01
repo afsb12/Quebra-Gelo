@@ -4,6 +4,7 @@
     "strict": true,
     "noImplicitAny": true,
     "resolveJsonModule": true,
+    "allowImportingTsExtensions": true,
     "types": ["jest"],
     "paths": {
       "@/*": ["./src/*"]

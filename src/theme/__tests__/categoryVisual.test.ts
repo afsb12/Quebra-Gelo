@@ -1,6 +1,6 @@
 import type { Category, CategoryId } from '../../data/types';
 import { CATEGORY_IDS } from '../../data/types';
-import { CATEGORY_INK, CATEGORY_PATTERNS, getCategoryVisual } from '../categoryVisual';
+import { CATEGORY_INK, getCategoryVisual } from '../categoryVisual';
 import { contrastRatio } from '../color';
 import { tokens } from '../tokens';
 
@@ -40,8 +40,9 @@ describe('category visuals (palette)', () => {
     expect(contrastRatio(tokens.colors.questionInk, tokens.colors.cream)).toBeGreaterThanOrEqual(4.5);
   });
 
-  it('has one distinct pattern per category', () => {
-    const kinds = CATEGORY_IDS.map((id) => CATEGORY_PATTERNS[id]);
-    expect(new Set(kinds).size).toBe(CATEGORY_IDS.length);
+  it('has no pattern and a distinct back color per category (003 FR-001, FR-005)', () => {
+    const visuals = CATEGORY_IDS.map((id) => getCategoryVisual(category(id)));
+    for (const visual of visuals) expect('pattern' in visual).toBe(false);
+    expect(new Set(visuals.map((v) => v.color)).size).toBe(CATEGORY_IDS.length);
   });
 });

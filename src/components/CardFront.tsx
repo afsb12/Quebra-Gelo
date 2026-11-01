@@ -5,7 +5,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import type { Category, Question } from '../data/types';
 import { strings } from '../i18n/strings';
 import { FRONT_LAYOUT, faceTextBox, questionFit, tokens, type CategoryVisual } from '../theme';
-import { Vignette } from './CategoryPattern';
+import { Vignette } from './Vignette';
 
 type IconName = ComponentProps<typeof MaterialCommunityIcons>['name'];
 
