@@ -4,6 +4,7 @@ import type { ReactNode } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import { getQuestionsByCategory } from '../../data/content';
+import { useFavoritesStore } from '../../store/favorites';
 import { useProgressStore } from '../../store/progress';
 import { DeckScreen } from '../DeckScreen';
 
@@ -34,6 +35,24 @@ describe('DeckScreen', () => {
     expect(screen.getByText(`Carta 1 de ${total}`)).toBeTruthy();
     await skip();
     expect(screen.getByText(`Carta 2 de ${total}`)).toBeTruthy();
+  });
+
+  it('favorite button is disabled face down, toggles the favorite once revealed, never discards', async () => {
+    useFavoritesStore.setState({ favorites: [] });
+    await render(<DeckScreen categoryId="dilemas" />, { wrapper });
+    expect(screen.getByTestId('favorite-button')).toBeDisabled();
+
+    await act(async () => {
+      fireEvent(screen.getByTestId('swipe-card'), 'accessibilityAction', { nativeEvent: { actionName: 'activate' } });
+    });
+    expect(screen.getByTestId('favorite-button')).toBeEnabled();
+
+    await act(async () => {
+      fireEvent.press(screen.getByTestId('favorite-button'));
+    });
+    expect(useFavoritesStore.getState().favorites).toHaveLength(1);
+    expect(screen.getByLabelText('Remover dos favoritos')).toBeTruthy();
+    expect(screen.getByText(`Carta 1 de ${total}`)).toBeTruthy();
   });
 
   it('shows "Fim do Baralho" after the last card, with reshuffle and choose-another', async () => {

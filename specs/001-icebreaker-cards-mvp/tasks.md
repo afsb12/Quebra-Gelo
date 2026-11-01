@@ -149,18 +149,18 @@ Favorites: all present newest first with category; remove one; empty state when 
 
 ### Tests for User Story 3 ⚠️
 
-- [ ] T047 [P] [US3] Write component tests: `FavoriteButton` shows label "Favoritar"/"Remover dos favoritos" by `active`, is not pressable when `disabled`; `EmptyState` renders title/message, in `src/components/__tests__/FavoriteButton.test.tsx`
-- [ ] T048 [P] [US3] Write tests for `useFavoriteQuestions()`: joins favorites with questions/categories, sorted by `savedAt` desc, skipping unknown IDs, in `src/hooks/__tests__/useFavoriteQuestions.test.ts`
+- [X] T047 [P] [US3] Write component tests: `FavoriteButton` shows label "Favoritar"/"Remover dos favoritos" by `active`, is not pressable when `disabled`; `EmptyState` renders title/message, in `src/components/__tests__/FavoriteButton.test.tsx`
+- [X] T048 [P] [US3] Write tests for `useFavoriteQuestions()`: joins favorites with questions/categories, sorted by `savedAt` desc, skipping unknown IDs, in `src/hooks/__tests__/useFavoriteQuestions.test.ts`
 
 ### Implementation for User Story 3
 
-- [ ] T049 [P] [US3] Implement `FavoriteButton` (`{ active: boolean; disabled: boolean; onPress(): void }`) — star icon filled/outlined, NativeWind, accessible label from strings.ts, in src/components/FavoriteButton.tsx
-- [ ] T050 [P] [US3] Implement `EmptyState` (`{ title: string; message: string }`) in src/components/EmptyState.tsx
-- [ ] T051 [P] [US3] Implement `useFavoriteQuestions()` in src/hooks/useFavoriteQuestions.ts (makes T048 pass)
-- [ ] T052 [US3] In `DeckScreen`, render `FavoriteButton` below the card outside the gesture area, `disabled={face === 'down'}`, `active={isFavorite(current.id)}`, `onPress` → `toggle(current.id)`; pass `isFavorite` to `SwipeCard` (indicator via `CardFront`) and wire the `favorite` accessibility action to the same toggle, in src/screens/DeckScreen.tsx
-- [ ] T053 [US3] Implement `FavoriteListItem` (`{ question, category, visual, onRemove }`) with category color/icon per 002/T033 and a remove button, in src/components/FavoriteListItem.tsx
-- [ ] T054 [US3] Implement `FavoritesScreen`: list from `useFavoriteQuestions()` newest first, `onRemove` → `remove(id)`, `EmptyState` with the strings.ts message explaining how to favorite when empty, in src/screens/FavoritesScreen.tsx
-- [ ] T055 [US3] Run 002/T029 (consistency tests) and make them pass
+- [X] T049 [P] [US3] Implement `FavoriteButton` (`{ active: boolean; disabled: boolean; onPress(): void }`) — star icon filled/outlined, NativeWind, accessible label from strings.ts, in src/components/FavoriteButton.tsx
+- [X] T050 [P] [US3] Implement `EmptyState` (`{ title: string; message: string }`) in src/components/EmptyState.tsx
+- [X] T051 [P] [US3] Implement `useFavoriteQuestions()` in src/hooks/useFavoriteQuestions.ts (makes T048 pass)
+- [X] T052 [US3] In `DeckScreen`, render `FavoriteButton` below the card outside the gesture area, `disabled={face === 'down'}`, `active={isFavorite(current.id)}`, `onPress` → `toggle(current.id)`; pass `isFavorite` to `SwipeCard` (indicator via `CardFront`) and wire the `favorite` accessibility action to the same toggle, in src/screens/DeckScreen.tsx
+- [X] T053 [US3] Implement `FavoriteListItem` (`{ question, category, visual, onRemove }`) with category color/icon per 002/T033 and a remove button, in src/components/FavoriteListItem.tsx
+- [X] T054 [US3] Implement `FavoritesScreen`: list from `useFavoriteQuestions()` newest first, `onRemove` → `remove(id)`, `EmptyState` with the strings.ts message explaining how to favorite when empty, in src/screens/FavoritesScreen.tsx
+- [X] T055 [US3] Run 002/T029 (consistency tests) and make them pass
 
 **Checkpoint**: All stories functional
 

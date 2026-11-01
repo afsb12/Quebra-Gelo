@@ -109,8 +109,8 @@ fits entirely (≥ 20pt), dark on cream, icon top-left, footer name and inner fr
 
 - [X] T024 [US2] Implement a pure fit helper `questionFit(text: string, boxWidth: number, boxHeight: number, fontScale: number): { fontSize: number; minimumFontScale: number }` that starts at `questionBaseSize(text)` and returns a `minimumFontScale` such that the rendered size never goes below 20pt, in src/theme/geometry.ts (makes T023 pass)
 - [X] T025 [US2] Implement `CardFront` (`{ category: Category; visual: CategoryVisual; question: Question; isFavorite: boolean; width: number }`): cream background with warm `RadialGradient` vignette (~5%), 6pt cream outer frame, inner frame 1.5pt in `visual.ink` inset 10pt, top row with icon (28pt, `ink`, left) and star indicator (22pt, `ink`, right, only when `isFavorite`, `pointerEvents="none"`), question block vertically centered and left-aligned in `tokens.fonts.question` color `tokens.questionInk` using `questionFit` with `adjustsFontSizeToFit` + `allowFontScaling`, footer with the category title (13pt, uppercase, letter-spaced, `ink`, `tokens.fonts.body`); top and bottom rows have fixed heights so nothing overlaps the text; StyleSheet only, in src/components/CardFront.tsx (depends on T024)
-- [ ] T026 [US2] Replace the front side of the flip in `SwipeCard` with `CardFront`, passing `question`, `isFavorite` and `visual`; delete the old `CardFace` component and its imports in src/components/SwipeCard.tsx and src/components/CardFace.tsx (depends on T025)
-- [ ] T027 [US2] When the system font scale is large, let the card grow up to the available height before text shrinks: pass `PixelRatio.getFontScale()` into `getCardGeometry`/`questionFit` from the container in src/screens/DeckScreen.tsx
+- [X] T026 [US2] Replace the front side of the flip in `SwipeCard` with `CardFront`, passing `question`, `isFavorite` and `visual`; delete the old `CardFace` component and its imports in src/components/SwipeCard.tsx and src/components/CardFace.tsx (depends on T025)
+- [X] T027 [US2] When the system font scale is large, let the card grow up to the available height before text shrinks: pass `PixelRatio.getFontScale()` into `getCardGeometry`/`questionFit` from the container in src/screens/DeckScreen.tsx
 
 **Checkpoint**: US1 + US2 deliver the full card look on both faces
 
@@ -127,16 +127,16 @@ card front, favorites item and end-of-deck screen — all match.
 ### Tests for User Story 3 ⚠️
 
 - [X] T028 [P] [US3] Write component tests: `MiniCard` renders a `CardBack variant="mini"` plus title and description below and calls `onPress(category.id)`; its accessibility label is `"<title>. <description>"`, in `src/components/__tests__/MiniCard.test.tsx`
-- [ ] T029 [P] [US3] Write component tests: `FavoriteListItem` shows the category icon and title in the category color; `DeckComplete` uses the category color, in `src/components/__tests__/Consistency.test.tsx`
+- [X] T029 [P] [US3] Write component tests: `FavoriteListItem` shows the category icon and title in the category color; `DeckComplete` uses the category color, in `src/components/__tests__/Consistency.test.tsx`
 
 ### Implementation for User Story 3
 
 - [X] T030 [US3] Implement `MiniCard` (`{ category: Category; visual: CategoryVisual; width: number; onPress(id: CategoryId): void }`): one `Pressable` wrapping `CardBack variant="mini"` at `width` plus title (`font-display`) and description (`font-body`) below, NativeWind classes for the wrapper/labels only, in src/components/MiniCard.tsx
 - [X] T031 [US3] Replace the Home grid items with `MiniCard` in a 2-column grid using `getCardGeometry(...).miniWidth` and 16pt gaps; remove `CategoryTile` usage, in src/screens/HomeScreen.tsx (depends on T030)
 - [X] T032 [US3] Delete the obsolete `CategoryTile` component and its test in src/components/CategoryTile.tsx and `src/components/__tests__/CategoryTile.test.tsx`
-- [ ] T033 [P] [US3] Update `FavoriteListItem` to accept `visual: CategoryVisual` and render the category icon and title in `visual.color` with a left accent bar and the card corner radius in src/components/FavoriteListItem.tsx
+- [X] T033 [P] [US3] Update `FavoriteListItem` to accept `visual: CategoryVisual` and render the category icon and title in `visual.color` with a left accent bar and the card corner radius in src/components/FavoriteListItem.tsx
 - [X] T034 [P] [US3] Update `DeckComplete` to accept `visual: CategoryVisual` and use `visual.color` as its accent/background with `visual.onColor` text in src/components/DeckComplete.tsx
-- [ ] T035 [US3] Pass `getCategoryVisual(...)` to `FavoriteListItem` in src/screens/FavoritesScreen.tsx and to `DeckComplete` in src/screens/DeckScreen.tsx (depends on T033, T034)
+- [X] T035 [US3] Pass `getCategoryVisual(...)` to `FavoriteListItem` in src/screens/FavoritesScreen.tsx and to `DeckComplete` in src/screens/DeckScreen.tsx (depends on T033, T034)
 
 **Checkpoint**: All three stories functional; identity consistent across the app
 
