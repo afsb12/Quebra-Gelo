@@ -12,14 +12,42 @@ Brazilian Portuguese (pt-BR).
 Work as a senior mobile engineer specializing in React Native, Expo, TypeScript and fluid
 animations (Reanimated/Gesture Handler), favoring clean, modular, maintainable code.
 
-## Current state
+## Commands
 
-No application code exists yet: no `package.json`, so there are no build/lint/test commands.
-When the Expo project is scaffolded, add its commands here (dev server, `tsc --noEmit`, lint,
-`jest`, and how to run a single test).
+```bash
+npm start                          # Expo dev server (scan QR with Expo Go, or press a / i)
+npm run typecheck                  # tsc --noEmit
+npm run lint                       # ESLint (no-explicit-any = error, React Compiler rules)
+npm test                           # Jest (unit, component, content validation)
+npx jest src/theme                 # one folder
+npx jest src/data/__tests__/deck.test.ts   # one file
+npx jest -t "não repete perguntas" # one test by name
+npx expo install <pkg>             # ALWAYS use instead of npm install (SDK-compatible versions)
+```
 
-`Assets/modelos cards.webp` is a photo of a commercial card game used **only** as a physical
-format reference. Never copy its text, category names, layout or branding.
+Merge gate: `typecheck`, `lint` and `test` all green.
+
+## Stack notes (versions matter)
+
+Expo SDK 58, React Native 0.88, TypeScript 6, React Compiler lint rules. Expo ships breaking
+changes every SDK: check the versioned docs (`https://docs.expo.dev/versions/v58.0.0/`) or the
+installed `node_modules/**/*.d.ts` instead of relying on memory.
+
+- **Gesture Handler 3**: use the hook API (`usePanGesture`, `useTapGesture`,
+  `useExclusiveGestures`, `GestureDetector`); callbacks are `onActivate`/`onUpdate`/
+  `onDeactivate`, events expose `translationX`/`velocityX` directly.
+- **Reanimated 4 + react-native-worklets**: use `sharedValue.get()/.set()` (the React Compiler
+  lint rejects `.value =`), `scheduleOnRN` from `react-native-worklets` to call JS from worklets.
+- **NativeWind 4**: `className` everywhere except animated card faces (StyleSheet). Its Babel
+  transform is disabled under Jest (`babel.config.js`), so tests don't see className styles.
+- **Design tokens**: `src/theme/tokens.json` is shared by `tailwind.config.js` and
+  `src/theme/tokens.ts` — change colors/fonts there only.
+- **Tests**: RNTL 14 is async (`await render(...)`, `await renderHook(...)`); screens using
+  `SwipeCard` need a `GestureHandlerRootView` wrapper. `jest.setup.ts` mocks svg, icons,
+  haptics, AsyncStorage, Reanimated/Worklets.
+- **App icons** live in `Assets/app/` (Expo's default `assets/` collides with `Assets/` on
+  Windows). The other images in `Assets/` are commercial games used **only** as style
+  references — never copy their text, names, layout, branding or typefaces.
 
 ## Spec-driven workflow (Spec Kit)
 

@@ -168,10 +168,10 @@ Favorites: all present newest first with category; remove one; empty state when 
 
 ## Phase 6: Polish & Cross-Cutting Concerns
 
-- [ ] T056 [P] Update CLAUDE.md "Current state" with the real commands (`npm start`, `npm run typecheck`, `npm run lint`, `npm test`, `npx jest <file>`, `npx jest -t "<name>"`) and remove the "no application code" note
-- [ ] T057 [P] Ensure every interactive element has a pt-BR accessibility label/role (cards, buttons, mini cards, list items) across src/components/ and src/screens/
+- [X] T056 [P] Update CLAUDE.md "Current state" with the real commands (`npm start`, `npm run typecheck`, `npm run lint`, `npm test`, `npx jest <file>`, `npx jest -t "<name>"`) and remove the "no application code" note
+- [X] T057 [P] Ensure every interactive element has a pt-BR accessibility label/role (cards, buttons, mini cards, list items) across src/components/ and src/screens/
 - [ ] T058 Run 002/T036–T039 (docs, gates, visual manual scenarios, 60 fps check)
-- [ ] T059 Run `npm run typecheck`, `npm run lint`, `npm test` — all green (merge gate)
+- [X] T059 Run `npm run typecheck`, `npm run lint`, `npm test` — all green (merge gate)
 - [ ] T060 Run manual scenarios 1–10 of specs/001-icebreaker-cards-mvp/quickstart.md on a physical phone in airplane mode, plus: measure cold-start time from tap on the app icon to the Home grid being visible on a mid-range Android (release/preview build, 3 runs, target ≤ 2 s per SC-007) and confirm flip/discard feel instantaneous (SC-003); record results under a "Results" heading in specs/001-icebreaker-cards-mvp/quickstart.md
 
 ---

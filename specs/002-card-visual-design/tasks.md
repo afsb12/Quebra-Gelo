@@ -146,8 +146,8 @@ card front, favorites item and end-of-deck screen — all match.
 
 **Purpose**: Gates, docs and manual validation
 
-- [ ] T036 [P] Add the new commands (`npx jest src/theme`, single test by name) to the commands section of CLAUDE.md
-- [ ] T037 Run `npm run typecheck`, `npm run lint` and `npm test`; fix any failures (no `any`, no StyleSheet/NativeWind mix inside one component) across src/
+- [X] T036 [P] Add the new commands (`npx jest src/theme`, single test by name) to the commands section of CLAUDE.md
+- [X] T037 Run `npm run typecheck`, `npm run lint` and `npm test`; fix any failures (no `any`, no StyleSheet/NativeWind mix inside one component) across src/
 - [ ] T038 Run the manual scenarios 1–9 of specs/002-card-visual-design/quickstart.md on a physical phone (backs, front, long text, largest system font, consistency, color-blind filter, offline fonts, originality review vs `Assets/`) and record results in specs/002-card-visual-design/quickstart.md under a "Results" heading
 - [ ] T039 Verify 60 fps during flip/swipe with the new faces (performance monitor, mid-range Android); if frames drop, memoize `CardBack`/`CardFront` with `React.memo` in src/components/CardBack.tsx and src/components/CardFront.tsx
 
