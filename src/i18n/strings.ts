@@ -7,6 +7,11 @@ export const strings = {
     favorites: 'Favoritos',
     openFavoritesHint: 'Abre a lista de perguntas favoritas',
   },
+  mixed: {
+    title: 'Tudo Misturado',
+    description: 'Todas as categorias num só baralho.',
+    heroLabel: 'Tudo Misturado. Todas as categorias num só baralho.',
+  },
   deck: {
     backHint: 'Volta para a escolha de baralho',
     position: (index: number, total: number) => `Carta ${index} de ${total}`,
@@ -14,6 +19,8 @@ export const strings = {
   },
   card: {
     faceDownLabel: (category: string) => `Carta de ${category}, virada para baixo`,
+    faceDownMixedLabel: 'Carta do Quebra-Gelo, virada para baixo',
+    faceUpMixedLabel: (category: string, question: string) => `${category}: ${question}`,
     actions: {
       flip: 'virar',
       favorite: 'favoritar',

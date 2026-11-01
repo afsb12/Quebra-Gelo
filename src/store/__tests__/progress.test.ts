@@ -7,6 +7,8 @@ jest.mock('../../data/content', () => {
   const questions = [...ids('casual', 3), ...ids('profundo', 5), ...ids('casais', 4), ...ids('futuro', 6)];
   return {
     getQuestionsByCategory: (cat: string) => questions.filter((q) => q.categoryId === cat),
+    getDeckQuestionIds: (deck: string) =>
+      (deck === 'mixed' ? questions : questions.filter((q) => q.categoryId === deck)).map((q) => q.id),
     getQuestion: (id: string) => questions.find((q) => q.id === id),
   };
 });
@@ -49,5 +51,22 @@ describe('useProgressStore (in memory)', () => {
 
   it('is not persisted (no persist API)', () => {
     expect('persist' in useProgressStore).toBe(false);
+  });
+
+  it('the mixed deck holds every question, each once (004)', () => {
+    useProgressStore.getState().ensureDeck('mixed');
+    const order = useProgressStore.getState().decks.mixed?.order ?? [];
+    expect(order).toHaveLength(18);
+    expect(new Set(order).size).toBe(18);
+  });
+
+  it('mixed and category progress are independent (004 FR-004)', () => {
+    useProgressStore.getState().ensureDeck('mixed');
+    useProgressStore.getState().ensureDeck('casais');
+    useProgressStore.getState().discard('mixed');
+    useProgressStore.getState().discard('mixed');
+    expect(useProgressStore.getState().decks.casais?.cursor).toBe(0);
+    useProgressStore.getState().discard('casais');
+    expect(useProgressStore.getState().decks.mixed?.cursor).toBe(2);
   });
 });

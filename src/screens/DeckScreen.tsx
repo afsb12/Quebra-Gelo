@@ -7,15 +7,15 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { DeckComplete } from '../components/DeckComplete';
 import { FavoriteButton } from '../components/FavoriteButton';
 import { SwipeCard, type CardFace } from '../components/SwipeCard';
-import type { CategoryId } from '../data/types';
+import { MIXED_DECK_ID, type DeckId } from '../data/types';
 import { useDeck } from '../hooks/useDeck';
 import { useHaptics } from '../hooks/useHaptics';
 import { strings } from '../i18n/strings';
 import { useFavoritesStore } from '../store/favorites';
-import { DECK_RESERVED_HEIGHT, getCardGeometry, getCategoryVisual, tokens } from '../theme';
+import { DECK_RESERVED_HEIGHT, MIXED_VISUAL, getCardGeometry, getCategoryVisual, tokens } from '../theme';
 
 export interface DeckScreenProps {
-  categoryId: CategoryId;
+  deckId: DeckId;
 }
 
 const goHome = () => {
@@ -23,11 +23,11 @@ const goHome = () => {
   else router.replace('/');
 };
 
-export function DeckScreen({ categoryId }: DeckScreenProps) {
-  const { category, current, position, ready, discard, reshuffle } = useDeck(categoryId);
+export function DeckScreen({ deckId }: DeckScreenProps) {
+  const { title, deckCategory, current, currentCategory, position, ready, discard, reshuffle } = useDeck(deckId);
+  const mixed = deckId === MIXED_DECK_ID;
   const haptics = useHaptics();
   const window = useWindowDimensions();
-  const visual = getCategoryVisual(category);
   const geometry = getCardGeometry(window, DECK_RESERVED_HEIGHT, window.fontScale);
   const [face, setFace] = useState<CardFace>('down');
   const toggleFavorite = useFavoritesStore((state) => state.toggle);
@@ -50,6 +50,8 @@ export function DeckScreen({ categoryId }: DeckScreenProps) {
     discard();
   }, [discard]);
 
+  const completeVisual = deckCategory ? getCategoryVisual(deckCategory) : MIXED_VISUAL;
+
   return (
     <SafeAreaView className="flex-1 bg-app">
       <View className="flex-row items-center gap-3 px-4 py-2">
@@ -63,8 +65,9 @@ export function DeckScreen({ categoryId }: DeckScreenProps) {
           <MaterialCommunityIcons name="arrow-left" size={24} color={tokens.colors.textPrimary} />
         </Pressable>
         <View className="flex-1">
+          {/* In the mixed deck the header stays "Tudo Misturado": it never hints at the next card. */}
           <Text accessibilityRole="header" className="font-display text-xl text-primary" numberOfLines={1}>
-            {category.title}
+            {title}
           </Text>
           {current ? (
             <Text className="font-body text-sm text-secondary">{strings.deck.position(position.index, position.total)}</Text>
@@ -73,12 +76,13 @@ export function DeckScreen({ categoryId }: DeckScreenProps) {
       </View>
 
       <View className="flex-1 items-center justify-center">
-        {!ready ? null : current ? (
+        {!ready ? null : current && currentCategory ? (
           <SwipeCard
             key={current.id}
+            mode={mixed ? 'mixed' : 'category'}
             question={current}
-            category={category}
-            visual={visual}
+            category={currentCategory}
+            visual={getCategoryVisual(currentCategory)}
             isFavorite={isFavorite}
             width={geometry.width}
             height={geometry.height}
@@ -90,7 +94,7 @@ export function DeckScreen({ categoryId }: DeckScreenProps) {
             onToggleFavorite={handleToggleFavorite}
           />
         ) : (
-          <DeckComplete category={category} visual={visual} onReshuffle={reshuffle} onChooseAnother={() => router.replace('/')} />
+          <DeckComplete deckTitle={title} visual={completeVisual} onReshuffle={reshuffle} onChooseAnother={() => router.replace('/')} />
         )}
       </View>
 
