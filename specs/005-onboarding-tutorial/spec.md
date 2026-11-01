@@ -27,6 +27,19 @@ virar com toque, pular deslizando) e [002-card-visual-design](../002-card-visual
 máximo **dois toques** da abertura do app até a primeira carta. Este tutorial é essa tela única:
 fechá-lo (1 toque) e escolher um baralho (1 toque) mantêm o limite.
 
+## Clarifications
+
+### Session 2026-11-01
+
+Modo automático: o usuário autorizou aceitar a opção recomendada em cada pergunta.
+
+- Q: O tutorial pode ser reaberto depois de fechado (ex.: link "Como jogar" na tela inicial)? → A:
+  Não nesta versão; só reaparece após reinstalar o app ou limpar os dados.
+- Q: Qual verso a carta de exemplo usa? → A: O verso neutro da marca da feature 004 (fundo escuro
+  com o símbolo do app), que não sugere nenhuma categoria.
+- Q: As dicas têm animação? → A: Sim, sutil e em loop (pulsação no ícone de toque, setas de
+  deslizar oscilando para os lados); estáticas com movimento reduzido ativo.
+
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - Entender os controles na primeira abertura (Priority: P1)
@@ -103,8 +116,8 @@ fechar o app por completo, reabri-lo e verificar que o tutorial não aparece.
   ele estiver aberto.
 - **Fonte grande do sistema e telas pequenas**: as dicas continuam legíveis, sem se sobrepor à carta,
   ao botão "Pular" ou entre si, de telas pequenas a tablets, em retrato.
-- **Movimento reduzido**: se as dicas tiverem algum movimento (ex.: mãozinha simulando o toque ou o
-  deslize), com movimento reduzido ativo elas ficam estáticas ou só com aparecimento suave.
+- **Movimento reduzido**: com movimento reduzido ativo, a pulsação do toque e a oscilação das setas
+  não acontecem; os ícones ficam estáticos (FR-017).
 - **Abertura sem internet**: o tutorial funciona totalmente offline desde a primeira execução.
 
 ## Requirements *(mandatory)*
@@ -137,8 +150,9 @@ fechar o app por completo, reabri-lo e verificar que o tutorial não aparece.
 
 **Conteúdo**
 
-- **FR-011**: O centro do tutorial MUST mostrar uma carta de exemplo estática, virada para baixo, no
-  mesmo estilo visual das cartas do app, sem expor nenhuma pergunta real.
+- **FR-011**: O centro do tutorial MUST mostrar uma carta de exemplo estática, virada para baixo, com
+  o verso neutro da marca (fundo escuro e símbolo do app, como no modo "Tudo Misturado"), sem expor
+  nenhuma pergunta real nem sugerir uma categoria.
 - **FR-012**: Em volta da carta, o tutorial MUST mostrar exatamente três dicas, cada uma com um ícone
   e uma frase curta:
   1. "Toque em um baralho para começar", com indicador apontando para fora/abaixo da carta;
@@ -152,8 +166,11 @@ fechar o app por completo, reabri-lo e verificar que o tutorial não aparece.
   MUST ficar centralizados com os demais textos da interface, em pt-BR.
 - **FR-016**: Com o leitor de tela ativo, o tutorial MUST ser anunciado como janela própria, ler as
   três dicas e o "Pular" e manter o foco dentro dele até ser fechado.
-- **FR-017**: Com movimento reduzido ativo, qualquer animação do tutorial MUST ser removida ou
-  substituída por um aparecimento suave.
+- **FR-017**: As dicas de toque e de deslizar MUST ter uma animação sutil em loop (pulsação no ícone
+  de toque; setas oscilando para os lados). Com movimento reduzido ativo, essas animações MUST ser
+  removidas (ícones estáticos) e o tutorial aparece só com um surgimento suave.
+- **FR-018**: O app MUST NOT oferecer, nesta versão, um caminho para reabrir o tutorial depois que ele
+  foi fechado.
 
 ### Key Entities
 
@@ -185,12 +202,10 @@ fechar o app por completo, reabri-lo e verificar que o tutorial não aparece.
   estática). Elas são indicações para o plano; a spec só exige o comportamento.
 - O tutorial conta como visto quando é fechado por qualquer caminho ("Pular", toque fora da carta ou
   "voltar"), não ao ser apenas exibido.
-- Não há opção para rever o tutorial nesta versão; reinstalar o app ou limpar os dados faz ele voltar.
-- A carta de exemplo é um verso de carta do app, sem pergunta real; tocar nela não a vira nem fecha o
-  tutorial.
+- Reinstalar o app ou limpar os dados faz o tutorial voltar (FR-018).
+- Tocar na carta de exemplo não a vira nem fecha o tutorial.
 - O controle de fechar é exibido como o texto "Pular" (o pedido aceita "X" ou "Pular"; o texto é mais
   claro e mais acessível).
-- As dicas podem ter um movimento sutil (ex.: mãozinha simulando o toque e o deslize) desde que
-  respeitem o movimento reduzido; o tutorial não tem som nem vibração.
+- O tutorial não tem som nem vibração.
 - O tutorial existe só na tela inicial; não há dicas dentro da tela do baralho.
 - Orientação retrato, como o resto do app.
