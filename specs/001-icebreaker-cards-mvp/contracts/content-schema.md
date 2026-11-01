@@ -44,6 +44,6 @@ implementation.)
 ## Change policy
 
 - Adding questions: new IDs with the next free number; never renumber.
-- Removing a question: delete it; its ID is never reused (persisted favorites/progress referring
-  to it are dropped on rehydrate).
+- Removing a question: delete it; its ID is never reused (persisted favorites referring to it are
+  dropped on rehydrate).
 - Content changes use `content:` commits and require content review (constitution).

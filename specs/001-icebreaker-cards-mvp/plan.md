@@ -9,7 +9,8 @@
 Build the first version of Quebra-Gelo: an offline Expo app where the user picks one of 8
 thematic categories on Home, then plays a deck of face-down cards — tap to flip (physics-based
 flip), swipe left/right to discard (spring physics) — with haptic feedback on flip and discard,
-no repeats until the deck is done, persisted per-category progress, and a local favorites list.
+no repeats until the deck is done, per-category progress kept while the app is open, a "Fim do
+Baralho" screen, and a persisted local favorites list toggled by a fixed star button below the card.
 Content (8 categories, ≥ 20 original questions each) ships in a validated `data.json`. The work
 follows the user's 5-step outline (setup → state/navigation → card → screens → polish), adjusted
 where the spec/constitution require it (see "Deviations from the user's outline").
@@ -24,7 +25,7 @@ Native Gesture Handler, expo-haptics, NativeWind, Zustand, @react-native-async-s
 @expo/vector-icons
 
 **Storage**: Bundled `src/data/data.json` (read-only content); AsyncStorage via Zustand `persist`
-for favorites and deck progress
+for favorites; deck progress in an in-memory Zustand store
 
 **Testing**: Jest (`jest-expo` preset) + React Native Testing Library; ESLint (`eslint-config-expo`,
 `no-explicit-any: error`); `tsc --noEmit`
@@ -55,7 +56,7 @@ thread; no eject from Managed Workflow
 | III. Strict TS, no `any`, typed entities/props/stores/route params | strict tsconfig, ESLint rule, typed routes, contracts in app-interfaces.md | PASS |
 | IV. Data / UI / Screens layers, top-down deps, pure business logic | `src/data`+`src/store`+`src/hooks` / `src/components` / `src/screens` (+ thin `src/app` routes); deck logic pure in `deck.ts` | PASS |
 | Stack: NativeWind default, StyleSheet only in perf-critical, never mixed per component | NativeWind everywhere except `SwipeCard`/`CardFace` (StyleSheet + animated styles) | PASS |
-| Stack: Zustand `persist` over AsyncStorage | R4 | PASS |
+| Stack: Zustand `persist` over AsyncStorage | Favorites persisted (R4); progress intentionally in memory per clarification (constitution does not require persisting it) | PASS |
 | New dependencies justified | All are constitution-mandated or Expo defaults (Router, vector-icons); no extras | PASS |
 | Conteúdo: one card at a time, no scoreboard/timer/ads; categories; no repeats; skip any card | FR-009–FR-018 mapped in design | PASS |
 | Conteúdo: original, inclusive pt-BR; centralized UI strings; a11y labels | R10; `src/i18n/strings.ts` (pt-BR); R9 | PASS |
@@ -71,7 +72,8 @@ part of the Screens layer and contains only route wrappers.
 |---|---|---|
 | `src/data/mockData.ts` with empty/test arrays | `src/data/data.json` (real content) + `types.ts` + `content.ts` | Feature input named `data.json`; constitution requires validated data files; FR-004 requires ≥ 20 real questions per category |
 | Routes `Home` and `DeckView` only | Plus `/favorites` | Spec US3 / FR-022 |
-| Zustand + AsyncStorage for favorites | Also for deck progress | Spec FR-016 |
+| Zustand + AsyncStorage for favorites | Plus an in-memory Zustand store for deck progress | Spec FR-016 (resume while app is open) |
+| Favorite button inside the card or as FAB (open question) | Fixed star button below the card + non-interactive star indicator on the card | Clarification 2026-10-31 (FR-020) |
 | `PanGestureHandler` | `Gesture.Pan()` / `Gesture.Tap()` (v2 API) | Same capability; legacy component API is deprecated |
 | Haptics at drag start and release | Haptics on flip and on confirmed discard only | Spec FR-014 / scenario 1.4 (no feedback on snap-back) |
 | "Dark mode nativo" | Single always-dark theme, no toggle | Satisfies polish request while spec excludes a dedicated dark-mode toggle |
@@ -126,7 +128,7 @@ src/
 │   ├── data.json            # categories + questions
 │   ├── types.ts
 │   ├── content.ts           # typed access + narrowing of data.json
-│   ├── deck.ts              # pure shuffle/advance/reconcile
+│   ├── deck.ts              # pure shuffle/advance
 │   └── __tests__/           # content.test.ts, deck.test.ts
 ├── store/
 │   ├── favorites.ts
@@ -151,12 +153,13 @@ the code they cover.
 1. **Setup & architecture** — scaffold Expo TS app, strict tsconfig, ESLint, Jest, NativeWind,
    folder structure, dark theme tokens, `types.ts`, `data.json` skeleton with the 8 categories,
    content validation test.
-2. **Data layer & navigation** — `content.ts`, `deck.ts` (tests first), favorites + progress
-   stores with persist, Expo Router layout with three routes and hydration gate.
+2. **Data layer & navigation** — `content.ts`, `deck.ts` (tests first), persisted favorites store
+   and in-memory progress store, Expo Router layout with three routes and favorites hydration gate.
 3. **Card (UI & physics)** — `CardFace`, `SwipeCard` (tap flip, pan swipe with spring/exit,
    gesture locking, reduced motion, a11y actions), `useHaptics`.
-4. **Screens** — Home grid (US2), DeckScreen with completion state (US1), FavoriteButton +
-   FavoritesScreen (US3); write the 160 questions.
+4. **Screens** — Home grid (US2), DeckScreen with "Fim do Baralho" state (US1), fixed
+   FavoriteButton below the card + on-card star indicator + FavoritesScreen (US3); write the 160
+   questions.
 5. **Polish** — typography and contrast pass on the dark theme, 60 fps check on device,
    quickstart manual scenarios.
 

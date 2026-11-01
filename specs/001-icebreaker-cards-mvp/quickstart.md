@@ -29,8 +29,8 @@ Merge gate: `typecheck`, `lint` and `test` all green.
 | Check                                   | Covers                    |
 |-----------------------------------------|---------------------------|
 | `content.test.ts` (10 schema rules)     | FR-001–FR-004             |
-| `deck.test.ts` (shuffle, advance, reconcile, no repeats) | FR-015, FR-016, SC-004 |
-| `favorites.test.ts`, `progress.test.ts` (persist + rehydrate) | FR-016, FR-021, SC-005 |
+| `deck.test.ts` (shuffle, advance, no repeats) | FR-015, FR-016, SC-004 |
+| `favorites.test.ts` (persist + rehydrate), `progress.test.ts` (in-memory resume, reshuffle) | FR-016, FR-021, SC-005 |
 | Component tests (tiles, favorites list, empty state, completion) | FR-006, FR-017, FR-022, FR-023 |
 
 ## Manual scenarios (physical phone, airplane mode ON before first launch)
@@ -47,10 +47,12 @@ Merge gate: `typecheck`, `lint` and `test` all green.
 5. **No repeats + completion** — play a whole category: 20 distinct questions, then the
    completion screen; "Embaralhar de novo" restarts in a new order; "Escolher outra categoria"
    returns Home.
-6. **Resume** — mid-deck, go back Home, kill the app, reopen the same category: continues with
-   unseen cards only.
-7. **Favorites (US3)** — on a revealed card tap the star: fills, card does not flip/discard. Tap
-   again: empties. Favorite 3 questions from 2 categories, kill and reopen app, open Favorites
+6. **Resume** — mid-deck, go back Home (and send the app to background), reopen the same
+   category: continues with unseen cards only. Then kill the app and reopen the category: a fresh
+   shuffled deck starts.
+7. **Favorites (US3)** — with the card face down the star button below it is disabled. Reveal
+   the card and tap the star button: it fills, the card shows a star indicator and does not
+   flip/discard. Tap again: both clear. Favorite 3 questions from 2 categories, kill and reopen app, open Favorites
    from Home: 3 items, newest first, with category name/color; remove one. Remove all → friendly
    empty state.
 8. **Reduced motion** — enable OS reduce motion: flip/discard become simple fades, vibration still

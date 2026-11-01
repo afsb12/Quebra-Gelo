@@ -16,6 +16,19 @@ text). Categorias: casual (Descontraído), profundo (Profundo), casais (Casais),
 (Happy Hour), dilemas (Dilemas), viagens (Viagens e Aventuras), nostalgia (Nostalgia e Infância),
 futuro (Futuro e Sonhos)."
 
+## Clarifications
+
+### Session 2026-10-31
+
+- Q: Ao voltar a uma categoria já iniciada, as cartas continuam de onde pararam ou o baralho é
+  embaralhado de novo? → A: Continua de onde parou enquanto o app estiver aberto; ao fechar o app,
+  o progresso é descartado e a próxima entrada embaralha de novo.
+- Q: O que acontece ao descartar a última carta da categoria? → A: Tela de "Fim do Baralho" com
+  "Embaralhar de novo" e "Escolher outra categoria" (sem loop automático).
+- Q: O botão de favoritar fica dentro da carta ou fora da área de arraste? → A: Os dois: a carta
+  revelada mostra uma estrela apenas como indicador (não tocável) e um botão fixo de estrela abaixo
+  da carta, fora da área de arraste, favorita/desfavorita.
+
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - Jogar um baralho de perguntas (Priority: P1)
@@ -75,8 +88,9 @@ descrição, e que cada uma leva ao seu próprio baralho.
 
 ### User Story 3 - Favoritar perguntas (Priority: P3)
 
-Durante o jogo, ao encontrar uma pergunta interessante, o usuário toca no ícone de estrela da
-carta para salvá-la. Depois, ele acessa a lista de favoritos a partir da tela inicial para rever
+Durante o jogo, ao encontrar uma pergunta interessante, o usuário toca no botão de estrela
+logo abaixo da carta para salvá-la; a própria carta passa a exibir uma estrela indicando que a
+pergunta está nos favoritos. Depois, ele acessa a lista de favoritos a partir da tela inicial para rever
 essas perguntas e pode remover as que não quiser mais.
 
 **Why this priority**: aumenta o valor de retorno ao app, mas o jogo funciona sem ela.
@@ -86,35 +100,38 @@ verificar que todas aparecem na lista de favoritos; remover uma e confirmar que 
 
 **Acceptance Scenarios**:
 
-1. **Given** uma carta revelada não favoritada, **When** o usuário toca na estrela, **Then** a
-   estrela fica preenchida e a pergunta é adicionada aos favoritos, sem virar nem descartar a
-   carta.
-2. **Given** uma carta revelada já favoritada, **When** o usuário toca na estrela, **Then** a
-   estrela fica vazia e a pergunta é removida dos favoritos.
-3. **Given** perguntas favoritadas, **When** o usuário fecha completamente o app e o reabre,
+1. **Given** uma carta revelada não favoritada, **When** o usuário toca no botão de estrela abaixo
+   da carta, **Then** o botão fica preenchido, a carta passa a exibir o indicador de estrela e a
+   pergunta é adicionada aos favoritos, sem virar nem descartar a carta.
+2. **Given** uma carta revelada já favoritada, **When** o usuário toca no botão de estrela,
+   **Then** o botão fica vazio, o indicador some da carta e a pergunta é removida dos favoritos.
+3. **Given** uma carta virada para baixo, **When** a tela de jogo é exibida, **Then** o botão de
+   estrela aparece desabilitado.
+4. **Given** perguntas favoritadas, **When** o usuário fecha completamente o app e o reabre,
    **Then** os favoritos continuam salvos.
-4. **Given** a tela inicial, **When** o usuário abre a lista de favoritos, **Then** vê todas as
+5. **Given** a tela inicial, **When** o usuário abre a lista de favoritos, **Then** vê todas as
    perguntas salvas, cada uma identificada pela sua categoria (nome e cor), da mais recente para a
    mais antiga, e pode remover qualquer uma.
-5. **Given** nenhum favorito salvo, **When** o usuário abre a lista, **Then** vê uma mensagem
+6. **Given** nenhum favorito salvo, **When** o usuário abre a lista, **Then** vê uma mensagem
    amigável explicando como favoritar uma pergunta.
 
 ---
 
 ### Edge Cases
 
-- **Fim do baralho**: ao descartar a última carta não vista da categoria, o app mostra uma tela de
-  conclusão com as opções "Embaralhar de novo" (reinicia o baralho em nova ordem) e "Escolher outra
+- **Fim do baralho**: ao descartar a última carta não vista da categoria, o app mostra a tela de
+  "Fim do Baralho" com as opções "Embaralhar de novo" (reinicia o baralho em nova ordem) e "Escolher outra
   categoria" (volta à tela inicial).
-- **Saída no meio do baralho**: ao sair e voltar à mesma categoria (inclusive após fechar o app),
-  o jogo continua com as cartas ainda não vistas; nenhuma carta já vista reaparece até o baralho
-  ser concluído ou reiniciado.
+- **Saída no meio do baralho**: ao sair e voltar à mesma categoria com o app ainda aberto
+  (inclusive em segundo plano), o jogo continua com as cartas ainda não vistas. Se o app for
+  fechado por completo, a próxima entrada na categoria começa um baralho novo, embaralhado.
 - **Toque × deslize**: um movimento muito curto conta como toque (vira a carta); só arrastos além
   de uma pequena distância contam como deslize, evitando viradas acidentais.
 - **Gestos rápidos repetidos**: toques ou deslizes seguidos durante uma animação não podem pular
   cartas, revelar duas cartas ao mesmo tempo nem deixar a carta em estado inconsistente.
-- **Toque na estrela**: tocar na estrela nunca vira nem descarta a carta; a estrela só aparece na
-  face revelada.
+- **Toque na estrela**: o botão de estrela fica fora da área de arraste, então tocá-lo nunca vira
+  nem descarta a carta; tocar no indicador de estrela dentro da carta conta como toque na carta
+  (vira). O botão fica desabilitado com a carta virada para baixo.
 - **Pergunta favoritada ainda não vista**: favoritos não alteram a ordem nem o progresso do
   baralho.
 - **Movimento reduzido**: com a opção de movimento reduzido do sistema ativa, as animações de
@@ -164,18 +181,22 @@ verificar que todas aparecem na lista de favoritos; remover uma e confirmar que 
 - **FR-014**: O app MUST emitir resposta tátil sutil ao virar uma carta e outra ao descartá-la.
 - **FR-015**: As perguntas de uma categoria MUST ser apresentadas em ordem aleatória, sem repetir
   nenhuma até que todas tenham sido exibidas.
-- **FR-016**: O progresso de cada categoria (cartas já vistas) MUST ser mantido ao sair da tela
-  e ao fechar o app, e MUST poder ser reiniciado ao concluir o baralho.
-- **FR-017**: Ao esgotar as cartas da categoria, o app MUST exibir a tela de conclusão com as
-  opções "Embaralhar de novo" e "Escolher outra categoria".
+- **FR-016**: O progresso de cada categoria (ordem embaralhada e cartas já vistas) MUST ser
+  mantido enquanto o app estiver aberto, inclusive ao sair da tela de jogo ou ir para segundo
+  plano, e MUST ser descartado quando o app é fechado por completo (não é salvo no dispositivo).
+- **FR-017**: Ao esgotar as cartas da categoria, o app MUST exibir a tela de "Fim do Baralho"
+  com as opções "Embaralhar de novo" (novo baralho embaralhado da mesma categoria) e "Escolher
+  outra categoria" (volta à tela inicial); o baralho MUST NOT recomeçar automaticamente.
 - **FR-018**: A tela de jogo MUST NOT exibir placar, cronômetro, anúncios ou notificações.
 - **FR-019**: Com movimento reduzido ativo no sistema, as animações MUST ser simplificadas,
   mantendo a resposta tátil.
 
 **Favoritos**
 
-- **FR-020**: A face revelada da carta MUST exibir um botão de estrela que alterna o estado de
-  favorito da pergunta, indicando visualmente se ela está favoritada.
+- **FR-020**: A tela de jogo MUST exibir um botão fixo de estrela abaixo da carta, fora da área
+  de arraste, que alterna o estado de favorito da pergunta atual e mostra visualmente esse estado;
+  o botão MUST ficar desabilitado enquanto a carta estiver virada para baixo. A face revelada da
+  carta MUST exibir um indicador de estrela (não interativo) quando a pergunta estiver favoritada.
 - **FR-021**: Os favoritos MUST ser armazenados apenas no dispositivo e persistir entre aberturas
   do app.
 - **FR-022**: A lista de favoritos MUST mostrar as perguntas salvas com sua categoria, da mais
@@ -196,7 +217,7 @@ verificar que todas aparecem na lista de favoritos; remover uma e confirmar que 
 - **Favorito**: uma pergunta salva pelo usuário, com a data em que foi salva. Fica apenas no
   dispositivo.
 - **Progresso da categoria**: por categoria, a ordem embaralhada atual e quais perguntas já foram
-  vistas. Fica apenas no dispositivo.
+  vistas. Existe só enquanto o app está aberto; não é salvo.
 
 ## Success Criteria *(mandatory)*
 

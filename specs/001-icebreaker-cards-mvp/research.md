@@ -43,20 +43,22 @@ input, the spec or the constitution.
 
 ## R4. State and persistence
 
-- **Decision**: Two Zustand stores, both using the `persist` middleware with
-  `createJSONStorage(() => AsyncStorage)`:
-  - `useFavoritesStore` — favorites (`questionId` + `savedAt`), toggle/remove/isFavorite.
-  - `useProgressStore` — per-category deck state (shuffled order + cursor), advance/reset.
+- **Decision**: Two Zustand stores:
+  - `useFavoritesStore` — favorites (`questionId` + `savedAt`), toggle/remove/isFavorite;
+    persisted with the `persist` middleware and `createJSONStorage(() => AsyncStorage)`.
+  - `useProgressStore` — per-category deck state (shuffled order + cursor), discard/reshuffle;
+    **in memory only** (no `persist`), so it survives leaving the deck screen and backgrounding
+    but resets when the app process is closed (clarification 2026-10-31).
   Shuffling (Fisher–Yates) and "next card" logic are pure functions in `src/data/deck.ts`, called
   by the store, so they are unit-testable without React.
-- **Rationale**: Constitution fixes Zustand + AsyncStorage. Spec FR-016 requires progress to
-  survive app restarts, and FR-021 requires favorites to persist. Storing only IDs keeps persisted
-  data valid when question texts are edited.
-- **Persisted state versioning**: each store sets `version: 1`; a `migrate` drops IDs that no
-  longer exist in `data.json` (handled on rehydrate by filtering against content).
+- **Rationale**: Constitution fixes Zustand + AsyncStorage. FR-016 keeps progress only while the
+  app is open; FR-021 requires favorites to persist. Storing only IDs keeps persisted favorites
+  valid when question texts are edited.
+- **Persisted state versioning**: the favorites store sets `version: 1`; on rehydrate, IDs that no
+  longer exist in `data.json` are dropped.
 - **Alternatives considered**: One combined store (couples unrelated concerns); MMKV (faster, but
-  not required for this data volume and adds a native module); in-memory only progress (violates
-  FR-016).
+  not required for this data volume and adds a native module); persisting progress (rejected by
+  clarification: closing the app should start fresh).
 
 ## R5. Card physics: flip + swipe
 
@@ -116,13 +118,23 @@ input, the spec or the constitution.
 
 - **Decision**: `jest-expo` preset + `@testing-library/react-native`. Unit tests for
   `src/data/deck.ts`, `src/data/content.ts`, both stores (with AsyncStorage mock), and the content
-  validation test. Component tests for `CategoryTile`, `FavoriteButton`, `FavoritesList` and the
+  validation test. Component tests for `CategoryTile`, `FavoriteButton`, `FavoriteListItem` and the
   `DeckView` screen's end-of-deck/back flow (gestures exercised via accessibility actions, not
   simulated physics). ESLint via `eslint-config-expo` + `@typescript-eslint/no-explicit-any:
   error`. `tsc --noEmit` script.
 - **Rationale**: Constitution quality gates. Gesture physics are verified manually on device
   (quickstart), because simulated pan tests are brittle and add little confidence.
 - **Alternatives considered**: Detox/Maestro E2E (valuable later; too heavy for MVP).
+
+## R9a. Favorite control placement
+
+- **Decision**: A fixed `FavoriteButton` below the card, outside the gesture area, toggles the
+  favorite; it is disabled while the card is face down. The revealed card face shows a
+  non-interactive star indicator when the question is favorited (clarification 2026-10-31).
+- **Rationale**: Keeping the only interactive star outside the `GestureDetector` removes any
+  tap/pan conflict on the card, while the on-card indicator keeps the state visible.
+- **Alternatives considered**: Star button inside the card (needs gesture exclusion zones);
+  button only, no indicator (state less visible on the card).
 
 ## R9. Accessibility of the card
 

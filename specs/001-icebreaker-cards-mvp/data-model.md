@@ -41,9 +41,9 @@ Fixed set (display order on Home = this order):
 
 Relationship: Category 1 — N Question (≥ 20 per category).
 
-## Device state (persisted)
+## Device state
 
-### Favorite
+### Favorite (persisted)
 
 | Field        | Type     | Rules                                               |
 |--------------|----------|-----------------------------------------------------|
@@ -53,19 +53,15 @@ Relationship: Category 1 — N Question (≥ 20 per category).
 Persisted as `{ version: 1, state: { favorites: Favorite[] } }` under key
 `quebra-gelo/favorites`. On rehydrate, entries whose `questionId` no longer exists are dropped.
 
-### DeckProgress (one per category that has been played)
+### DeckProgress (in memory only; one per category played in the current app session)
 
 | Field     | Type       | Rules                                                                 |
 |-----------|------------|-----------------------------------------------------------------------|
 | `order`   | `string[]` | Permutation of all question IDs of the category (Fisher–Yates).       |
 | `cursor`  | `number`   | Index of the current card in `order`; `0 ≤ cursor ≤ order.length`.    |
 
-Persisted as `{ version: 1, state: { decks: Partial<Record<CategoryId, DeckProgress>> } }` under
-key `quebra-gelo/progress`.
-
-**Rehydrate reconciliation**: if content changed (questions added/removed), `order` is filtered to
-existing IDs, and new IDs are appended in random order after the cursor so unseen new questions
-are still shown in the current pass.
+Held as `decks: Partial<Record<CategoryId, DeckProgress>>` in a non-persisted store. Content
+cannot change while the app is running, so no reconciliation is needed.
 
 ### State transitions — DeckProgress
 
@@ -75,10 +71,12 @@ ACTIVE(cursor < n-1) --discard--> ACTIVE(cursor+1)
 ACTIVE(cursor = n-1) --discard--> COMPLETED(cursor = n)
 COMPLETED --"Embaralhar de novo"--> ACTIVE(order=shuffle(ids), cursor=0)
 COMPLETED --"Escolher outra categoria"--> COMPLETED (kept; reopening shows completion screen)
-ACTIVE/COMPLETED --leave screen / close app--> unchanged (resumes on reopen)
+ACTIVE/COMPLETED --leave screen / background app--> unchanged (resumes on reopen)
+any --app process closed--> (no entry)  # next open reshuffles
 ```
 
 ### Card view state (ephemeral, not persisted)
 
 `face: 'down' | 'up'` — each new card starts `down`; tap toggles; discard resets for the next
-card. Favoriting does not change `face`, `order` or `cursor`.
+card. Favoriting does not change `face`, `order` or `cursor`. The favorite button is enabled
+only when `face === 'up'`.

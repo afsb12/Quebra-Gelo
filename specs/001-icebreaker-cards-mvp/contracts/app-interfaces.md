@@ -38,9 +38,8 @@ createDeck(questionIds: readonly string[], random?: () => number): DeckProgress
 advance(deck: DeckProgress): DeckProgress
 currentQuestionId(deck: DeckProgress): string | undefined   // undefined ⇒ completed
 isCompleted(deck: DeckProgress): boolean
-reconcile(deck: DeckProgress, questionIds: readonly string[], random?: () => number): DeckProgress
 
-// src/store/favorites.ts
+// src/store/favorites.ts — persisted (AsyncStorage)
 useFavoritesStore: {
   favorites: Favorite[];
   toggle(questionId: string): void;
@@ -48,10 +47,10 @@ useFavoritesStore: {
   isFavorite(questionId: string): boolean;
 }
 
-// src/store/progress.ts
+// src/store/progress.ts — in memory only, resets when the app closes
 useProgressStore: {
   decks: Partial<Record<CategoryId, DeckProgress>>;
-  ensureDeck(categoryId: CategoryId): void;   // creates if missing, reconciles if stale
+  ensureDeck(categoryId: CategoryId): void;   // creates (shuffled) if missing
   discard(categoryId: CategoryId): void;      // advance
   reshuffle(categoryId: CategoryId): void;    // new order, cursor 0
 }
@@ -79,12 +78,15 @@ interface SwipeCardProps {
   isFavorite: boolean;
   onFlip(face: 'up' | 'down'): void;      // screen triggers haptics
   onDiscard(direction: 'left' | 'right'): void; // called once, after exit animation
-  onToggleFavorite(): void;
+  onToggleFavorite(): void;               // only used by the "favorite" accessibility action
 }
+// isFavorite drives a non-interactive star indicator on the revealed face.
 // SwipeCard owns gesture + animation state; resets to face 'down' when question.id changes.
 
-interface CardFaceProps { category: Category; question?: Question; side: 'front' | 'back' }
-interface FavoriteButtonProps { active: boolean; onPress(): void }   // label "Favoritar"/"Remover dos favoritos"
+interface CardFaceProps { category: Category; question?: Question; side: 'front' | 'back'; isFavorite?: boolean }
+interface FavoriteButtonProps { active: boolean; disabled: boolean; onPress(): void }
+// Rendered by DeckScreen below the card, outside the gesture area; disabled while face down.
+// Label "Favoritar" / "Remover dos favoritos".
 interface DeckCompleteProps { category: Category; onReshuffle(): void; onChooseAnother(): void }
 interface FavoriteListItemProps { question: Question; category: Category; onRemove(): void }
 interface EmptyStateProps { title: string; message: string }
@@ -94,6 +96,7 @@ Interaction guarantees of `SwipeCard` (verified by quickstart and tests):
 
 - Tap toggles face; pan below threshold springs back without calling `onDiscard`.
 - `onDiscard` fires exactly once per card; gestures are ignored while a flip/exit animation runs.
-- Pressing the favorite button never flips or discards.
+- The favorite button lives outside `SwipeCard`, so pressing it never flips or discards; tapping
+  the on-card star indicator counts as a tap on the card (flip).
 - Accessibility actions `activate` (virar), `favorite` (favoritar), `skip` (pular) map to
   `onFlip`, `onToggleFavorite`, `onDiscard('right')`.
