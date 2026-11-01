@@ -93,14 +93,14 @@ both options; leaving and returning (app still open) resumes.
 
 ### Content for User Story 1
 
-- [ ] T028 [US1] Write 20 original pt-BR questions for `casual` (IDs `casual-001`…`casual-020`, text "trimmed, non-empty, ≤ 200 chars", welcoming and inclusive — no assumptions about gender, orientation, religion, marital status, finances or family structure; nothing copied from commercial games) in src/data/data.json
-- [ ] T029 [US1] Write 20 questions for `profundo` (`profundo-001`…`profundo-020`, same rules) in src/data/data.json
-- [ ] T030 [US1] Write 20 questions for `casais` (`casais-001`…`casais-020`, same rules; inclusive of any couple) in src/data/data.json
-- [ ] T031 [US1] Write 20 questions for `happy-hour` (`happy-hour-001`…`happy-hour-020`, same rules; no pressure to drink) in src/data/data.json
-- [ ] T032 [US1] Write 20 questions for `dilemas` (`dilemas-001`…`dilemas-020`, same rules) in src/data/data.json
-- [ ] T033 [US1] Write 20 questions for `viagens` (`viagens-001`…`viagens-020`, same rules; no assumption that the player has traveled) in src/data/data.json
-- [ ] T034 [US1] Write 20 questions for `nostalgia` (`nostalgia-001`…`nostalgia-020`, same rules; no pressure to reveal painful memories) in src/data/data.json
-- [ ] T035 [US1] Write 20 questions for `futuro` (`futuro-001`…`futuro-020`, same rules) in src/data/data.json; then run `npx jest src/data` — all content rules pass
+- [X] T028 [US1] Write 20 original pt-BR questions for `casual` (IDs `casual-001`…`casual-020`, text "trimmed, non-empty, ≤ 200 chars", welcoming and inclusive — no assumptions about gender, orientation, religion, marital status, finances or family structure; nothing copied from commercial games) in src/data/data.json
+- [X] T029 [US1] Write 20 questions for `profundo` (`profundo-001`…`profundo-020`, same rules) in src/data/data.json
+- [X] T030 [US1] Write 20 questions for `casais` (`casais-001`…`casais-020`, same rules; inclusive of any couple) in src/data/data.json
+- [X] T031 [US1] Write 20 questions for `happy-hour` (`happy-hour-001`…`happy-hour-020`, same rules; no pressure to drink) in src/data/data.json
+- [X] T032 [US1] Write 20 questions for `dilemas` (`dilemas-001`…`dilemas-020`, same rules) in src/data/data.json
+- [X] T033 [US1] Write 20 questions for `viagens` (`viagens-001`…`viagens-020`, same rules; no assumption that the player has traveled) in src/data/data.json
+- [X] T034 [US1] Write 20 questions for `nostalgia` (`nostalgia-001`…`nostalgia-020`, same rules; no pressure to reveal painful memories) in src/data/data.json
+- [X] T035 [US1] Write 20 questions for `futuro` (`futuro-001`…`futuro-020`, same rules) in src/data/data.json; then run `npx jest src/data` — all content rules pass
 
 ### Implementation for User Story 1
 
