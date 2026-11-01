@@ -43,8 +43,9 @@ Features are developed through the Spec Kit skills in `.claude/skills/`:
 - **Strict typing:** `"strict": true`, zero `any` (`@typescript-eslint/no-explicit-any` as error;
   use `unknown` + narrowing); domain types, props, stores and navigation params explicitly typed.
 - **Stack:** Expo Managed Workflow only (no eject); NativeWind by default, `StyleSheet` allowed in
-  performance-critical animated components but never mixed within one component; Zustand with
-  `persist` over AsyncStorage for favorites/progress.
+  performance-critical animated components but never mixed within one component; Zustand for
+  state, with `persist` over AsyncStorage for data that must survive restarts (favorites); deck
+  progress is in memory only (resets when the app closes).
 
 ## Architecture (three layers, dependencies flow top-down only)
 

@@ -69,8 +69,10 @@ e fácil de manter.
 - Linguagem: TypeScript em modo strict (ver Princípio III).
 - Estilização: NativeWind é o padrão. `StyleSheet` nativo MAY ser usado em componentes críticos
   de performance (ex.: cartas animadas); um mesmo componente MUST NOT misturar as duas abordagens.
-- Estado: Zustand para favoritos e progresso, persistido com o middleware `persist` sobre
-  AsyncStorage. Estado efêmero de tela fica em estado local do componente.
+- Estado: Zustand para favoritos e progresso. Dados que precisam sobreviver ao fechamento do
+  app (ex.: favoritos) MUST ser persistidos com o middleware `persist` sobre AsyncStorage;
+  estado de sessão (ex.: progresso do baralho, quando a especificação assim definir) MAY ficar
+  apenas em memória. Estado efêmero de tela fica em estado local do componente.
 - Animações e gestos: React Native Reanimated e React Native Gesture Handler; háptica via
   `expo-haptics`.
 - Plataformas-alvo: Android e iOS, com telas a partir de 320pt de largura.
@@ -124,4 +126,4 @@ e fácil de manter.
   conteúdo MUST verificar aderência aos princípios. Qualquer violação MUST ser justificada na
   seção de complexidade do plano ou corrigida antes do merge.
 
-**Version**: 2.0.0 | **Ratified**: 2026-10-31 | **Last Amended**: 2026-10-31
+**Version**: 2.1.0 | **Ratified**: 2026-10-31 | **Last Amended**: 2026-11-01
