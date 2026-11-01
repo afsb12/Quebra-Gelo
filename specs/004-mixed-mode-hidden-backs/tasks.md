@@ -68,7 +68,7 @@ or label face down, questions from several categories, end of deck after all que
 - [ ] T020 [P] [US1] Add `src/components/__tests__/MixedHeroCard.test.tsx`: shows "Tudo Misturado" and the description, press calls `onPress`
 - [ ] T021 [US1] Render `MixedHeroCard` above the grid in `src/screens/HomeScreen.tsx`, pressing it pushes `/deck/[deckId]` with `deckId: 'mixed'`
 - [ ] T022 [US1] Pass `mode="mixed"` to `SwipeCard` in `src/screens/DeckScreen.tsx` when `deckId === MIXED_DECK_ID`
-- [ ] T023 [US1] Add mixed tests to `src/screens/__tests__/DeckScreen.test.tsx`: header "Tudo Misturado"; brand back rendered; face-down label contains no category title; skipping through all questions shows no repeated question IDs and ends in "Fim do Baralho"
+- [ ] T023 [US1] Add mixed tests to `src/screens/__tests__/DeckScreen.test.tsx`: header "Tudo Misturado"; brand back rendered; face-down label contains no category title; skipping through all questions shows no repeated question IDs and ends in "Fim do Baralho"; flipping triggers the flip haptic (`Haptics.impactAsync`) as in category decks
 - [ ] T024 [US1] Add to `src/screens/__tests__/HomeScreen.test.tsx`: hero card rendered before the first mini card; press pushes `{ pathname: '/deck/[deckId]', params: { deckId: 'mixed' } }`
 
 **Checkpoint**: US1 works on its own (badge not yet shown).
@@ -85,7 +85,7 @@ category's icon, title and color and never overlaps text.
 
 - [ ] T025 [P] [US2] Create `src/components/CategoryBadge.tsx` (StyleSheet): `CategoryBadgeProps { category; visual }`, pill background `visual.color`, `visual.icon` (14 pt) + `category.title` (body font 12 pt, 1 line, `adjustsFontSizeToFit`, `maxFontSizeMultiplier` 1.3) in `visual.onColor`, `testID="category-badge"`, accessibility label = title
 - [ ] T026 [US2] Add `showOriginBadge?: boolean` to `src/components/CardFront.tsx`: badge centered in the top row between the corner icon and the star slot (`flexShrink`, fixed-width slots so it never overlaps them); corner icon, footer and inner frame unchanged
-- [ ] T027 [P] [US2] Add `src/components/__tests__/CategoryBadge.test.tsx` and extend `src/components/__tests__/CardFront.test.tsx`: for all 8 categories the badge shows `icon-{category.icon}`, the title and background = category color; no badge without `showOriginBadge`; corner icon and footer still present with it
+- [ ] T027 [P] [US2] Add `src/components/__tests__/CategoryBadge.test.tsx` and extend `src/components/__tests__/CardFront.test.tsx`: for all 8 categories the badge shows `icon-{category.icon}`, the title and background = category color; no badge without `showOriginBadge`; corner icon and footer still present with it; badge text has `numberOfLines={1}` and `maxFontSizeMultiplier` 1.3
 - [ ] T028 [US2] Pass `showOriginBadge` from `SwipeCard` to `CardFront` in mixed mode in `src/components/SwipeCard.tsx`
 - [ ] T029 [US2] Add to `src/screens/__tests__/DeckScreen.test.tsx`: after flipping in mixed mode the badge shows the current question's category; favoriting stores the question ID (origin kept via the question)
 
