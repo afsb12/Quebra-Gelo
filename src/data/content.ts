@@ -1,10 +1,12 @@
 import rawData from './data.json';
-import type { Category, CategoryId, Content, Question } from './types';
-import { CATEGORY_IDS } from './types';
+import type { Category, CategoryId, Content, DeckId, Question } from './types';
+import { CATEGORY_IDS, MIXED_DECK_ID } from './types';
 
 const CATEGORY_ID_SET: ReadonlySet<string> = new Set(CATEGORY_IDS);
 
 export const isCategoryId = (value: string): value is CategoryId => CATEGORY_ID_SET.has(value);
+
+export const isDeckId = (value: string): value is DeckId => value === MIXED_DECK_ID || isCategoryId(value);
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   typeof value === 'object' && value !== null && !Array.isArray(value);
@@ -50,3 +52,9 @@ export const getCategory = (id: string): Category | undefined => content.categor
 export const getQuestionsByCategory = (id: CategoryId): readonly Question[] => questionsByCategory.get(id) ?? [];
 
 export const getQuestion = (id: string): Question | undefined => questionsById.get(id);
+
+export const getAllQuestions = (): readonly Question[] => content.questions;
+
+/** Question IDs that make up a deck: one category's, or every question for the mixed deck. */
+export const getDeckQuestionIds = (deckId: DeckId): string[] =>
+  (deckId === MIXED_DECK_ID ? getAllQuestions() : getQuestionsByCategory(deckId)).map((q) => q.id);

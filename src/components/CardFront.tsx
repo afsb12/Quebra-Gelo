@@ -5,6 +5,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import type { Category, Question } from '../data/types';
 import { strings } from '../i18n/strings';
 import { FRONT_LAYOUT, faceTextBox, questionFit, tokens, type CategoryVisual } from '../theme';
+import { CategoryBadge } from './CategoryBadge';
 import { Vignette } from './Vignette';
 
 type IconName = ComponentProps<typeof MaterialCommunityIcons>['name'];
@@ -19,6 +20,8 @@ export interface CardFrontProps {
   height?: number;
   /** OS font scale (PixelRatio.getFontScale()); text never renders below 20pt. */
   fontScale?: number;
+  /** Mixed deck (004): shows where the question came from in a badge at the top. */
+  showOriginBadge?: boolean;
 }
 
 /** Revealed side: cream paper, dark question text, category-colored frame, icon and footer. */
@@ -30,6 +33,7 @@ export const CardFront = memo(function CardFront({
   width,
   height = width / tokens.card.ratio,
   fontScale = 1,
+  showOriginBadge = false,
 }: CardFrontProps) {
   const radius = width * tokens.card.radiusRatio;
   const box = faceTextBox(width, height);
@@ -56,12 +60,21 @@ export const CardFront = memo(function CardFront({
       />
       <View style={[styles.content, { padding: frame + innerInset + FRONT_LAYOUT.padding }]}>
         <View style={styles.topRow}>
-          <MaterialCommunityIcons name={visual.icon as IconName} size={28} color={visual.ink} />
-          {isFavorite ? (
-            <View pointerEvents="none" accessibilityLabel={strings.card.favoritedIndicator} testID="favorite-indicator">
-              <MaterialCommunityIcons name="star" size={22} color={visual.ink} />
+          <View style={styles.slot}>
+            <MaterialCommunityIcons name={visual.icon as IconName} size={28} color={visual.ink} />
+          </View>
+          {showOriginBadge ? (
+            <View style={styles.badgeArea}>
+              <CategoryBadge category={category} visual={visual} />
             </View>
           ) : null}
+          <View style={[styles.slot, styles.slotEnd]}>
+            {isFavorite ? (
+              <View pointerEvents="none" accessibilityLabel={strings.card.favoritedIndicator} testID="favorite-indicator">
+                <MaterialCommunityIcons name="star" size={22} color={visual.ink} />
+              </View>
+            ) : null}
+          </View>
         </View>
         <View style={styles.questionArea}>
           <Text
@@ -103,6 +116,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'flex-start',
     justifyContent: 'space-between',
+  },
+  /** Fixed-width corner slots, so the centered badge can never overlap the icon or the star. */
+  slot: {
+    width: 30,
+  },
+  slotEnd: {
+    alignItems: 'flex-end',
+  },
+  badgeArea: {
+    flex: 1,
+    alignItems: 'center',
+    paddingHorizontal: 4,
   },
   questionArea: {
     flex: 1,

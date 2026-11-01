@@ -1,6 +1,6 @@
 import { act, renderHook } from '@testing-library/react-native';
 
-import { getQuestionsByCategory } from '../../data/content';
+import { getAllQuestions, getQuestionsByCategory } from '../../data/content';
 import { useProgressStore } from '../../store/progress';
 import { useDeck } from '../useDeck';
 
@@ -13,7 +13,7 @@ describe('useDeck', () => {
 
   it('returns category, current question and position', async () => {
     const { result } = await renderHook(() => useDeck('casual'));
-    expect(result.current.category.id).toBe('casual');
+    expect(result.current.deckCategory?.id).toBe('casual');
     expect(result.current.current?.categoryId).toBe('casual');
     expect(result.current.position).toEqual({ index: 1, total });
   });
@@ -46,5 +46,13 @@ describe('useDeck', () => {
     const again = await renderHook(() => useDeck('casual'));
     expect(again.result.current.position.index).toBe(2);
     expect(again.result.current.current?.id).toBe(seenId);
+  });
+
+  it('mixed deck: title "Tudo Misturado", no deck category, current category follows the question (004)', async () => {
+    const { result } = await renderHook(() => useDeck('mixed'));
+    expect(result.current.title).toBe('Tudo Misturado');
+    expect(result.current.deckCategory).toBeUndefined();
+    expect(result.current.position.total).toBe(getAllQuestions().length);
+    expect(result.current.currentCategory?.id).toBe(result.current.current?.categoryId);
   });
 });

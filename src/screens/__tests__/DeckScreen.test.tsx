@@ -3,7 +3,9 @@ import { router } from 'expo-router';
 import type { ReactNode } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
-import { getQuestionsByCategory } from '../../data/content';
+import * as Haptics from 'expo-haptics';
+
+import { getAllQuestions, getCategories, getQuestion, getQuestionsByCategory } from '../../data/content';
 import { useFavoritesStore } from '../../store/favorites';
 import { useProgressStore } from '../../store/progress';
 import { DeckScreen } from '../DeckScreen';
@@ -31,7 +33,7 @@ describe('DeckScreen', () => {
   });
 
   it('pular advances to the next question', async () => {
-    await render(<DeckScreen categoryId="dilemas" />, { wrapper });
+    await render(<DeckScreen deckId="dilemas" />, { wrapper });
     expect(screen.getByText(`Carta 1 de ${total}`)).toBeTruthy();
     await skip();
     expect(screen.getByText(`Carta 2 de ${total}`)).toBeTruthy();
@@ -39,7 +41,7 @@ describe('DeckScreen', () => {
 
   it('favorite button is disabled face down, toggles the favorite once revealed, never discards', async () => {
     useFavoritesStore.setState({ favorites: [] });
-    await render(<DeckScreen categoryId="dilemas" />, { wrapper });
+    await render(<DeckScreen deckId="dilemas" />, { wrapper });
     expect(screen.getByTestId('favorite-button')).toBeDisabled();
 
     await act(async () => {
@@ -56,7 +58,7 @@ describe('DeckScreen', () => {
   });
 
   it('shows "Fim do Baralho" after the last card, with reshuffle and choose-another', async () => {
-    await render(<DeckScreen categoryId="dilemas" />, { wrapper });
+    await render(<DeckScreen deckId="dilemas" />, { wrapper });
     for (let i = 0; i < total; i += 1) await skip();
 
     expect(screen.getByTestId('deck-complete')).toBeTruthy();
@@ -72,5 +74,63 @@ describe('DeckScreen', () => {
     });
     expect(screen.getByTestId('swipe-card')).toBeTruthy();
     expect(screen.getByText(`Carta 1 de ${total}`)).toBeTruthy();
+  });
+});
+
+describe('DeckScreen — Tudo Misturado (004)', () => {
+  const mixedTotal = getAllQuestions().length;
+  const titles = getCategories().map((c) => c.title);
+  const currentId = () => useProgressStore.getState().decks.mixed?.order[useProgressStore.getState().decks.mixed?.cursor ?? 0];
+  const flip = async () => {
+    await act(async () => {
+      fireEvent(screen.getByTestId('swipe-card'), 'accessibilityAction', { nativeEvent: { actionName: 'activate' } });
+    });
+  };
+
+  beforeEach(() => {
+    useProgressStore.setState({ decks: {} });
+    useFavoritesStore.setState({ favorites: [] });
+    jest.clearAllMocks();
+  });
+
+  it('header says "Tudo Misturado"; the face-down card shows the brand back and never names a category', async () => {
+    await render(<DeckScreen deckId="mixed" />, { wrapper });
+    expect(screen.getByText('Tudo Misturado')).toBeTruthy();
+    expect(screen.getByTestId('brand-card-back')).toBeTruthy();
+    for (let i = 0; i < 5; i += 1) {
+      const label = String(screen.getByTestId('swipe-card').props.accessibilityLabel);
+      expect(label).toBe('Carta do Quebra-Gelo, virada para baixo');
+      for (const title of titles) expect(label).not.toContain(title);
+      expect(screen.queryByTestId('card-back-title')).toBeNull();
+      await skip();
+    }
+  });
+
+  it('walks every question of every category once, then shows "Fim do Baralho"', async () => {
+    await render(<DeckScreen deckId="mixed" />, { wrapper });
+    const seen = new Set<string>();
+    for (let i = 0; i < mixedTotal; i += 1) {
+      const id = currentId();
+      if (id) seen.add(id);
+      await skip();
+    }
+    expect(seen.size).toBe(mixedTotal);
+    expect(screen.getByTestId('deck-complete')).toBeTruthy();
+    expect(screen.getByText('Vocês viram todas as perguntas de Tudo Misturado.')).toBeTruthy();
+  });
+
+  it('flipping triggers the flip haptic and reveals the origin badge; favoriting keeps the question', async () => {
+    await render(<DeckScreen deckId="mixed" />, { wrapper });
+    const question = getQuestion(currentId() ?? '');
+    const category = getCategories().find((c) => c.id === question?.categoryId);
+    await flip();
+    expect(Haptics.impactAsync).toHaveBeenCalledWith(Haptics.ImpactFeedbackStyle.Light);
+    expect(screen.getByTestId('category-badge-title')).toHaveTextContent(category?.title ?? '');
+    expect(String(screen.getByTestId('swipe-card').props.accessibilityLabel)).toBe(`${category?.title}: ${question?.text}`);
+
+    await act(async () => {
+      fireEvent.press(screen.getByTestId('favorite-button'));
+    });
+    expect(useFavoritesStore.getState().favorites.map((f) => f.questionId)).toEqual([question?.id]);
   });
 });

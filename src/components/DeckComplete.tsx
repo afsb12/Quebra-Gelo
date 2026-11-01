@@ -2,21 +2,27 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import type { ComponentProps } from 'react';
 import { Pressable, Text, View } from 'react-native';
 
-import type { Category } from '../data/types';
 import { strings } from '../i18n/strings';
-import type { CategoryVisual } from '../theme';
 
 type IconName = ComponentProps<typeof MaterialCommunityIcons>['name'];
 
+/** Colors and icon of the end screen; a `CategoryVisual` satisfies it, the mixed deck passes `MIXED_VISUAL`. */
+export interface DeckCompleteVisual {
+  color: string;
+  onColor: string;
+  icon: string;
+}
+
 export interface DeckCompleteProps {
-  category: Category;
-  visual: CategoryVisual;
+  /** Category name, or "Tudo Misturado". */
+  deckTitle: string;
+  visual: DeckCompleteVisual;
   onReshuffle: () => void;
   onChooseAnother: () => void;
 }
 
 /** "Fim do Baralho": shown after the last card; never restarts automatically. */
-export function DeckComplete({ category, visual, onReshuffle, onChooseAnother }: DeckCompleteProps) {
+export function DeckComplete({ deckTitle, visual, onReshuffle, onChooseAnother }: DeckCompleteProps) {
   return (
     <View
       testID="deck-complete"
@@ -28,7 +34,7 @@ export function DeckComplete({ category, visual, onReshuffle, onChooseAnother }:
         {strings.deckComplete.title}
       </Text>
       <Text className="text-center font-body text-base" style={{ color: visual.onColor }}>
-        {strings.deckComplete.message(category.title)}
+        {strings.deckComplete.message(deckTitle)}
       </Text>
       <Pressable
         accessibilityRole="button"

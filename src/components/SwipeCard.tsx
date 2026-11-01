@@ -15,13 +15,17 @@ import { scheduleOnRN } from 'react-native-worklets';
 import type { Category, Question } from '../data/types';
 import { strings } from '../i18n/strings';
 import type { CategoryVisual } from '../theme';
+import { BrandCardBack } from './BrandCardBack';
 import { CardBack } from './CardBack';
 import { CardFront } from './CardFront';
 
 export type CardFace = 'up' | 'down';
 export type SwipeDirection = 'left' | 'right';
+/** `mixed`: neutral brand back, no category in the face-down label, origin badge on the front (004). */
+export type SwipeCardMode = 'category' | 'mixed';
 
 export interface SwipeCardProps {
+  mode?: SwipeCardMode;
   question: Question;
   category: Category;
   visual: CategoryVisual;
@@ -49,6 +53,7 @@ const EXIT_MS = 220;
 const FADE_MS = 150;
 
 export function SwipeCard({
+  mode = 'category',
   question,
   category,
   visual,
@@ -202,6 +207,10 @@ export function SwipeCard({
     }
   };
 
+  const mixed = mode === 'mixed';
+  const faceUpLabel = mixed ? strings.card.faceUpMixedLabel(category.title, question.text) : question.text;
+  const faceDownLabel = mixed ? strings.card.faceDownMixedLabel : strings.card.faceDownLabel(category.title);
+
   return (
     <GestureDetector gesture={gesture}>
       <Animated.View
@@ -209,7 +218,7 @@ export function SwipeCard({
         style={[styles.container, { width, height }, containerStyle]}
         accessible
         accessibilityRole="button"
-        accessibilityLabel={face === 'up' ? question.text : strings.card.faceDownLabel(category.title)}
+        accessibilityLabel={face === 'up' ? faceUpLabel : faceDownLabel}
         accessibilityHint={strings.deck.tapHint}
         accessibilityActions={[
           { name: 'activate', label: strings.card.actions.flip },
@@ -219,7 +228,11 @@ export function SwipeCard({
         onAccessibilityAction={onAccessibilityAction}
       >
         <Animated.View style={[styles.face, backStyle]}>
-          <CardBack category={category} visual={visual} width={width} variant="full" />
+          {mixed ? (
+            <BrandCardBack width={width} height={height} variant="full" />
+          ) : (
+            <CardBack category={category} visual={visual} width={width} variant="full" />
+          )}
         </Animated.View>
         <Animated.View style={[styles.face, frontStyle]}>
           <View style={styles.fill}>
@@ -231,6 +244,7 @@ export function SwipeCard({
               width={width}
               height={height}
               fontScale={fontScale}
+              showOriginBadge={mixed}
             />
           </View>
         </Animated.View>

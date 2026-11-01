@@ -26,7 +26,16 @@ describe('HomeScreen', () => {
   it('opens the deck of the pressed category', async () => {
     await render(<HomeScreen />);
     await fireEvent.press(screen.getByTestId('mini-card-viagens'));
-    expect(router.push).toHaveBeenCalledWith({ pathname: '/deck/[categoryId]', params: { categoryId: 'viagens' } });
+    expect(router.push).toHaveBeenCalledWith({ pathname: '/deck/[deckId]', params: { deckId: 'viagens' } });
+  });
+
+  it('shows the "Tudo Misturado" hero card before the grid and opens the mixed deck (004)', async () => {
+    await render(<HomeScreen />);
+    const hero = screen.getByTestId('mixed-hero-card');
+    const all = screen.getAllByTestId(/^(mixed-hero-card|mini-card-)/).map((el) => el.props.testID);
+    expect(all[0]).toBe('mixed-hero-card');
+    await fireEvent.press(hero);
+    expect(router.push).toHaveBeenCalledWith({ pathname: '/deck/[deckId]', params: { deckId: 'mixed' } });
   });
 
   it('has a Favoritos entry', async () => {
