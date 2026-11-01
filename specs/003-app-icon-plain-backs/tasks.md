@@ -82,20 +82,20 @@ unclipped ([quickstart §2 and §4](./quickstart.md)).
 
 ### Setup for User Story 2
 
-- [ ] T011 [US2] Add `"allowImportingTsExtensions": true` to `compilerOptions` in `tsconfig.json` (research R5; valid because the project is `noEmit`) and confirm `npm run typecheck` is still green
+- [X] T011 [US2] Add `"allowImportingTsExtensions": true` to `compilerOptions` in `tsconfig.json` (research R5; valid because the project is `noEmit`) and confirm `npm run typecheck` is still green
 
 ### Tests for User Story 2
 
 > Write first; they must FAIL before T014–T016.
 
-- [ ] T012 [P] [US2] Create `scripts/__tests__/symbol.test.ts` (imports `../icon/symbol`), asserting against data-model "IconSymbol":
+- [X] T012 [P] [US2] Create `scripts/__tests__/symbol.test.ts` (imports `../icon/symbol`), asserting against data-model "IconSymbol":
   - (a) `SYMBOL` params are `side 1`, `offset 0.42`, `radius 0.24`, `stroke 0.085`, with `0 < radius < side / 2`, and `extent(SYMBOL)` ≈ `1.505`;
   - (b) `SYMBOL.colors.background === tokens.colors.appBackground` and `SYMBOL.colors.outline === tokens.colors.cream` (import `tokens` from `src/theme`), and `accent === '#FF6B4A'`;
   - (c) using `contrastRatio` from `src/theme/color.ts`, contrast is accent vs background ≥ 4.5, outline vs background ≥ 7, accent vs outline ≥ 2.2;
   - (d) for the radius fit `{ kind: 'radius', ratio: 0.30 }` at size 1024, every point with coverage > 0 lies within `0.3056 × 1024` of the center (sample the outer contour via `maxRadius`, plus a coarse 64×64 grid scan of `coverageAt`);
   - (e) `coverageAt` at the intersection center returns the fill layer and at the canvas corner returns background only;
   - (f) `toSvg(…)` contains no `<text` and exactly three distinct fill/stroke colors
-- [ ] T013 [P] [US2] Create `scripts/__tests__/app-icons.test.ts`: read each generated file with `fs.readFileSync`, parse the PNG `IHDR` (width, height, color type) and inflate `IDAT` with `zlib.inflateSync` (unfilter rows) to sample pixels. Assert, per [contracts/app-icon-assets.md](./contracts/app-icon-assets.md):
+- [X] T013 [P] [US2] Create `scripts/__tests__/app-icons.test.ts`: read each generated file with `fs.readFileSync`, parse the PNG `IHDR` (width, height, color type) and inflate `IDAT` with `zlib.inflateSync` (unfilter rows) to sample pixels. Assert, per [contracts/app-icon-assets.md](./contracts/app-icon-assets.md):
   - `icon.png` is 1024² RGB (color type 2, no alpha), its corner pixel is `#16131C` and the symbol-center pixel is `#FF6B4A`;
   - `android-icon-foreground.png` and `android-icon-monochrome.png` are 1024² RGBA (type 6), with every pixel of alpha > 0 within `0.3056 × 1024` of the center, and the monochrome one has only white RGB where alpha > 0;
   - `favicon.png` is 48² RGB;
@@ -105,7 +105,7 @@ unclipped ([quickstart §2 and §4](./quickstart.md)).
 
 ### Implementation for User Story 2
 
-- [ ] T014 [US2] Create `scripts/icon/symbol.ts` (pure, no I/O, strict TS, no `any`). Export:
+- [X] T014 [US2] Create `scripts/icon/symbol.ts` (pure, no I/O, strict TS, no `any`). Export:
   - `interface IconSymbol { side; offset; radius; stroke; colors: { background; outline; accent } }` and `SYMBOL` with values `1`, `0.42`, `0.24`, `0.085`, `#16131C`, `#F7F0E3`, `#FF6B4A`;
   - `type IconFit = { kind: 'bbox'; ratio: number } | { kind: 'radius'; ratio: number }`;
   - `extent(s)` = `side + offset + stroke`, and `maxRadius(s)` = `√2·(extent/2 − stroke/2 − radius) + radius + stroke/2` (data-model "Derived values");
@@ -113,15 +113,15 @@ unclipped ([quickstart §2 and §4](./quickstart.md)).
   - `sdfRoundedRect(px, py, rect, r)`;
   - `coverageAt(x, y, layout, s)`, which returns `{ fill, outline }` coverages in [0,1], with analytic anti-aliasing `clamp(0.5 − d/pixel)`: fill = `A ∩ B` (`max(sdfA, sdfB) ≤ 0`) on the outline centerlines, outline = union of `|sdf| − stroke/2 ≤ 0` for A and B. Paint order is background → fill → outline (research R3);
   - `toSvg(s, size, fit, background: boolean)`, which emits an SVG with a background `<rect>`, the intersection as a `<clipPath>`-clipped rounded `<rect>` filled with accent, then two stroked rounded `<rect>`s in outline color, with no `<text>`
-- [ ] T015 [US2] Create `scripts/generate-icons.ts` (first line `/// <reference types="node" />`, imports `./icon/symbol.ts` with extension). Implement:
+- [X] T015 [US2] Create `scripts/generate-icons.ts` (first line `/// <reference types="node" />`, imports `./icon/symbol.ts` with extension; type-only imports use `import type`, since Node strips types at runtime; run via `npm run icons`). Implement:
   - a deterministic PNG encoder with `node:zlib` (`deflateSync` at level 9, `crc32`): signature, `IHDR`, a single `IDAT` with filter byte 0 per row, `IEND`, no `tEXt`/`tIME` chunks; color type 2 (RGB) for opaque variants and 6 (RGBA) for transparent ones;
   - `render(size, fit, { background: 'opaque' | 'transparent', mode: 'color' | 'mono' })`, which composites per pixel with 4×4 supersampling. Color mode: background `#16131C` → accent × fill → outline × outline. Mono mode: white with alpha = max(fill, outline);
-  - writes for the six artifacts in research R6 / the contract table: `Assets/app/icon-source.svg` (bbox 0.60, opaque); `icon.png` (1024, bbox 0.60, opaque); `android-icon-foreground.png` (1024, radius 0.30, transparent, color); `android-icon-monochrome.png` (1024, radius 0.30, transparent, mono); `favicon.png` (48, bbox 0.70, opaque); `splash-icon.png` (1024, bbox fit so the outline edge touches the canvas minus one stroke margin, transparent, color);
+  - writes for the six artifacts in research R6 / the contract table: `Assets/app/icon-source.svg` (bbox 0.60, opaque); `icon.png` (1024, bbox 0.60, opaque); `android-icon-foreground.png` (1024, radius 0.30, transparent, color); `android-icon-monochrome.png` (1024, radius 0.30, transparent, mono); `favicon.png` (48, bbox 0.70, opaque); `splash-icon.png` (1024, bbox 0.90 ≈ one stroke of margin per side, transparent, color);
   - logs each written path.
   (depends on T014)
-- [ ] T016 [US2] Run `node scripts/generate-icons.ts` to regenerate the 5 PNGs and create `Assets/app/icon-source.svg`; delete `Assets/app/android-icon-background.png`; run it a second time and confirm `git status Assets/app` shows no further change (determinism, plan "US2 determinism") (depends on T015)
-- [ ] T017 [US2] Update `app.json`: remove `expo.android.adaptiveIcon.backgroundImage` (keep `backgroundColor: "#16131C"`, `foregroundImage`, `monochromeImage`), and change the `expo-splash-screen` plugin `imageWidth` from `160` to `128` (contract "`app.json` changes")
-- [ ] T018 [US2] Visually review `Assets/app/icon.png`, `android-icon-foreground.png`, `favicon.png` and `splash-icon.png` (Read the images): the outlines are even, the corners smooth, the coral overlap is clean and the symbol centered, with no text and no clipping. Then run `npx jest scripts` and `npm run typecheck && npm run lint`; T012/T013 now pass
+- [X] T016 [US2] Run `node scripts/generate-icons.ts` to regenerate the 5 PNGs and create `Assets/app/icon-source.svg`; delete `Assets/app/android-icon-background.png`; run it a second time and confirm `git status Assets/app` shows no further change (determinism, plan "US2 determinism") (depends on T015)
+- [X] T017 [US2] Update `app.json`: remove `expo.android.adaptiveIcon.backgroundImage` (keep `backgroundColor: "#16131C"`, `foregroundImage`, `monochromeImage`), and change the `expo-splash-screen` plugin `imageWidth` from `160` to `128` (contract "`app.json` changes")
+- [X] T018 [US2] Visually review `Assets/app/icon.png`, `android-icon-foreground.png`, `favicon.png` and `splash-icon.png` (Read the images): the outlines are even, the corners smooth, the coral overlap is clean and the symbol centered, with no text and no clipping. Then run `npx jest scripts` and `npm run typecheck && npm run lint`; T012/T013 now pass
 
 **Checkpoint**: US2 complete. The icon is in place and verified by tests. The device check is in Polish.
 

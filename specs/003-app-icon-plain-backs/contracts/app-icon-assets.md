@@ -1,6 +1,6 @@
 # Contract: App icon assets
 
-Produced by `node scripts/generate-icons.ts` from the parameters in
+Produced by `npm run icons` (`node scripts/generate-icons.ts`) from the parameters in
 [data-model.md](../data-model.md#iconsymbol-scriptsiconsymbolts-build-time-only). Consumed by
 `app.json` at build time.
 
@@ -10,10 +10,10 @@ Produced by `node scripts/generate-icons.ts` from the parameters in
 |---|---|---|---|---|---|
 | `Assets/app/icon-source.svg` | viewBox `0 0 1024 1024` | n/a (SVG) | `#16131C` rect | bbox 60% | none (editable master, FR-013) |
 | `Assets/app/icon.png` | 1024×1024 | RGB, no alpha | `#16131C` | bbox 60% | `expo.icon` |
-| `Assets/app/android-icon-foreground.png` | 1024×1024 | RGBA | transparent | max radius ≤ 0.30 × size | `android.adaptiveIcon.foregroundImage` |
+| `Assets/app/android-icon-foreground.png` | 1024×1024 | RGBA | transparent | max radius = 0.30 × size (design target; tested limit 0.3056, the 66/108 dp safe circle) | `android.adaptiveIcon.foregroundImage` |
 | `Assets/app/android-icon-monochrome.png` | 1024×1024 | RGBA, white only | transparent | same as foreground | `android.adaptiveIcon.monochromeImage` |
 | `Assets/app/favicon.png` | 48×48 | RGB, no alpha | `#16131C` | bbox 70% | `web.favicon` |
-| `Assets/app/splash-icon.png` | 1024×1024 | RGBA | transparent | bbox 100% (margin = stroke) | `expo-splash-screen` `image` |
+| `Assets/app/splash-icon.png` | 1024×1024 | RGBA | transparent | bbox 90% (≈ one stroke of margin per side) | `expo-splash-screen` `image` |
 | ~~`Assets/app/android-icon-background.png`~~ | | | | | **deleted**; replaced by `adaptiveIcon.backgroundColor` |
 
 ## `app.json` changes
