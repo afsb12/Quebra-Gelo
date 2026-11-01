@@ -1,0 +1,61 @@
+{
+  "categories": [
+    {
+      "id": "casual",
+      "title": "Descontraído",
+      "icon": "emoticon-happy-outline",
+      "color": "#F5C230",
+      "description": "Perguntas leves para começar o papo sem pressão."
+    },
+    {
+      "id": "profundo",
+      "title": "Profundo",
+      "icon": "lightbulb-on-outline",
+      "color": "#3D3FA6",
+      "description": "Para ir além da superfície e refletir sobre a vida."
+    },
+    {
+      "id": "casais",
+      "title": "Casais",
+      "icon": "heart-outline",
+      "color": "#C41E3A",
+      "description": "Para quem quer se conhecer ainda melhor a dois."
+    },
+    {
+      "id": "happy-hour",
+      "title": "Happy Hour",
+      "icon": "glass-cocktail",
+      "color": "#F27A1F",
+      "description": "Assuntos divertidos para a mesa do bar ou do café."
+    },
+    {
+      "id": "dilemas",
+      "title": "Dilemas",
+      "icon": "scale-balance",
+      "color": "#7A3EB1",
+      "description": "Escolhas difíceis que rendem boas discussões."
+    },
+    {
+      "id": "viagens",
+      "title": "Viagens e Aventuras",
+      "icon": "airplane",
+      "color": "#14A39E",
+      "description": "Lugares, descobertas e vontade de explorar."
+    },
+    {
+      "id": "nostalgia",
+      "title": "Nostalgia e Infância",
+      "icon": "teddy-bear",
+      "color": "#F28CB4",
+      "description": "Memórias, brincadeiras e quem você já foi."
+    },
+    {
+      "id": "futuro",
+      "title": "Futuro e Sonhos",
+      "icon": "rocket-launch-outline",
+      "color": "#167A4C",
+      "description": "Planos, desejos e o que ainda está por vir."
+    }
+  ],
+  "questions": []
+}

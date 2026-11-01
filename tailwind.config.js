@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
 // Design tokens live in src/theme/tokens.json (single source shared with src/theme/tokens.ts).
 const tokens = require('./src/theme/tokens.json');
 

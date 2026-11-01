@@ -27,7 +27,7 @@ Fonts: `display` = `Outfit_800ExtraBold`, `question` = `Outfit_600SemiBold`, `bo
 | `categoryId` | `CategoryId` | key |
 | `color` | hex | `Category.color` from `data.json` |
 | `onColor` | hex | `pickOnColor(color)`: whichever of `onColorLight`/`onColorDark` has the higher contrast; MUST be ≥ 4.5:1 |
-| `ink` | hex | `inkOnCream(color)`: `color` darkened in HSL lightness steps until contrast with `cream` ≥ 4.5:1 |
+| `ink` | hex | fixed per category (`CATEGORY_INK`, R1 table), validated ≥ 4.5:1 against `cream`; `inkOnCream(color)` (darken in HSL lightness steps until ≥ 4.5:1) is the fallback for other colors |
 | `pattern` | `PatternKind` | fixed map (below) |
 | `icon` | string | `Category.icon` |
 

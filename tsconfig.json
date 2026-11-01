@@ -4,9 +4,9 @@
     "strict": true,
     "noImplicitAny": true,
     "resolveJsonModule": true,
-    "baseUrl": ".",
+    "types": ["jest"],
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["./src/*"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts", "nativewind-env.d.ts"]
