@@ -22,7 +22,7 @@ shapes, vignette kept, all 8 categories × 2 variants),
 ## 2. Regenerate the icons (only when the design changes)
 
 ```bash
-node scripts/generate-icons.ts
+npm run icons            # node scripts/generate-icons.ts
 git status Assets/app   # regenerating with unchanged params MUST produce no diff (deterministic)
 ```
 

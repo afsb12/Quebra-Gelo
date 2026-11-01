@@ -129,9 +129,9 @@ unclipped ([quickstart §2 and §4](./quickstart.md)).
 
 ## Phase 5: Polish & Cross-Cutting Concerns
 
-- [ ] T019 [P] Add a "Regenerating the app icon" note to `CLAUDE.md` under "Stack notes": `node scripts/generate-icons.ts` writes `Assets/app/icon-source.svg` + all icon PNGs from `scripts/icon/symbol.ts`; edit the params there, never the PNGs by hand
-- [ ] T020 [P] Update `specs/002-card-visual-design/contracts/visual-components.md`: mark `CategoryPatternProps` and the "CategoryPattern" render step as removed by 003, with a link to `../../003-app-icon-plain-backs/contracts/card-back.md`
-- [ ] T021 Run the full merge gate `npm run typecheck && npm run lint && npm test`; all green
+- [X] T019 [P] Add a "Regenerating the app icon" note to `CLAUDE.md` under "Stack notes": `node scripts/generate-icons.ts` writes `Assets/app/icon-source.svg` + all icon PNGs from `scripts/icon/symbol.ts`; edit the params there, never the PNGs by hand
+- [X] T020 [P] Update `specs/002-card-visual-design/contracts/visual-components.md`: mark `CategoryPatternProps` and the "CategoryPattern" render step as removed by 003, with a link to `../../003-app-icon-plain-backs/contracts/card-back.md`
+- [X] T021 Run the full merge gate `npm run typecheck && npm run lint && npm test`; all green
 - [ ] T022 Run [quickstart.md](./quickstart.md) §3 (card backs in the app) and §4 (native build: launcher icon, shape masks, themed icon, splash, small sizes), and record any deviation as a follow-up
 
 ---
