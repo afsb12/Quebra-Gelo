@@ -18,7 +18,8 @@
         "backgroundImage": "./Assets/app/android-icon-background.png",
         "monochromeImage": "./Assets/app/android-icon-monochrome.png"
       },
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.anonymous.quebragelo"
     },
     "web": {
       "favicon": "./Assets/app/favicon.png"
