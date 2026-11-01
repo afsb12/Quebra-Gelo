@@ -4,6 +4,7 @@ import { router } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { getCategories } from '../../data/content';
+import { useMixFilterStore } from '../../store/mixFilter';
 import { ONBOARDING_STORAGE_KEY, useOnboardingStore } from '../../store/onboarding';
 import { HomeScreen } from '../HomeScreen';
 
@@ -82,5 +83,71 @@ describe('HomeScreen', () => {
     await render(<HomeScreen />);
     await fireEvent.press(screen.getByLabelText('Favoritos'));
     expect(router.push).toHaveBeenCalledWith('/favorites');
+  });
+});
+
+describe('HomeScreen — mix filter (006)', () => {
+  const toggle = async (id: string) => {
+    await act(async () => {
+      fireEvent(screen.getByTestId(`mix-filter-switch-${id}`), 'valueChange');
+    });
+  };
+  const open = async () => {
+    await act(async () => {
+      fireEvent.press(screen.getByTestId('mix-filter-button'));
+    });
+  };
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    useOnboardingStore.setState({ hasSeenTutorial: true, readFailed: false });
+    useMixFilterStore.setState({ excluded: [] });
+  });
+
+  it('switching off 2 categories and saving filters the mix and shows "6 de 8 categorias"', async () => {
+    await render(<HomeScreen />);
+    expect(screen.queryByTestId('mix-filter-summary')).toBeNull();
+    await open();
+    expect(router.push).not.toHaveBeenCalled();
+    await toggle('happy-hour');
+    await toggle('dilemas');
+    await act(async () => {
+      fireEvent.press(screen.getByTestId('mix-filter-save'));
+    });
+    expect(screen.queryByTestId('mix-filter-sheet')).toBeNull();
+    expect(useMixFilterStore.getState().excluded).toEqual(['happy-hour', 'dilemas']);
+    expect(screen.getByTestId('mix-filter-summary')).toHaveTextContent('6 de 8 categorias');
+
+    await open();
+    expect(screen.getByTestId('mix-filter-switch-dilemas').props.value).toBe(false);
+    expect(screen.getByTestId('mix-filter-switch-casais').props.value).toBe(true);
+  });
+
+  it('closing without saving discards the changes', async () => {
+    await render(<HomeScreen />);
+    await open();
+    await toggle('casais');
+    await act(async () => {
+      fireEvent.press(screen.getByTestId('mix-filter-backdrop', { includeHiddenElements: true }));
+    });
+    expect(useMixFilterStore.getState().excluded).toEqual([]);
+    await open();
+    expect(screen.getByTestId('mix-filter-switch-casais').props.value).toBe(true);
+  });
+
+  it('with only 1 category on, Salvar is disabled until another is turned back on (US2)', async () => {
+    await render(<HomeScreen />);
+    await open();
+    for (const { id } of getCategories().slice(1)) await toggle(id);
+    expect(screen.getByTestId('mix-filter-save')).toBeDisabled();
+    expect(screen.getByTestId('mix-filter-minimum')).toBeTruthy();
+    await act(async () => {
+      fireEvent.press(screen.getByTestId('mix-filter-save'));
+    });
+    expect(useMixFilterStore.getState().excluded).toEqual([]);
+
+    await toggle(getCategories()[1].id);
+    expect(screen.getByTestId('mix-filter-save')).toBeEnabled();
+    expect(screen.queryByTestId('mix-filter-minimum')).toBeNull();
   });
 });

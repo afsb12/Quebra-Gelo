@@ -15,6 +15,13 @@ export const strings = {
     hintFlip: 'Toque na carta para revelar a pergunta',
     hintDeck: 'Toque em um baralho para começar',
   },
+  mixFilter: {
+    title: 'Categorias da mistura',
+    open: 'Escolher categorias da mistura',
+    save: 'Salvar',
+    minimum: 'Escolha pelo menos 2 categorias',
+    summary: (active: number, total: number) => `${active} de ${total} categorias`,
+  },
   mixed: {
     title: 'Tudo Misturado',
     description: 'Todas as categorias num só baralho.',
