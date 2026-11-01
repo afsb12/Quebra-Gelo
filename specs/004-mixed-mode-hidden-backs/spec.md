@@ -28,6 +28,19 @@ não existe. Esta feature cria o modo (todas as categorias embaralhadas num úni
 visual das suas cartas. Os exemplos do pedido ("❤️ Casais" em `#FF3366`, "🚀 Futuro" em `#33FFEC`)
 são ilustrativos: a etiqueta usa o ícone e a cor que cada categoria já tem no conteúdo do app.
 
+## Clarifications
+
+### Session 2026-11-01
+
+- Q: Na frente revelada do modo misturado, como a etiqueta convive com o ícone do canto, o nome no
+  rodapé e a moldura interna colorida? → A: A frente atual permanece igual (ícone no canto, nome no
+  rodapé, moldura na cor da categoria) e a etiqueta é adicionada no topo, além desses elementos.
+- Q: "Pergunta centralizada" significa também centralizar o texto na horizontal? → A: Não; mantém o
+  padrão atual (texto no centro vertical da carta, alinhado à esquerda), igual aos demais baralhos.
+- Q: Onde e em que formato a opção "Tudo Misturado" aparece na tela inicial? → A: Mini carta
+  horizontal na largura total, acima da grade das 8 categorias, com o verso escuro da marca e o
+  nome "Tudo Misturado".
+
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - Jogar com todas as categorias misturadas, sem saber o tom antes de virar (Priority: P1)
@@ -48,8 +61,8 @@ categorias diferentes.
 **Acceptance Scenarios**:
 
 1. **Given** a tela inicial, **When** o grupo procura como começar, **Then** encontra a opção
-   "Tudo Misturado", visualmente distinta das 8 categorias e exibida com o mesmo verso neutro da
-   marca.
+   "Tudo Misturado" como uma mini carta horizontal na largura total, acima da grade das 8
+   categorias, exibida com o mesmo verso neutro da marca e o nome do modo.
 2. **Given** o modo "Tudo Misturado" aberto, **When** uma nova carta aparece, **Then** ela está
    virada para baixo, com fundo escuro e o símbolo do Quebra-Gelo centralizado, sem cor, ícone,
    nome de categoria, texto ou pista da pergunta.
@@ -79,8 +92,8 @@ o que torna o modo misturado confortável de jogar.
 
 **Acceptance Scenarios**:
 
-1. **Given** uma carta virada no modo misturado, **When** a frente aparece, **Then** a pergunta fica
-   centralizada na carta e é o elemento de maior destaque.
+1. **Given** uma carta virada no modo misturado, **When** a frente aparece, **Then** a pergunta fica no
+   centro vertical da carta, alinhada à esquerda, e é o elemento de maior destaque.
 2. **Given** uma pergunta da categoria "Casais", **When** a carta é virada, **Then** uma etiqueta
    pequena mostra o ícone de Casais e o nome "Casais" na cor de Casais.
 3. **Given** qualquer uma das 8 categorias, **When** uma pergunta dela é revelada, **Then** a
@@ -141,22 +154,25 @@ o que torna o modo misturado confortável de jogar.
   cor, ícone ou nome de categoria, texto da pergunta ou qualquer elemento que varie com a carta.
 - **FR-009**: Enquanto a carta estiver virada para baixo, nenhum outro canal (rótulo de
   acessibilidade, título ou cores da tela, transições) MUST revelar a categoria ou a pergunta.
-- **FR-010**: A opção "Tudo Misturado" na tela inicial MUST usar o mesmo verso neutro, em versão
-  miniatura, mantendo a moldura e o formato das demais mini cartas.
+- **FR-010**: A opção "Tudo Misturado" na tela inicial MUST ser uma mini carta horizontal na largura
+  total, posicionada acima da grade das 8 categorias, com o mesmo verso neutro da marca (fundo escuro
+  e símbolo), a moldura clara e os cantos arredondados das demais mini cartas, e o nome
+  "Tudo Misturado" visível.
 
 **Frente revelada**
 
 - **FR-011**: Ao tocar na carta, ela MUST virar com a mesma animação, física e resposta tátil dos
   demais baralhos, e o pulo/descarte MUST funcionar igual.
-- **FR-012**: A frente MUST exibir a pergunta centralizada na carta, como elemento principal, com o
-  mesmo papel creme e tipografia de leitura dos demais baralhos.
-- **FR-013**: A frente MUST exibir uma etiqueta pequena com o ícone e o nome da categoria de origem,
-  na cor dessa categoria, conforme cadastrados no conteúdo do app (nenhuma cor ou ícone fixo no
-  componente).
+- **FR-012**: A frente MUST exibir a pergunta como elemento principal, no centro vertical da área de
+  texto e alinhada à esquerda, com o mesmo papel creme, tipografia e alinhamento dos demais baralhos.
+- **FR-013**: A frente MUST exibir, no topo da carta, uma etiqueta pequena com o ícone e o nome da
+  categoria de origem, na cor dessa categoria, conforme cadastrados no conteúdo do app (nenhuma cor
+  ou ícone fixo no componente).
 - **FR-014**: A etiqueta MUST ser legível sobre a frente para todas as 8 cores de categoria e MUST NOT
-  sobrepor o texto da pergunta.
-- **FR-015**: A cor da categoria de origem MAY ser usada nos detalhes da frente revelada (ex.:
-  moldura), mas apenas depois da revelação.
+  sobrepor o texto da pergunta, o ícone do canto nem o indicador de favorito.
+- **FR-015**: A etiqueta MUST ser adicionada sem remover os elementos atuais da frente: o ícone da
+  categoria no canto superior, o nome da categoria no rodapé e a moldura interna na cor da categoria
+  permanecem como nos demais baralhos (todos visíveis apenas depois da revelação).
 - **FR-016**: Favoritar uma pergunta no modo misturado MUST funcionar como nos demais baralhos e
   MUST registrar a pergunta com sua categoria de origem.
 
@@ -204,9 +220,5 @@ o que torna o modo misturado confortável de jogar.
 - Os exemplos de emoji e de cores hexadecimais do pedido são ilustrativos; o ícone e a cor da
   etiqueta são os já cadastrados para cada categoria no conteúdo do app (ex.: Casais usa o ícone de
   coração e `#C41E3A`; Futuro usa o foguete e `#167A4C`).
-- "Pergunta centralizada" significa a pergunta ocupar a área central da carta como foco de leitura;
-  o alinhamento do texto segue o padrão de leitura já usado na frente das cartas.
-- A opção "Tudo Misturado" aparece na tela inicial em posição de destaque (antes ou acima das 8
-  categorias); a posição exata é decisão de design no plano.
 - Favoritos, fim de baralho, haptics e movimento reduzido reaproveitam o comportamento existente.
 - Nenhum conteúdo novo de perguntas é necessário; o modo usa o conteúdo já embarcado, offline.
