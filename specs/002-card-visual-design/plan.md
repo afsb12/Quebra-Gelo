@@ -44,7 +44,7 @@ decorative animation; originality vs. `Assets/` references
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-| Rule (constitution v2.0.0) | Plan compliance | Status |
+| Rule (constitution v2.1.0) | Plan compliance | Status |
 |---|---|---|
 | I. Zero Fricção — offline from first run | Fonts and icons bundled; patterns are code-generated SVG; no downloads | PASS |
 | II. Imersão Tátil — 60 fps, reduced motion | Static faces inside the existing animated card; memoized SVG; no decorative animation | PASS |

@@ -70,11 +70,12 @@ useHaptics(): { flip(): void; discard(): void }   // fire-and-forget, never thro
 ## 3. UI components (`src/components`) — props only, no stores/navigation
 
 ```ts
-interface CategoryTileProps { category: Category; onPress(id: CategoryId): void }
+// CategoryTileProps — superseded by MiniCardProps (002 contracts/visual-components.md)
 
 interface SwipeCardProps {
   question: Question;
   category: Category;
+  visual: CategoryVisual;                 // (002) colors/pattern for CardBack/CardFront
   isFavorite: boolean;
   onFlip(face: 'up' | 'down'): void;      // screen triggers haptics
   onDiscard(direction: 'left' | 'right'): void; // called once, after exit animation
@@ -83,7 +84,7 @@ interface SwipeCardProps {
 // isFavorite drives a non-interactive star indicator on the revealed face.
 // SwipeCard owns gesture + animation state; resets to face 'down' when question.id changes.
 
-interface CardFaceProps { category: Category; question?: Question; side: 'front' | 'back'; isFavorite?: boolean }
+// CardFaceProps — superseded by CardBackProps / CardFrontProps (002 contracts/visual-components.md)
 interface FavoriteButtonProps { active: boolean; disabled: boolean; onPress(): void }
 // Rendered by DeckScreen below the card, outside the gesture area; disabled while face down.
 // Label "Favoritar" / "Remover dos favoritos".

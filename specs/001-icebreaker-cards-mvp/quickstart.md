@@ -36,7 +36,9 @@ Merge gate: `typecheck`, `lint` and `test` all green.
 ## Manual scenarios (physical phone, airplane mode ON before first launch)
 
 1. **Home (US2)** — open app: 8 categories in a grid with icon, color, name, description; on a
-   small phone everything is readable by scrolling. App reaches Home in ≤ 2 s (SC-007).
+   small phone everything is readable by scrolling. App reaches Home in ≤ 2 s (SC-007), measured
+   on a preview/release build (Expo Go and dev builds are slower and don't count); the splash
+   waits for fonts + favorites hydration, so if it exceeds 2 s, check font loading first.
 2. **Play (US1)** — tap "Descontraído": a face-down card with the category identity appears.
    Tap → card flips, question shown, light vibration. Tap again → flips back.
 3. **Swipe** — drag slightly and release → card springs back, no vibration. Drag past ~⅓ of the

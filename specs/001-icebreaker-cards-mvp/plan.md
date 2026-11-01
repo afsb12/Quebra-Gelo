@@ -47,7 +47,7 @@ thread; no eject from Managed Workflow
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-| Rule (constitution v2.0.0) | Plan compliance | Status |
+| Rule (constitution v2.1.0) | Plan compliance | Status |
 |---|---|---|
 | I. Zero Fricção — no login/backend, ≤ 1 onboarding screen, ≤ 2 taps to first card | Home → category tap → card; no onboarding, no network code | PASS |
 | I. All content bundled, offline from first run; no data collection/tracking | `data.json` bundled; icons from bundled vector set; no analytics deps | PASS |
@@ -55,8 +55,8 @@ thread; no eject from Managed Workflow
 | II. Haptics via expo-haptics on flip and discard; reduced motion simplified | R6 + `useReducedMotion` (FR-019) | PASS |
 | III. Strict TS, no `any`, typed entities/props/stores/route params | strict tsconfig, ESLint rule, typed routes, contracts in app-interfaces.md | PASS |
 | IV. Data / UI / Screens layers, top-down deps, pure business logic | `src/data`+`src/store`+`src/hooks` / `src/components` / `src/screens` (+ thin `src/app` routes); deck logic pure in `deck.ts` | PASS |
-| Stack: NativeWind default, StyleSheet only in perf-critical, never mixed per component | NativeWind everywhere except `SwipeCard`/`CardFace` (StyleSheet + animated styles) | PASS |
-| Stack: Zustand `persist` over AsyncStorage | Favorites persisted (R4); progress intentionally in memory per clarification (constitution does not require persisting it) | PASS |
+| Stack: NativeWind default, StyleSheet only in perf-critical, never mixed per component | NativeWind everywhere except `SwipeCard`/`CardBack`/`CardFront` (StyleSheet + animated styles) | PASS |
+| Stack: Zustand; `persist` for data that survives restarts (v2.1.0) | Favorites persisted (R4); progress in memory as allowed for session state (FR-016) | PASS |
 | New dependencies justified | All are constitution-mandated or Expo defaults (Router, vector-icons); no extras | PASS |
 | Conteúdo: one card at a time, no scoreboard/timer/ads; categories; no repeats; skip any card | FR-009–FR-018 mapped in design | PASS |
 | Conteúdo: original, inclusive pt-BR; centralized UI strings; a11y labels | R10; `src/i18n/strings.ts` (pt-BR); R9 | PASS |
@@ -79,6 +79,10 @@ part of the Screens layer and contains only route wrappers.
 | "Dark mode nativo" | Single always-dark theme, no toggle | Satisfies polish request while spec excludes a dedicated dark-mode toggle |
 
 ## Project Structure
+
+> **Superseded by 002**: `CardFace` is replaced by `CardBack` + `CardFront` (+ `CategoryPattern`),
+> and `CategoryTile` by `MiniCard`. See
+> [002 plan — Amendments](../002-card-visual-design/plan.md#amendments-to-the-001-design).
 
 ### Documentation (this feature)
 
@@ -117,9 +121,11 @@ src/
 │   ├── DeckScreen.tsx
 │   └── FavoritesScreen.tsx
 ├── components/              # dumb UI (props only)
-│   ├── CategoryTile.tsx
+│   ├── MiniCard.tsx         # (002) Home grid item
 │   ├── SwipeCard.tsx        # gestures + flip/swipe animations (StyleSheet)
-│   ├── CardFace.tsx
+│   ├── CardBack.tsx         # (002)
+│   ├── CardFront.tsx        # (002)
+│   ├── CategoryPattern.tsx  # (002)
 │   ├── FavoriteButton.tsx
 │   ├── DeckComplete.tsx
 │   ├── FavoriteListItem.tsx
@@ -155,7 +161,7 @@ the code they cover.
    content validation test.
 2. **Data layer & navigation** — `content.ts`, `deck.ts` (tests first), persisted favorites store
    and in-memory progress store, Expo Router layout with three routes and favorites hydration gate.
-3. **Card (UI & physics)** — `CardFace`, `SwipeCard` (tap flip, pan swipe with spring/exit,
+3. **Card (UI & physics)** — `CardBack`/`CardFront` (002), `SwipeCard` (tap flip, pan swipe with spring/exit,
    gesture locking, reduced motion, a11y actions), `useHaptics`.
 4. **Screens** — Home grid (US2), DeckScreen with "Fim do Baralho" state (US1), fixed
    FavoriteButton below the card + on-card star indicator + FavoritesScreen (US3); write the 160
