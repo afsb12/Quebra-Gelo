@@ -16,6 +16,18 @@ back (category color, big icon, bold name, tone-on-tone geometric pattern) and t
 home screen. This feature **removes the geometric pattern** requirement from 002 and replaces the
 app icon, which today is still the framework's default placeholder.
 
+## Clarifications
+
+### Session 2026-11-01
+
+- Q: Qual esquema de cores o novo ícone do app usa? → A: Fundo escuro do app (`#16131C`),
+  contornos em creme (`#F7F0E3`) e a interseção preenchida com uma única cor de destaque quente
+  (ex.: coral/âmbar).
+- Q: O verso também perde o leve escurecimento nas bordas (vinheta)? → A: Não; a vinheta sutil do
+  verso permanece, só os desenhos (padrões geométricos) saem.
+- Q: A tela de abertura mostra só o símbolo ou o símbolo com o nome "Quebra-Gelo"? → A: Só o
+  símbolo, centralizado sobre o fundo escuro, sem texto.
+
 ## Referência do ícone
 
 `Assets/ícone.png` é um esboço do próprio usuário: dois quadrados de cantos arredondados, só com
@@ -101,8 +113,8 @@ gaveta de apps, com tema de ícones monocromático (Android) e a tela de abertur
 **Verso das cartas**
 
 - **FR-001**: O verso de toda carta MUST exibir como fundo apenas a cor sólida da sua categoria, sem
-  padrões, formas, texturas ou desenhos (substitui o padrão geométrico tom sobre tom definido na
-  feature 002).
+  padrões, formas ou desenhos (substitui o padrão geométrico tom sobre tom definido na feature 002).
+  O leve escurecimento nas bordas (vinheta) do verso MUST ser mantido como está.
 - **FR-002**: O verso MUST manter a moldura clara, os cantos arredondados, o ícone grande da
   categoria e o nome da categoria em tipografia bold, nas mesmas posições, tamanhos e cores atuais.
 - **FR-003**: As mini cartas da tela inicial MUST usar o mesmo verso liso da carta grande.
@@ -118,16 +130,17 @@ gaveta de apps, com tema de ícones monocromático (Android) e a tela de abertur
 - **FR-007**: O ícone MUST seguir uma estética moderna, minimalista e premium: geometria precisa e
   simétrica, traço uniforme, poucas cores (no máximo 3, contando o fundo), sem texto, sombras
   pesadas, brilhos ou detalhes decorativos.
-- **FR-008**: As cores do ícone MUST vir da identidade visual existente do app (fundo escuro do app e
-  tom creme claro, com no máximo uma cor de destaque para a interseção), para que ícone, tela de
-  abertura e app pareçam um só produto.
+- **FR-008**: O ícone MUST usar exatamente 3 cores: o fundo escuro do app (`#16131C`), creme claro
+  (`#F7F0E3`) nos contornos dos dois quadrados e uma única cor de destaque quente (coral/âmbar)
+  preenchendo a interseção, para que ícone, tela de abertura e app pareçam um só produto. A versão
+  monocromática usa só a forma, sem cor.
 - **FR-009**: O ícone MUST ser entregue em todas as variantes que o app usa: ícone principal (iOS e
   geral), ícone adaptativo do Android (frente com o símbolo dentro da área segura + fundo),
   versão monocromática para ícones temáticos do Android, favicon e imagem da tela de abertura.
 - **FR-010**: Na variante adaptativa do Android, o símbolo MUST caber inteiro dentro da área segura
   central, sem ser cortado por nenhuma máscara de formato.
-- **FR-011**: A tela de abertura MUST exibir o mesmo símbolo do ícone, centralizado, sobre a cor de
-  fundo do app.
+- **FR-011**: A tela de abertura MUST exibir apenas o mesmo símbolo do ícone, centralizado, sobre a
+  cor de fundo do app, sem o nome do app nem qualquer outro texto.
 - **FR-012**: O ícone MUST ser original, sem reproduzir logotipos, marcas ou elementos de outros
   jogos ou apps (constituição, "Conteúdo e Experiência de Jogo").
 - **FR-013**: O arquivo-fonte do ícone MUST ficar guardado no projeto em formato editável e
@@ -135,8 +148,8 @@ gaveta de apps, com tema de ícones monocromático (Android) e a tela de abertur
 
 ### Key Entities
 
-- **Verso da carta**: lado virado para baixo; atributos que permanecem: cor da categoria, moldura,
-  ícone, nome. Atributo removido: padrão geométrico de fundo.
+- **Verso da carta**: lado virado para baixo; atributos que permanecem: cor da categoria, vinheta
+  sutil nas bordas, moldura, ícone, nome. Atributo removido: padrão geométrico de fundo.
 - **Símbolo do app**: o desenho dos dois quadrados sobrepostos; origem de todas as variantes do ícone
   (principal, adaptativo, monocromático, favicon, tela de abertura).
 
@@ -163,13 +176,10 @@ gaveta de apps, com tema de ícones monocromático (Android) e a tela de abertur
 - "Tira os desenhos e deixa somente as cores" refere-se ao padrão geométrico de fundo do verso
   (bolinhas, círculos concêntricos, losangos, bolhas, xadrez, ondas, listras, divisas). O ícone e o
   nome da categoria **permanecem**, pois identificam a categoria e não são "desenhos de fundo".
-- O leve escurecimento nas bordas do verso (vinheta) também sai, deixando a cor totalmente lisa; a
-  vinheta da frente creme continua como está.
 - O texto "Quebra-Gelo" do esboço não entra no ícone (fica ilegível em tamanho de ícone e o sistema
   já mostra o nome do app); a composição dos dois quadrados é o símbolo.
-- Direção visual padrão do ícone: fundo escuro do app (`#16131C`), contornos em creme claro
-  (`#F7F0E3`) e interseção preenchida, em creme ou numa única cor de destaque escolhida no
-  planejamento. A escolha final pode ser ajustada após ver as opções.
+- O tom exato do destaque quente (dentro da faixa coral/âmbar) é definido no planejamento,
+  garantindo contraste com o fundo escuro e com o creme.
 - O ícone gerado substitui os arquivos de ícone existentes do app; o esboço `Assets/ícone.png`
   continua no repositório como referência.
 - Nome, versão, identificador do pacote e demais configurações do app não mudam.
