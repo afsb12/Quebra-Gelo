@@ -33,16 +33,16 @@ contexto na tela inicial (P2), US3 Favoritar perguntas (P3).
 
 **Purpose**: Scaffold the Expo project and tooling
 
-- [ ] T001 Scaffold the Expo app in a temporary sibling folder with `npx create-expo-app@latest quebra-gelo-tmp --template blank-typescript`, then copy its files (package.json, package-lock.json, app.json, tsconfig.json, babel config, App/entry files, assets/) into the repository root without overwriting `.claude/`, `.specify/`, `Assets/`, `specs/`, `CLAUDE.md`, `README.md` or `.gitignore` (merge `.gitignore` entries instead), delete the temp folder, run `npm install`, remove the blank `App.tsx` in favor of Expo Router routes under src/app/, and set `"main": "expo-router/entry"` in package.json
-- [ ] T002 Install runtime dependencies with `npx expo install expo-router react-native-reanimated react-native-worklets react-native-gesture-handler expo-haptics @react-native-async-storage/async-storage react-native-safe-area-context react-native-screens zustand nativewind tailwindcss`; if the installed Reanimated major is < 4, skip `react-native-worklets` and use `runOnJS` instead of `scheduleOnRN`; ensure the Babel config ends with the matching plugin (`react-native-worklets/plugin` for Reanimated 4, `react-native-reanimated/plugin` for 3); record versions in package.json
-- [ ] T003 Configure app.json: name "Quebra-Gelo", `orientation: "portrait"`, `userInterfaceStyle: "dark"`, `experiments.typedRoutes: true`, scheme `quebragelo`, keep New Architecture enabled
-- [ ] T004 [P] Set `"strict": true`, `noImplicitAny`, path alias `@/*` → `src/*` in tsconfig.json
-- [ ] T005 [P] Configure ESLint flat config with `eslint-config-expo` and `@typescript-eslint/no-explicit-any: "error"` in eslint.config.js
-- [ ] T006 [P] Configure Jest with the `jest-expo` preset, `@testing-library/react-native`, setup file jest.setup.ts (AsyncStorage mock from `@react-native-async-storage/async-storage/jest/async-storage-mock`, Reanimated mock) in jest.config.js
-- [ ] T007 [P] Configure NativeWind (babel preset, metro `withNativeWind`, `global.css` with Tailwind directives, `content: ['./src/**/*.{ts,tsx}']`) in babel.config.js, metro.config.js, tailwind.config.js and global.css
-- [ ] T008 Add scripts `"start": "expo start"`, `"typecheck": "tsc --noEmit"`, `"lint": "eslint ."`, `"test": "jest"` in package.json
-- [ ] T009 Create folders `src/app`, `src/screens`, `src/components`, `src/data`, `src/store`, `src/hooks`, `src/theme`, `src/i18n` (with `.gitkeep` where empty) per plan.md
-- [ ] T010 Run 002/T001–T003 (svg, fonts, splash, svg Jest mock) now so the visual stack is in place
+- [X] T001 Scaffold the Expo app in a temporary sibling folder with `npx create-expo-app@latest quebra-gelo-tmp --template blank-typescript`, then copy its files (package.json, package-lock.json, app.json, tsconfig.json, babel config, App/entry files, assets/) into the repository root without overwriting `.claude/`, `.specify/`, `Assets/`, `specs/`, `CLAUDE.md`, `README.md` or `.gitignore` (merge `.gitignore` entries instead), delete the temp folder, run `npm install`, remove the blank `App.tsx` in favor of Expo Router routes under src/app/, and set `"main": "expo-router/entry"` in package.json
+- [X] T002 Install runtime dependencies with `npx expo install expo-router react-native-reanimated react-native-worklets react-native-gesture-handler expo-haptics @react-native-async-storage/async-storage react-native-safe-area-context react-native-screens zustand nativewind tailwindcss`; if the installed Reanimated major is < 4, skip `react-native-worklets` and use `runOnJS` instead of `scheduleOnRN`; ensure the Babel config ends with the matching plugin (`react-native-worklets/plugin` for Reanimated 4, `react-native-reanimated/plugin` for 3); record versions in package.json
+- [X] T003 Configure app.json: name "Quebra-Gelo", `orientation: "portrait"`, `userInterfaceStyle: "dark"`, `experiments.typedRoutes: true`, scheme `quebragelo`, keep New Architecture enabled
+- [X] T004 [P] Set `"strict": true`, `noImplicitAny`, path alias `@/*` → `src/*` in tsconfig.json
+- [X] T005 [P] Configure ESLint flat config with `eslint-config-expo` and `@typescript-eslint/no-explicit-any: "error"` in eslint.config.js
+- [X] T006 [P] Configure Jest with the `jest-expo` preset, `@testing-library/react-native`, setup file jest.setup.ts (AsyncStorage mock from `@react-native-async-storage/async-storage/jest/async-storage-mock`, Reanimated mock) in jest.config.js
+- [X] T007 [P] Configure NativeWind (babel preset, metro `withNativeWind`, `global.css` with Tailwind directives, `content: ['./src/**/*.{ts,tsx}']`) in babel.config.js, metro.config.js, tailwind.config.js and global.css
+- [X] T008 Add scripts `"start": "expo start"`, `"typecheck": "tsc --noEmit"`, `"lint": "eslint ."`, `"test": "jest"` in package.json
+- [X] T009 Create folders `src/app`, `src/screens`, `src/components`, `src/data`, `src/store`, `src/hooks`, `src/theme`, `src/i18n` (with `.gitkeep` where empty) per plan.md
+- [X] T010 Run 002/T001–T003 (svg, fonts, splash, svg Jest mock) now so the visual stack is in place
 
 ---
 

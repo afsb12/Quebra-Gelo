@@ -32,9 +32,9 @@ implementation and testing of each story.
 
 **Purpose**: Add the dependencies this feature needs to the existing Expo project
 
-- [ ] T001 Install visual dependencies with `npx expo install react-native-svg expo-font expo-splash-screen @expo-google-fonts/outfit` and confirm they are listed in package.json
+- [X] T001 Install visual dependencies with `npx expo install react-native-svg expo-font expo-splash-screen @expo-google-fonts/outfit` and confirm they are listed in package.json
 - [ ] T002 [P] Create the theme folder skeleton `src/theme/` with an `index.ts` barrel that will re-export tokens, color, categoryVisual and geometry modules in src/theme/index.ts
-- [ ] T003 [P] Add a Jest mock for `react-native-svg` (render primitives as plain host components) so component tests can render SVG in jest.setup.ts (create or extend the file referenced by `setupFiles` in jest.config.js)
+- [X] T003 [P] Add a Jest mock for `react-native-svg` (render primitives as plain host components) so component tests can render SVG in jest.setup.ts (create or extend the file referenced by `setupFiles` in jest.config.js)
 
 ---
 
