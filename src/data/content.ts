@@ -55,6 +55,14 @@ export const getQuestion = (id: string): Question | undefined => questionsById.g
 
 export const getAllQuestions = (): readonly Question[] => content.questions;
 
-/** Question IDs that make up a deck: one category's, or every question for the mixed deck. */
-export const getDeckQuestionIds = (deckId: DeckId): string[] =>
-  (deckId === MIXED_DECK_ID ? getAllQuestions() : getQuestionsByCategory(deckId)).map((q) => q.id);
+/**
+ * Question IDs that make up a deck: one category's, or — for the mixed deck — those of
+ * `mixCategories` (every category when omitted, 006). Category decks ignore `mixCategories`.
+ */
+export const getDeckQuestionIds = (deckId: DeckId, mixCategories?: readonly CategoryId[]): string[] => {
+  if (deckId !== MIXED_DECK_ID) return getQuestionsByCategory(deckId).map((q) => q.id);
+  const allowed = mixCategories ? new Set(mixCategories) : undefined;
+  return getAllQuestions()
+    .filter((q) => !allowed || allowed.has(q.categoryId))
+    .map((q) => q.id);
+};

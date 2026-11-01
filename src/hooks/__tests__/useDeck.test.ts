@@ -1,6 +1,7 @@
 import { act, renderHook } from '@testing-library/react-native';
 
 import { getAllQuestions, getQuestionsByCategory } from '../../data/content';
+import { useMixFilterStore } from '../../store/mixFilter';
 import { useProgressStore } from '../../store/progress';
 import { useDeck } from '../useDeck';
 
@@ -9,6 +10,7 @@ const total = getQuestionsByCategory('casual').length;
 describe('useDeck', () => {
   beforeEach(() => {
     useProgressStore.setState({ decks: {} });
+    useMixFilterStore.setState({ excluded: [] });
   });
 
   it('returns category, current question and position', async () => {
@@ -54,5 +56,19 @@ describe('useDeck', () => {
     expect(result.current.deckCategory).toBeUndefined();
     expect(result.current.position.total).toBe(getAllQuestions().length);
     expect(result.current.currentCategory?.id).toBe(result.current.current?.categoryId);
+  });
+
+  it('mixed deck follows the saved filter (006)', async () => {
+    useMixFilterStore.getState().save(['casais', 'futuro']);
+    const { result } = await renderHook(() => useDeck('mixed'));
+    const expected = getQuestionsByCategory('casais').length + getQuestionsByCategory('futuro').length;
+    expect(result.current.position.total).toBe(expected);
+    expect(['casais', 'futuro']).toContain(result.current.current?.categoryId);
+
+    await act(async () => {
+      useMixFilterStore.getState().save(['dilemas', 'viagens', 'casual']);
+    });
+    const next = getQuestionsByCategory('dilemas').length + getQuestionsByCategory('viagens').length + getQuestionsByCategory('casual').length;
+    expect(result.current.position).toEqual({ index: 1, total: next });
   });
 });
