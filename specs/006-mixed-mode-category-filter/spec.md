@@ -28,6 +28,18 @@ incluir as categorias escolhidas pelo usuário (todas, por padrão).
 (Descontraído, Profundo, Casais, Happy Hour, Dilemas, Viagens e Aventuras, Nostalgia e Infância,
 Futuro).
 
+## Clarifications
+
+### Session 2026-11-01
+
+Modo automático: o usuário autorizou aceitar a opção recomendada em cada pergunta.
+
+- Q: O destaque mostra "X de 8 categorias" quando há filtro ativo? → A: Sim (FR-015), para quem volta
+  ao app saber que a mistura está reduzida.
+- Q: Mudar o filtro descarta o baralho misturado em andamento? → A: Sim, só quando o conjunto de
+  categorias muda; salvar o mesmo conjunto mantém o progresso (FR-010).
+- Q: Qual tom de azul-gelo usa o ícone de filtro? → A: `#9ED8F0`, sobre o fundo escuro da marca.
+
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - Escolher quais categorias entram na mistura (Priority: P1)
@@ -139,7 +151,7 @@ mostra as mesmas chaves e que o destaque indica o filtro ativo.
 **Gatilho**
 
 - **FR-001**: O destaque "Tudo Misturado" da tela inicial MUST exibir um ícone de filtro no canto
-  superior direito, discreto, em tons escuros com detalhe azul-gelo, coerente com o verso da marca.
+  superior direito, discreto, em azul-gelo `#9ED8F0` sobre tons escuros, coerente com o verso da marca.
 - **FR-002**: Tocar no ícone MUST abrir o painel de seleção sem iniciar o jogo; tocar no restante do
   destaque MUST iniciar o modo misturado como na feature 004.
 
@@ -212,8 +224,6 @@ mostra as mesmas chaves e que o destaque indica o filtro ativo.
   a regra é aplicada desativando "Salvar", não bloqueando as chaves.
 - O painel inferior é a forma escolhida; o modal centralizado citado como alternativa não será feito.
 - O ícone é um funil (filtro), que comunica melhor "escolher o que entra" do que uma engrenagem.
-- O app ainda não tem um tom "azul-gelo" na paleta; o plano define esse tom de destaque mantendo
-  contraste com o fundo escuro.
-- A indicação "X de 8 categorias" no destaque é um acréscimo para deixar claro que há filtro ativo.
+- O azul-gelo `#9ED8F0` passa a fazer parte da paleta do app (tokens de design) como cor de destaque.
 - Não há "selecionar todas"/"limpar" nem filtros salvos por nome nesta versão.
 - O progresso do baralho misturado continua só em memória (zera ao fechar o app); só o filtro é salvo.
