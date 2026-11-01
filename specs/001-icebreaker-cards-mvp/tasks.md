@@ -126,13 +126,13 @@ description; readable on a 320pt phone by scrolling; each opens its own deck.
 
 ### Tests for User Story 2 ⚠️
 
-- [ ] T043 [P] [US2] Write a screen test: `HomeScreen` renders exactly 8 `MiniCard`s in the data.json order with titles and descriptions, pressing one navigates to `/deck/<id>`, and a "Favoritos" entry exists, in `src/screens/__tests__/HomeScreen.test.tsx`
+- [X] T043 [P] [US2] Write a screen test: `HomeScreen` renders exactly 8 `MiniCard`s in the data.json order with titles and descriptions, pressing one navigates to `/deck/<id>`, and a "Favoritos" entry exists, in `src/screens/__tests__/HomeScreen.test.tsx`
 
 ### Implementation for User Story 2
 
-- [ ] T044 [US2] Run 002/T028 and 002/T030 (MiniCard test + component)
-- [ ] T045 [P] [US2] Add a header entry/button to Favorites (`router.push('/favorites')`, label from strings.ts) in src/screens/HomeScreen.tsx
-- [ ] T046 [US2] Replace the temporary list with a scrollable 2-column grid of `MiniCard` using `getCardGeometry(...).miniWidth` and 16pt gaps, `onPress` → `router.push('/deck/' + id)`, title from strings.ts, NativeWind styling, in src/screens/HomeScreen.tsx (makes T043 pass)
+- [X] T044 [US2] Run 002/T028 and 002/T030 (MiniCard test + component)
+- [X] T045 [P] [US2] Add a header entry/button to Favorites (`router.push('/favorites')`, label from strings.ts) in src/screens/HomeScreen.tsx
+- [X] T046 [US2] Replace the temporary list with a scrollable 2-column grid of `MiniCard` using `getCardGeometry(...).miniWidth` and 16pt gaps, `onPress` → `router.push('/deck/' + id)`, title from strings.ts, NativeWind styling, in src/screens/HomeScreen.tsx (makes T043 pass)
 
 **Checkpoint**: US1 + US2 work; ≤ 2 taps from launch to first card
 

@@ -126,14 +126,14 @@ card front, favorites item and end-of-deck screen — all match.
 
 ### Tests for User Story 3 ⚠️
 
-- [ ] T028 [P] [US3] Write component tests: `MiniCard` renders a `CardBack variant="mini"` plus title and description below and calls `onPress(category.id)`; its accessibility label is `"<title>. <description>"`, in `src/components/__tests__/MiniCard.test.tsx`
+- [X] T028 [P] [US3] Write component tests: `MiniCard` renders a `CardBack variant="mini"` plus title and description below and calls `onPress(category.id)`; its accessibility label is `"<title>. <description>"`, in `src/components/__tests__/MiniCard.test.tsx`
 - [ ] T029 [P] [US3] Write component tests: `FavoriteListItem` shows the category icon and title in the category color; `DeckComplete` uses the category color, in `src/components/__tests__/Consistency.test.tsx`
 
 ### Implementation for User Story 3
 
-- [ ] T030 [US3] Implement `MiniCard` (`{ category: Category; visual: CategoryVisual; width: number; onPress(id: CategoryId): void }`): one `Pressable` wrapping `CardBack variant="mini"` at `width` plus title (`font-display`) and description (`font-body`) below, NativeWind classes for the wrapper/labels only, in src/components/MiniCard.tsx
-- [ ] T031 [US3] Replace the Home grid items with `MiniCard` in a 2-column grid using `getCardGeometry(...).miniWidth` and 16pt gaps; remove `CategoryTile` usage, in src/screens/HomeScreen.tsx (depends on T030)
-- [ ] T032 [US3] Delete the obsolete `CategoryTile` component and its test in src/components/CategoryTile.tsx and `src/components/__tests__/CategoryTile.test.tsx`
+- [X] T030 [US3] Implement `MiniCard` (`{ category: Category; visual: CategoryVisual; width: number; onPress(id: CategoryId): void }`): one `Pressable` wrapping `CardBack variant="mini"` at `width` plus title (`font-display`) and description (`font-body`) below, NativeWind classes for the wrapper/labels only, in src/components/MiniCard.tsx
+- [X] T031 [US3] Replace the Home grid items with `MiniCard` in a 2-column grid using `getCardGeometry(...).miniWidth` and 16pt gaps; remove `CategoryTile` usage, in src/screens/HomeScreen.tsx (depends on T030)
+- [X] T032 [US3] Delete the obsolete `CategoryTile` component and its test in src/components/CategoryTile.tsx and `src/components/__tests__/CategoryTile.test.tsx`
 - [ ] T033 [P] [US3] Update `FavoriteListItem` to accept `visual: CategoryVisual` and render the category icon and title in `visual.color` with a left accent bar and the card corner radius in src/components/FavoriteListItem.tsx
 - [X] T034 [P] [US3] Update `DeckComplete` to accept `visual: CategoryVisual` and use `visual.color` as its accent/background with `visual.onColor` text in src/components/DeckComplete.tsx
 - [ ] T035 [US3] Pass `getCategoryVisual(...)` to `FavoriteListItem` in src/screens/FavoritesScreen.tsx and to `DeckComplete` in src/screens/DeckScreen.tsx (depends on T033, T034)
