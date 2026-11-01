@@ -7,6 +7,14 @@ export const strings = {
     favorites: 'Favoritos',
     openFavoritesHint: 'Abre a lista de perguntas favoritas',
   },
+  tutorial: {
+    title: 'Como jogar',
+    skip: 'Pular',
+    skipLabel: 'Pular tutorial',
+    hintSwipe: 'Deslize para os lados para a próxima carta',
+    hintFlip: 'Toque na carta para revelar a pergunta',
+    hintDeck: 'Toque em um baralho para começar',
+  },
   mixed: {
     title: 'Tudo Misturado',
     description: 'Todas as categorias num só baralho.',
