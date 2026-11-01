@@ -27,8 +27,8 @@ independent.
 
 **Purpose**: Confirm a green baseline and track the design reference
 
-- [ ] T001 Run `npm run typecheck && npm run lint && npm test` on branch `003-app-icon-plain-backs` and confirm everything is green before any change (baseline)
-- [ ] T002 [P] Commit the user's sketch `Assets/ícone.png` as the icon design reference (research R7); do not modify it
+- [X] T001 Run `npm run typecheck && npm run lint && npm test` on branch `003-app-icon-plain-backs` and confirm everything is green before any change (baseline)
+- [X] T002 [P] Commit the user's sketch `Assets/ícone.png` as the icon design reference (research R7); do not modify it
 
 ---
 
@@ -54,17 +54,17 @@ unchanged, and so are the front and the flip/swipe/haptics ([quickstart §3](./q
 
 > Write first; they must FAIL before T006–T009.
 
-- [ ] T003 [US1] In `src/components/__tests__/CardBack.test.tsx`: delete the `describe('CategoryPattern', …)` block and the imports of `CATEGORY_PATTERNS`, `PatternKind` and `../CategoryPattern`. Add an `it.each` over all 8 `CategoryId`s × `['full', 'mini']` that renders `<CardBack … width={272} />` and asserts, using the svg host mocks from `jest.setup.ts` (`screen.UNSAFE_queryAllByType('Circle')` etc. or equivalent host-name queries): zero `Circle`, zero `Path`, exactly one `Rect` and exactly one `RadialGradient` (the vignette), and that the face `View` has `backgroundColor === visual.color` (contract [card-back.md](./contracts/card-back.md))
-- [ ] T004 [P] [US1] In `src/theme/__tests__/categoryVisual.test.ts`: remove the `CATEGORY_PATTERNS` import and the `'has one distinct pattern per category'` test; add a test that `getCategoryVisual(category)` for every category has no `pattern` key (`expect('pattern' in visual).toBe(false)`) and that the 8 `visual.color` values are pairwise distinct (spec FR-005)
+- [X] T003 [US1] In `src/components/__tests__/CardBack.test.tsx`: delete the `describe('CategoryPattern', …)` block and the imports of `CATEGORY_PATTERNS`, `PatternKind` and `../CategoryPattern`. Add an `it.each` over all 8 `CategoryId`s × `['full', 'mini']` that renders `<CardBack … width={272} />` and asserts, using the svg host mocks from `jest.setup.ts` (walk `screen.toJSON()` and count host types; RNTL 14 has no `UNSAFE_*` queries): zero `Circle`, zero `Path`, exactly one `Rect` and exactly one `RadialGradient` (the vignette), and that the face `View` (`testID="card-back-face"`, added in T007) has `backgroundColor === visual.color` (contract [card-back.md](./contracts/card-back.md))
+- [X] T004 [P] [US1] In `src/theme/__tests__/categoryVisual.test.ts`: remove the `CATEGORY_PATTERNS` import and the `'has one distinct pattern per category'` test; add a test that `getCategoryVisual(category)` for every category has no `pattern` key (`expect('pattern' in visual).toBe(false)`) and that the 8 `visual.color` values are pairwise distinct (spec FR-005)
 
 ### Implementation for User Story 1
 
-- [ ] T005 [P] [US1] Create `src/components/Vignette.tsx`: move `VignetteShape` (private), `VignetteProps` and the memoized `Vignette` export from `src/components/CategoryPattern.tsx` unchanged, keeping the `W = 100`/`H = 140` viewBox constants, the `useId`-based gradient id and `pointerEvents="none"`. StyleSheet-only, no NativeWind (contract "Moved (no behavior change)")
-- [ ] T006 [US1] Update `src/components/CardFront.tsx` to `import { Vignette } from './Vignette'` instead of `'./CategoryPattern'` (depends on T005)
-- [ ] T007 [US1] Update `src/components/CardBack.tsx`: remove the `CategoryPattern` import/element and render `<Vignette width={innerWidth} height={innerHeight} tint="#000000" strength={0.16} />` as the first child of the face `View` (the face already has `backgroundColor: visual.color`). Update the doc comment to "Face-down side: flat category color, edge vignette, big icon and bold name. Never shows a question." (depends on T005)
-- [ ] T008 [US1] Delete `src/components/CategoryPattern.tsx` (depends on T006, T007)
-- [ ] T009 [US1] In `src/theme/categoryVisual.ts`: remove `PatternKind`, `CATEGORY_PATTERNS`, the `pattern: PatternKind` field of `CategoryVisual` and `pattern: CATEGORY_PATTERNS[category.id]` in `getCategoryVisual` (data-model "CategoryVisual … `pattern` removed"); run `npx tsc --noEmit` and fix any remaining reference anywhere in `src/` and `app/` (depends on T008)
-- [ ] T010 [US1] Run `npm run typecheck && npm run lint && npx jest src/components src/theme`; T003/T004 now pass and all other existing component tests (`CardFront`, `MiniCard`, `Consistency`) stay green
+- [X] T005 [P] [US1] Create `src/components/Vignette.tsx`: move `VignetteShape` (private), `VignetteProps` and the memoized `Vignette` export from `src/components/CategoryPattern.tsx` unchanged, keeping the `W = 100`/`H = 140` viewBox constants, the `useId`-based gradient id and `pointerEvents="none"`. StyleSheet-only, no NativeWind (contract "Moved (no behavior change)")
+- [X] T006 [US1] Update `src/components/CardFront.tsx` to `import { Vignette } from './Vignette'` instead of `'./CategoryPattern'` (depends on T005)
+- [X] T007 [US1] Update `src/components/CardBack.tsx`: remove the `CategoryPattern` import/element and render `<Vignette width={innerWidth} height={innerHeight} tint="#000000" strength={0.16} />` as the first child of the face `View` (the face already has `backgroundColor: visual.color`). Update the doc comment to "Face-down side: flat category color, edge vignette, big icon and bold name. Never shows a question." (depends on T005)
+- [X] T008 [US1] Delete `src/components/CategoryPattern.tsx` (depends on T006, T007)
+- [X] T009 [US1] In `src/theme/categoryVisual.ts`: remove `PatternKind`, `CATEGORY_PATTERNS`, the `pattern: PatternKind` field of `CategoryVisual` and `pattern: CATEGORY_PATTERNS[category.id]` in `getCategoryVisual` (data-model "CategoryVisual … `pattern` removed"); run `npx tsc --noEmit` and fix any remaining reference anywhere in `src/` and `app/` (depends on T008)
+- [X] T010 [US1] Run `npm run typecheck && npm run lint && npx jest src/components src/theme`; T003/T004 now pass and all other existing component tests (`CardFront`, `MiniCard`, `Consistency`) stay green
 
 **Checkpoint**: US1 complete. The card backs are plain everywhere and can be shipped alone (MVP).
 

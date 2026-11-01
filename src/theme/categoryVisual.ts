@@ -1,20 +1,6 @@
 import type { Category, CategoryId } from '../data/types';
 import { inkOnCream, pickOnColor } from './color';
 
-export type PatternKind = 'dots' | 'concentric' | 'diamonds' | 'bubbles' | 'checker' | 'waves' | 'stripes' | 'chevrons';
-
-/** One distinct tone-on-tone geometric pattern per category (002 research R2). */
-export const CATEGORY_PATTERNS: Record<CategoryId, PatternKind> = {
-  casual: 'dots',
-  profundo: 'concentric',
-  casais: 'diamonds',
-  'happy-hour': 'bubbles',
-  dilemas: 'checker',
-  viagens: 'waves',
-  nostalgia: 'stripes',
-  futuro: 'chevrons',
-};
-
 /**
  * Category color used on the cream front (frame, icon, footer), fixed by 002 research R1 and
  * validated (≥ 4.5:1 on cream) by tests. `inkOnCream` is the fallback for any other color.
@@ -38,7 +24,6 @@ export interface CategoryVisual {
   onColor: string;
   /** Category color on the cream front. */
   ink: string;
-  pattern: PatternKind;
   icon: string;
 }
 
@@ -54,7 +39,6 @@ export const getCategoryVisual = (category: Category): CategoryVisual => {
     color,
     onColor: pickOnColor(color),
     ink: CATEGORY_INK[category.id] ?? inkOnCream(color),
-    pattern: CATEGORY_PATTERNS[category.id],
     icon: category.icon,
   };
   cache.set(key, visual);
