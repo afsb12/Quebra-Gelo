@@ -83,9 +83,9 @@ background; no question text on the back.
 
 - [X] T017 [US1] Implement `CategoryPattern` (`{ kind: PatternKind; color: string; onColor: string; width: number; height: number }`) with `react-native-svg`: background rect in `color`, 8 static geometric generators (dots grid, concentric circles from one corner, diamond lattice, bubbles of three sizes, half-tone checkerboard, horizontal waves, diagonal stripes, upward chevrons) drawn in `onColor` at 10–14% opacity inside a `viewBox` with the card ratio, shapes memoized with `useMemo` per kind/size, no animation, plus a `RadialGradient` vignette (center transparent → edges ~8% darker); StyleSheet only, in src/components/CategoryPattern.tsx
 - [X] T018 [US1] Implement `CardBack` (`{ category: Category; visual: CategoryVisual; width: number; variant: 'full' | 'mini' }`): 6pt cream outer frame, corner radius `0.06 × width`, `CategoryPattern` fill, centered `MaterialCommunityIcons` icon ≈ 30% of width in the upper half, category title in `tokens.fonts.display`, uppercase, one word per line, centered in the lower half, color `visual.onColor`; `variant 'mini'` scales icon/title proportionally; MUST NOT render any question text; StyleSheet only, in src/components/CardBack.tsx (depends on T017)
-- [ ] T019 [US1] Add card shadow (Android `elevation: 8`; iOS `shadowOpacity: 0.35`, `shadowRadius: 16`) to the card container and size the card with `getCardGeometry(windowDimensions, reservedHeight)` in src/components/SwipeCard.tsx
-- [ ] T020 [US1] Replace the back side of the flip in `SwipeCard` with `CardBack variant="full"` (keeping existing gesture/flip props and `backfaceVisibility: 'hidden'`) and pass `visual` from the screen in src/components/SwipeCard.tsx (depends on T018, T019)
-- [ ] T021 [US1] Compute `getCategoryVisual(category)` in the deck container and pass `visual` and geometry to `SwipeCard` in src/screens/DeckScreen.tsx
+- [X] T019 [US1] Add card shadow (Android `elevation: 8`; iOS `shadowOpacity: 0.35`, `shadowRadius: 16`) to the card container and size the card with `getCardGeometry(windowDimensions, reservedHeight)` in src/components/SwipeCard.tsx
+- [X] T020 [US1] Replace the back side of the flip in `SwipeCard` with `CardBack variant="full"` (keeping existing gesture/flip props and `backfaceVisibility: 'hidden'`) and pass `visual` from the screen in src/components/SwipeCard.tsx (depends on T018, T019)
+- [X] T021 [US1] Compute `getCategoryVisual(category)` in the deck container and pass `visual` and geometry to `SwipeCard` in src/screens/DeckScreen.tsx
 
 **Checkpoint**: Card backs show full category identity; US1 testable on device
 
@@ -135,7 +135,7 @@ card front, favorites item and end-of-deck screen — all match.
 - [ ] T031 [US3] Replace the Home grid items with `MiniCard` in a 2-column grid using `getCardGeometry(...).miniWidth` and 16pt gaps; remove `CategoryTile` usage, in src/screens/HomeScreen.tsx (depends on T030)
 - [ ] T032 [US3] Delete the obsolete `CategoryTile` component and its test in src/components/CategoryTile.tsx and `src/components/__tests__/CategoryTile.test.tsx`
 - [ ] T033 [P] [US3] Update `FavoriteListItem` to accept `visual: CategoryVisual` and render the category icon and title in `visual.color` with a left accent bar and the card corner radius in src/components/FavoriteListItem.tsx
-- [ ] T034 [P] [US3] Update `DeckComplete` to accept `visual: CategoryVisual` and use `visual.color` as its accent/background with `visual.onColor` text in src/components/DeckComplete.tsx
+- [X] T034 [P] [US3] Update `DeckComplete` to accept `visual: CategoryVisual` and use `visual.color` as its accent/background with `visual.onColor` text in src/components/DeckComplete.tsx
 - [ ] T035 [US3] Pass `getCategoryVisual(...)` to `FavoriteListItem` in src/screens/FavoritesScreen.tsx and to `DeckComplete` in src/screens/DeckScreen.tsx (depends on T033, T034)
 
 **Checkpoint**: All three stories functional; identity consistent across the app
