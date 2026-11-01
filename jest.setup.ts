@@ -22,6 +22,14 @@ jest.mock('react-native-svg', () => {
   return mod;
 });
 
+// Icon fonts are loaded asynchronously by expo-font; render icons as plain Text in tests.
+jest.mock('@expo/vector-icons/MaterialCommunityIcons', () => {
+  const React = require('react');
+  const { Text } = require('react-native');
+  const Icon = ({ name, ...rest }: { name: string }) => React.createElement(Text, { ...rest, testID: `icon-${name}` }, name);
+  return { __esModule: true, default: Icon };
+});
+
 jest.mock('expo-haptics', () => ({
   impactAsync: jest.fn(() => Promise.resolve()),
   ImpactFeedbackStyle: { Light: 'light', Medium: 'medium', Heavy: 'heavy' },

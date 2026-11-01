@@ -17,6 +17,18 @@ export const FRONT_LAYOUT = {
   padding: 8,
 } as const;
 
+/** Vertical space DeckScreen reserves for header, favorite button and safe areas (pt). */
+export const DECK_RESERVED_HEIGHT = 170;
+
+/** Area available for the question text on a front face of the given size. */
+export const faceTextBox = (width: number, height: number = width / tokens.card.ratio) => {
+  const inset = tokens.card.frame + tokens.card.innerInset + FRONT_LAYOUT.padding;
+  return {
+    width: width - inset * 2,
+    height: height - inset * 2 - FRONT_LAYOUT.topRow - FRONT_LAYOUT.footer,
+  };
+};
+
 /**
  * Card size for a screen: width = min(screenWidth − 48, 360) (grown up to 25% when the system
  * font scale is large), height = width / ratio, both reduced when the height does not fit
@@ -27,7 +39,7 @@ export const getCardGeometry = (
   reservedHeight: number,
   fontScale = 1,
 ): CardGeometry => {
-  const { ratio, maxWidth, frame, innerInset, radiusRatio } = tokens.card;
+  const { ratio, maxWidth, radiusRatio } = tokens.card;
   const { screenPadding, gridGap } = tokens.layout;
   const growth = Math.min(Math.max(fontScale, 1), 1.25);
   let width = Math.min(screen.width - screenPadding * 2, maxWidth * growth);
@@ -37,16 +49,12 @@ export const getCardGeometry = (
     height = available;
     width = height * ratio;
   }
-  const inset = frame + innerInset + FRONT_LAYOUT.padding;
   return {
     width,
     height,
     radius: radiusRatio * width,
     miniWidth: (screen.width - screenPadding * 2 - gridGap) / 2,
-    textBox: {
-      width: width - inset * 2,
-      height: height - inset * 2 - FRONT_LAYOUT.topRow - FRONT_LAYOUT.footer,
-    },
+    textBox: faceTextBox(width, height),
   };
 };
 
@@ -59,7 +67,7 @@ export const questionBaseSize = (text: string): 26 | 23 | 21 => {
 
 /** Average glyph width (em) and line height used to estimate wrapped text height. */
 const CHAR_WIDTH_EM = 0.5;
-const LINE_HEIGHT_EM = 1.25;
+const LINE_HEIGHT_EM = 1.2;
 
 export const estimateTextHeight = (text: string, boxWidth: number, size: number): number => {
   const charsPerLine = Math.max(1, Math.floor(boxWidth / (size * CHAR_WIDTH_EM)));
