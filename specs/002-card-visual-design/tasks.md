@@ -46,9 +46,9 @@ implementation and testing of each story.
 
 ### Tests (write first, ensure they fail)
 
-- [ ] T004 [P] Write tests for `contrastRatio` (WCAG 2.1 relative luminance; e.g. `#FFFFFF` vs `#000000` = 21), `pickOnColor` ("whichever of `onColorLight`/`onColorDark` has the higher contrast; MUST be ≥ 4.5:1") and `inkOnCream` ("`color` darkened in HSL lightness steps until contrast with `cream` ≥ 4.5:1") in src/theme/__tests__/color.test.ts
-- [ ] T005 [P] Write the palette test asserting, for all 8 categories, the exact `color`, derived `onColor` and `ink` from research.md R1 (casual `#F5C230`/dark/`#8A6100`; profundo `#3D3FA6`/white/`#3D3FA6`; casais `#C41E3A`/white/`#B01A34`; happy-hour `#F27A1F`/dark/`#A84F00`; dilemas `#7A3EB1`/white/`#6E35A3`; viagens `#14A39E`/dark/`#0B6B67`; nostalgia `#F28CB4`/dark/`#A6316B`; futuro `#167A4C`/white/`#167A4C`), that `contrast(onColor, color) ≥ 4.5`, `contrast(ink, cream) ≥ 4.5`, `contrast(questionInk, cream) ≥ 4.5`, and that the 8 pattern kinds are pairwise distinct, in src/theme/__tests__/categoryVisual.test.ts (if a computed `ink` differs from the table, adjust the darkening step so the table value is produced, keeping ≥ 4.5:1)
-- [ ] T006 [P] Write tests for `getCardGeometry` (ratio `5 / 7`; `width = min(screenWidth − 48, 360)`, reduced when `height` exceeds available height = screen height − reservedHeight; `radius = 0.06 × width`; `miniWidth = (screenWidth − 48 − 16) / 2`, so 2 columns fit at 320pt) and `questionBaseSize` (≤ 120 chars → 26, 121–160 → 23, 161–200 → 21) in src/theme/__tests__/geometry.test.ts
+- [ ] T004 [P] Write tests for `contrastRatio` (WCAG 2.1 relative luminance; e.g. `#FFFFFF` vs `#000000` = 21), `pickOnColor` ("whichever of `onColorLight`/`onColorDark` has the higher contrast; MUST be ≥ 4.5:1") and `inkOnCream` ("`color` darkened in HSL lightness steps until contrast with `cream` ≥ 4.5:1") in `src/theme/__tests__/color.test.ts`
+- [ ] T005 [P] Write the palette test asserting, for all 8 categories, the exact `color`, derived `onColor` and `ink` from research.md R1 (casual `#F5C230`/dark/`#8A6100`; profundo `#3D3FA6`/white/`#3D3FA6`; casais `#C41E3A`/white/`#B01A34`; happy-hour `#F27A1F`/dark/`#A84F00`; dilemas `#7A3EB1`/white/`#6E35A3`; viagens `#14A39E`/dark/`#0B6B67`; nostalgia `#F28CB4`/dark/`#A6316B`; futuro `#167A4C`/white/`#167A4C`), that `contrast(onColor, color) ≥ 4.5`, `contrast(ink, cream) ≥ 4.5`, `contrast(questionInk, cream) ≥ 4.5`, and that the 8 pattern kinds are pairwise distinct, in `src/theme/__tests__/categoryVisual.test.ts` (if a computed `ink` differs from the table, adjust the darkening step so the table value is produced, keeping ≥ 4.5:1)
+- [ ] T006 [P] Write tests for `getCardGeometry` (ratio `5 / 7`; `width = min(screenWidth − 48, 360)`, reduced when `height` exceeds available height = screen height − reservedHeight; `radius = 0.06 × width`; `miniWidth = (screenWidth − 48 − 16) / 2`, so 2 columns fit at 320pt) and `questionBaseSize` (≤ 120 chars → 26, 121–160 → 23, 161–200 → 21) in `src/theme/__tests__/geometry.test.ts`
 
 ### Implementation
 
@@ -57,7 +57,7 @@ implementation and testing of each story.
 - [ ] T009 Implement `PatternKind` union (`'dots' | 'concentric' | 'diamonds' | 'bubbles' | 'checker' | 'waves' | 'stripes' | 'chevrons'`), the `Record<CategoryId, PatternKind>` map (casual → dots, profundo → concentric, casais → diamonds, happy-hour → bubbles, dilemas → checker, viagens → waves, nostalgia → stripes, futuro → chevrons), the `CategoryVisual` type `{ categoryId, color, onColor, ink, pattern, icon }` and memoized `getCategoryVisual(category: Category)` in src/theme/categoryVisual.ts (depends on T008)
 - [ ] T010 [P] Implement `CardGeometry` type, `getCardGeometry(screen: { width: number; height: number }, reservedHeight: number)` and `questionBaseSize(text: string): 26 | 23 | 21` in src/theme/geometry.ts (depends on T007; makes T006 pass)
 - [ ] T011 Set each category's `color` and `icon` in src/data/data.json to the research values: casual `#F5C230` `emoticon-happy-outline`; profundo `#3D3FA6` `lightbulb-on-outline`; casais `#C41E3A` `heart-outline`; happy-hour `#F27A1F` `glass-cocktail`; dilemas `#7A3EB1` `scale-balance`; viagens `#14A39E` `airplane`; nostalgia `#F28CB4` `teddy-bear`; futuro `#167A4C` `rocket-launch-outline` (makes T005 pass together with T009)
-- [ ] T012 Extend the content test so "Every `Category.color` in `data.json` equals the R1 table value" and every `icon` exists in `MaterialCommunityIcons.glyphMap` in src/data/__tests__/content.test.ts
+- [ ] T012 Extend the content test so "Every `Category.color` in `data.json` equals the R1 table value" and every `icon` exists in `MaterialCommunityIcons.glyphMap` in `src/data/__tests__/content.test.ts`
 - [ ] T013 Update the root layout to load `Outfit_800ExtraBold`, `Outfit_600SemiBold`, `Outfit_400Regular` via `useFonts` from `@expo-google-fonts/outfit`, call `SplashScreen.preventAutoHideAsync()` at module scope and hide the splash only when fonts are loaded AND the favorites store has hydrated; set the screen background to `tokens.appBackground` in src/app/_layout.tsx
 - [ ] T014 Map the font tokens into NativeWind (`fontFamily.display`, `fontFamily.question`, `fontFamily.body`) and the color tokens (`app`, `cream`, `ink`) in tailwind.config.js, importing values from src/theme/tokens.ts so there is one source of truth
 - [ ] T015 Re-export all theme modules from src/theme/index.ts and run `npx jest src/theme src/data` — T004, T005, T006 and the content test must pass
@@ -77,7 +77,7 @@ background; no question text on the back.
 
 ### Tests for User Story 1 ⚠️
 
-- [ ] T016 [P] [US1] Write component tests: `CardBack` renders the category title (uppercase) and icon, never any question text ("verso não mostra a pergunta"), and uses `onColor` for name/icon; `CategoryPattern` renders for all 8 `PatternKind`s without throwing, in src/components/__tests__/CardBack.test.tsx
+- [ ] T016 [P] [US1] Write component tests: `CardBack` renders the category title (uppercase) and icon, never any question text ("verso não mostra a pergunta"), and uses `onColor` for name/icon; `CategoryPattern` renders for all 8 `PatternKind`s without throwing, in `src/components/__tests__/CardBack.test.tsx`
 
 ### Implementation for User Story 1
 
@@ -102,8 +102,8 @@ fits entirely (≥ 20pt), dark on cream, icon top-left, footer name and inner fr
 
 ### Tests for User Story 2 ⚠️
 
-- [ ] T022 [P] [US2] Write component tests: `CardFront` renders question text, footer with the category title and icon in `visual.ink`; the star indicator renders only when `isFavorite` and is not pressable; question font size equals `questionBaseSize(text)`, in src/components/__tests__/CardFront.test.tsx
-- [ ] T023 [P] [US2] Write the text-fit test: for the longest question of every category in data.json, the size from `questionBaseSize` and the fit helper's minimum never drop below `tokens.minQuestionSize` (20pt) on a 320×568 viewport with font scale 1.0 (SC-003), in src/theme/__tests__/textFit.test.ts
+- [ ] T022 [P] [US2] Write component tests: `CardFront` renders question text, footer with the category title and icon in `visual.ink`; the star indicator renders only when `isFavorite` and is not pressable; question font size equals `questionBaseSize(text)`, in `src/components/__tests__/CardFront.test.tsx`
+- [ ] T023 [P] [US2] Write the text-fit test: for the longest question of every category in data.json, the size from `questionBaseSize` and the fit helper's minimum never drop below `tokens.minQuestionSize` (20pt) on a 320×568 viewport with font scale 1.0 (SC-003), in `src/theme/__tests__/textFit.test.ts`
 
 ### Implementation for User Story 2
 
@@ -126,14 +126,14 @@ card front, favorites item and end-of-deck screen — all match.
 
 ### Tests for User Story 3 ⚠️
 
-- [ ] T028 [P] [US3] Write component tests: `MiniCard` renders a `CardBack variant="mini"` plus title and description below and calls `onPress(category.id)`; its accessibility label is `"<title>. <description>"`, in src/components/__tests__/MiniCard.test.tsx
-- [ ] T029 [P] [US3] Write component tests: `FavoriteListItem` shows the category icon and title in the category color; `DeckComplete` uses the category color, in src/components/__tests__/Consistency.test.tsx
+- [ ] T028 [P] [US3] Write component tests: `MiniCard` renders a `CardBack variant="mini"` plus title and description below and calls `onPress(category.id)`; its accessibility label is `"<title>. <description>"`, in `src/components/__tests__/MiniCard.test.tsx`
+- [ ] T029 [P] [US3] Write component tests: `FavoriteListItem` shows the category icon and title in the category color; `DeckComplete` uses the category color, in `src/components/__tests__/Consistency.test.tsx`
 
 ### Implementation for User Story 3
 
 - [ ] T030 [US3] Implement `MiniCard` (`{ category: Category; visual: CategoryVisual; width: number; onPress(id: CategoryId): void }`): one `Pressable` wrapping `CardBack variant="mini"` at `width` plus title (`font-display`) and description (`font-body`) below, NativeWind classes for the wrapper/labels only, in src/components/MiniCard.tsx
 - [ ] T031 [US3] Replace the Home grid items with `MiniCard` in a 2-column grid using `getCardGeometry(...).miniWidth` and 16pt gaps; remove `CategoryTile` usage, in src/screens/HomeScreen.tsx (depends on T030)
-- [ ] T032 [US3] Delete the obsolete `CategoryTile` component and its test in src/components/CategoryTile.tsx and src/components/__tests__/CategoryTile.test.tsx
+- [ ] T032 [US3] Delete the obsolete `CategoryTile` component and its test in src/components/CategoryTile.tsx and `src/components/__tests__/CategoryTile.test.tsx`
 - [ ] T033 [P] [US3] Update `FavoriteListItem` to accept `visual: CategoryVisual` and render the category icon and title in `visual.color` with a left accent bar and the card corner radius in src/components/FavoriteListItem.tsx
 - [ ] T034 [P] [US3] Update `DeckComplete` to accept `visual: CategoryVisual` and use `visual.color` as its accent/background with `visual.onColor` text in src/components/DeckComplete.tsx
 - [ ] T035 [US3] Pass `getCategoryVisual(...)` to `FavoriteListItem` in src/screens/FavoritesScreen.tsx and to `DeckComplete` in src/screens/DeckScreen.tsx (depends on T033, T034)
@@ -190,9 +190,9 @@ card front, favorites item and end-of-deck screen — all match.
 ## Parallel Example: Phase 2
 
 ```bash
-Task: "Write color helper tests in src/theme/__tests__/color.test.ts"
-Task: "Write palette/pattern tests in src/theme/__tests__/categoryVisual.test.ts"
-Task: "Write geometry tests in src/theme/__tests__/geometry.test.ts"
+Task: "Write color helper tests in `src/theme/__tests__/color.test.ts"`
+Task: "Write palette/pattern tests in `src/theme/__tests__/categoryVisual.test.ts"`
+Task: "Write geometry tests in `src/theme/__tests__/geometry.test.ts"`
 ```
 
 ## Parallel Example: User Story 3

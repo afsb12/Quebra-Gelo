@@ -54,10 +54,10 @@ contexto na tela inicial (P2), US3 Favoritar perguntas (P3).
 
 ### Tests (write first, ensure they fail)
 
-- [ ] T011 [P] Write the content validation test implementing the 10 rules of contracts/content-schema.md (top level exactly `categories` + `questions`; exactly the 8 IDs `casual, profundo, casais, happy-hour, dilemas, viagens, nostalgia, futuro` in that order; `title` non-empty "≤ 30", `description` non-empty "≤ 80", `color` matching `^#[0-9A-Fa-f]{6}$` and pairwise distinct; `icon` exists in the glyph map; question fields exactly `id`, `categoryId`, `text`; IDs unique and matching `^<categoryId>-\d{3}$`; `categoryId` exists; `text` "trimmed, non-empty and ≤ 200 characters"; "≥ 20 questions" per category; no duplicate normalized text) in src/data/__tests__/content.test.ts
-- [ ] T012 [P] Write tests for `shuffle` (permutation, deterministic with injected `random`), `createDeck` (`order` is a permutation, `cursor = 0`), `advance` (cursor + 1, never beyond `order.length`), `currentQuestionId` (undefined when completed), `isCompleted`, and "não repete perguntas" (walking a full deck yields every ID exactly once) in src/data/__tests__/deck.test.ts
-- [ ] T013 [P] Write tests for the favorites store: `toggle` adds `{ questionId, savedAt }` / removes; `remove`; `isFavorite`; persisted under key `quebra-gelo/favorites` with `version: 1`; on rehydrate "entries whose `questionId` no longer exists are dropped", in src/store/__tests__/favorites.test.ts
-- [ ] T014 [P] Write tests for the in-memory progress store: `ensureDeck` creates a shuffled deck only if missing (calling twice keeps the same order/cursor — resume), `discard` advances, `reshuffle` creates a new order with `cursor 0`, and the store has no `persist`, in src/store/__tests__/progress.test.ts
+- [ ] T011 [P] Write the content validation test implementing the 10 rules of contracts/content-schema.md (top level exactly `categories` + `questions`; exactly the 8 IDs `casual, profundo, casais, happy-hour, dilemas, viagens, nostalgia, futuro` in that order; `title` non-empty "≤ 30", `description` non-empty "≤ 80", `color` matching `^#[0-9A-Fa-f]{6}$` and pairwise distinct; `icon` exists in the glyph map; question fields exactly `id`, `categoryId`, `text`; IDs unique and matching `^<categoryId>-\d{3}$`; `categoryId` exists; `text` "trimmed, non-empty and ≤ 200 characters"; "≥ 20 questions" per category; no duplicate normalized text) in `src/data/__tests__/content.test.ts`
+- [ ] T012 [P] Write tests for `shuffle` (permutation, deterministic with injected `random`), `createDeck` (`order` is a permutation, `cursor = 0`), `advance` (cursor + 1, never beyond `order.length`), `currentQuestionId` (undefined when completed), `isCompleted`, and "não repete perguntas" (walking a full deck yields every ID exactly once) in `src/data/__tests__/deck.test.ts`
+- [ ] T013 [P] Write tests for the favorites store: `toggle` adds `{ questionId, savedAt }` / removes; `remove`; `isFavorite`; persisted under key `quebra-gelo/favorites` with `version: 1`; on rehydrate "entries whose `questionId` no longer exists are dropped", in `src/store/__tests__/favorites.test.ts`
+- [ ] T014 [P] Write tests for the in-memory progress store: `ensureDeck` creates a shuffled deck only if missing (calling twice keeps the same order/cursor — resume), `discard` advances, `reshuffle` creates a new order with `cursor 0`, and the store has no `persist`, in `src/store/__tests__/progress.test.ts`
 
 ### Implementation
 
@@ -88,8 +88,8 @@ both options; leaving and returning (app still open) resumes.
 
 ### Tests for User Story 1 ⚠️
 
-- [ ] T026 [P] [US1] Write hook tests for `useDeck(categoryId)`: returns `category`, `current`, `position { index, total }`; `discard()` advances; `current` is `undefined` after the last card; `reshuffle()` restarts; returning to the same category keeps progress, in src/hooks/__tests__/useDeck.test.ts
-- [ ] T027 [P] [US1] Write a screen test for `DeckScreen` using accessibility actions (not gestures): "pular" advances to the next question; after the last card `DeckComplete` shows "Embaralhar de novo" (restarts) and "Escolher outra categoria" (navigates to `/`), in src/screens/__tests__/DeckScreen.test.tsx
+- [ ] T026 [P] [US1] Write hook tests for `useDeck(categoryId)`: returns `category`, `current`, `position { index, total }`; `discard()` advances; `current` is `undefined` after the last card; `reshuffle()` restarts; returning to the same category keeps progress, in `src/hooks/__tests__/useDeck.test.ts`
+- [ ] T027 [P] [US1] Write a screen test for `DeckScreen` using accessibility actions (not gestures): "pular" advances to the next question; after the last card `DeckComplete` shows "Embaralhar de novo" (restarts) and "Escolher outra categoria" (navigates to `/`), in `src/screens/__tests__/DeckScreen.test.tsx`
 
 ### Content for User Story 1
 
@@ -126,7 +126,7 @@ description; readable on a 320pt phone by scrolling; each opens its own deck.
 
 ### Tests for User Story 2 ⚠️
 
-- [ ] T043 [P] [US2] Write a screen test: `HomeScreen` renders exactly 8 `MiniCard`s in the data.json order with titles and descriptions, pressing one navigates to `/deck/<id>`, and a "Favoritos" entry exists, in src/screens/__tests__/HomeScreen.test.tsx
+- [ ] T043 [P] [US2] Write a screen test: `HomeScreen` renders exactly 8 `MiniCard`s in the data.json order with titles and descriptions, pressing one navigates to `/deck/<id>`, and a "Favoritos" entry exists, in `src/screens/__tests__/HomeScreen.test.tsx`
 
 ### Implementation for User Story 2
 
@@ -149,8 +149,8 @@ Favorites: all present newest first with category; remove one; empty state when 
 
 ### Tests for User Story 3 ⚠️
 
-- [ ] T047 [P] [US3] Write component tests: `FavoriteButton` shows label "Favoritar"/"Remover dos favoritos" by `active`, is not pressable when `disabled`; `EmptyState` renders title/message, in src/components/__tests__/FavoriteButton.test.tsx
-- [ ] T048 [P] [US3] Write tests for `useFavoriteQuestions()`: joins favorites with questions/categories, sorted by `savedAt` desc, skipping unknown IDs, in src/hooks/__tests__/useFavoriteQuestions.test.ts
+- [ ] T047 [P] [US3] Write component tests: `FavoriteButton` shows label "Favoritar"/"Remover dos favoritos" by `active`, is not pressable when `disabled`; `EmptyState` renders title/message, in `src/components/__tests__/FavoriteButton.test.tsx`
+- [ ] T048 [P] [US3] Write tests for `useFavoriteQuestions()`: joins favorites with questions/categories, sorted by `savedAt` desc, skipping unknown IDs, in `src/hooks/__tests__/useFavoriteQuestions.test.ts`
 
 ### Implementation for User Story 3
 
@@ -203,10 +203,10 @@ Favorites: all present newest first with category; remove one; empty state when 
 ## Parallel Example: Phase 2
 
 ```bash
-Task: "Content validation test in src/data/__tests__/content.test.ts"
-Task: "Deck logic tests in src/data/__tests__/deck.test.ts"
-Task: "Favorites store tests in src/store/__tests__/favorites.test.ts"
-Task: "Progress store tests in src/store/__tests__/progress.test.ts"
+Task: "Content validation test in `src/data/__tests__/content.test.ts"`
+Task: "Deck logic tests in `src/data/__tests__/deck.test.ts"`
+Task: "Favorites store tests in `src/store/__tests__/favorites.test.ts"`
+Task: "Progress store tests in `src/store/__tests__/progress.test.ts"`
 ```
 
 ## Parallel Example: User Story 1
