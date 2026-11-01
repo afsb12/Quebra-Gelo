@@ -1,0 +1,862 @@
+{
+  "categories": [
+    {
+      "id": "casual",
+      "title": "Descontraído",
+      "icon": "emoticon-happy-outline",
+      "color": "#F5C230",
+      "description": "Perguntas leves para começar o papo sem pressão."
+    },
+    {
+      "id": "profundo",
+      "title": "Profundo",
+      "icon": "lightbulb-on-outline",
+      "color": "#3D3FA6",
+      "description": "Para ir além da superfície e refletir sobre a vida."
+    },
+    {
+      "id": "casais",
+      "title": "Casais",
+      "icon": "heart-outline",
+      "color": "#C41E3A",
+      "description": "Para quem quer se conhecer ainda melhor a dois."
+    },
+    {
+      "id": "happy-hour",
+      "title": "Happy Hour",
+      "icon": "glass-cocktail",
+      "color": "#F27A1F",
+      "description": "Assuntos divertidos para a mesa do bar ou do café."
+    },
+    {
+      "id": "dilemas",
+      "title": "Dilemas",
+      "icon": "scale-balance",
+      "color": "#7A3EB1",
+      "description": "Escolhas difíceis que rendem boas discussões."
+    },
+    {
+      "id": "viagens",
+      "title": "Viagens e Aventuras",
+      "icon": "airplane",
+      "color": "#14A39E",
+      "description": "Lugares, descobertas e vontade de explorar."
+    },
+    {
+      "id": "nostalgia",
+      "title": "Nostalgia e Infância",
+      "icon": "teddy-bear",
+      "color": "#F28CB4",
+      "description": "Memórias, brincadeiras e quem você já foi."
+    },
+    {
+      "id": "futuro",
+      "title": "Futuro e Sonhos",
+      "icon": "rocket-launch-outline",
+      "color": "#167A4C",
+      "description": "Planos, desejos e o que ainda está por vir."
+    }
+  ],
+  "questions": [
+    {
+      "id": "casual-001",
+      "categoryId": "casual",
+      "text": "Qual foi a última coisa que te fez rir de verdade?"
+    },
+    {
+      "id": "casual-002",
+      "categoryId": "casual",
+      "text": "Se você pudesse comer só um prato pelo resto da vida, qual seria?"
+    },
+    {
+      "id": "casual-003",
+      "categoryId": "casual",
+      "text": "Qual música você nunca pula quando toca?"
+    },
+    {
+      "id": "casual-004",
+      "categoryId": "casual",
+      "text": "Qual é o seu jeito favorito de passar um domingo à tarde?"
+    },
+    {
+      "id": "casual-005",
+      "categoryId": "casual",
+      "text": "Que habilidade inútil você tem e adora exibir?"
+    },
+    {
+      "id": "casual-006",
+      "categoryId": "casual",
+      "text": "Qual série ou filme você assistiria de novo sem pensar duas vezes?"
+    },
+    {
+      "id": "casual-007",
+      "categoryId": "casual",
+      "text": "Se você ganhasse um dia de folga surpresa amanhã, o que faria?"
+    },
+    {
+      "id": "casual-008",
+      "categoryId": "casual",
+      "text": "Qual é o melhor conselho que você já recebeu sobre algo bem bobo?"
+    },
+    {
+      "id": "casual-009",
+      "categoryId": "casual",
+      "text": "Que aplicativo você mais usa e qual você deveria apagar?"
+    },
+    {
+      "id": "casual-010",
+      "categoryId": "casual",
+      "text": "Qual comida todo mundo ama, mas você não suporta?"
+    },
+    {
+      "id": "casual-011",
+      "categoryId": "casual",
+      "text": "Se a sua vida tivesse uma música de abertura, qual seria?"
+    },
+    {
+      "id": "casual-012",
+      "categoryId": "casual",
+      "text": "Qual é o seu pequeno prazer do dia a dia?"
+    },
+    {
+      "id": "casual-013",
+      "categoryId": "casual",
+      "text": "Que mania sua as pessoas só descobrem depois de te conhecer melhor?"
+    },
+    {
+      "id": "casual-014",
+      "categoryId": "casual",
+      "text": "Se você pudesse ter um superpoder bem pequeno e prático, qual seria?"
+    },
+    {
+      "id": "casual-015",
+      "categoryId": "casual",
+      "text": "Qual foi a última coisa que você aprendeu só por curiosidade?"
+    },
+    {
+      "id": "casual-016",
+      "categoryId": "casual",
+      "text": "Você é de acordar cedo ou de dormir tarde? Por quê?"
+    },
+    {
+      "id": "casual-017",
+      "categoryId": "casual",
+      "text": "Qual emoji representa melhor a sua semana?"
+    },
+    {
+      "id": "casual-018",
+      "categoryId": "casual",
+      "text": "Se você abrisse um negócio amanhã, o que venderia?"
+    },
+    {
+      "id": "casual-019",
+      "categoryId": "casual",
+      "text": "Qual palavra ou expressão você fala o tempo todo?"
+    },
+    {
+      "id": "casual-020",
+      "categoryId": "casual",
+      "text": "Qual foi o elogio mais inesperado que você já recebeu?"
+    },
+    {
+      "id": "profundo-001",
+      "categoryId": "profundo",
+      "text": "O que você sabe hoje que gostaria de ter aprendido mais cedo?"
+    },
+    {
+      "id": "profundo-002",
+      "categoryId": "profundo",
+      "text": "Qual momento te deu mais orgulho de quem você é?"
+    },
+    {
+      "id": "profundo-003",
+      "categoryId": "profundo",
+      "text": "O que significa, para você, ter uma vida bem vivida?"
+    },
+    {
+      "id": "profundo-004",
+      "categoryId": "profundo",
+      "text": "Qual crença sua mudou completamente nos últimos anos?"
+    },
+    {
+      "id": "profundo-005",
+      "categoryId": "profundo",
+      "text": "Do que você precisa para se sentir em paz?"
+    },
+    {
+      "id": "profundo-006",
+      "categoryId": "profundo",
+      "text": "Que pergunta você gostaria que as pessoas te fizessem mais vezes?"
+    },
+    {
+      "id": "profundo-007",
+      "categoryId": "profundo",
+      "text": "Qual medo você já conseguiu superar, e como?"
+    },
+    {
+      "id": "profundo-008",
+      "categoryId": "profundo",
+      "text": "Que pequena atitude de alguém já mudou o seu dia?"
+    },
+    {
+      "id": "profundo-009",
+      "categoryId": "profundo",
+      "text": "O que você faria se tivesse certeza de que não ia falhar?"
+    },
+    {
+      "id": "profundo-010",
+      "categoryId": "profundo",
+      "text": "Qual valor você não negocia de jeito nenhum?"
+    },
+    {
+      "id": "profundo-011",
+      "categoryId": "profundo",
+      "text": "Quando foi a última vez que você mudou de opinião sobre algo importante?"
+    },
+    {
+      "id": "profundo-012",
+      "categoryId": "profundo",
+      "text": "O que te faz perder a noção do tempo?"
+    },
+    {
+      "id": "profundo-013",
+      "categoryId": "profundo",
+      "text": "Qual parte de você você está aprendendo a aceitar?"
+    },
+    {
+      "id": "profundo-014",
+      "categoryId": "profundo",
+      "text": "Que conselho você daria para a pessoa que você era há cinco anos?"
+    },
+    {
+      "id": "profundo-015",
+      "categoryId": "profundo",
+      "text": "O que é sucesso para você, sem pensar no que os outros acham?"
+    },
+    {
+      "id": "profundo-016",
+      "categoryId": "profundo",
+      "text": "Pelo que você sente gratidão hoje e quase nunca diz em voz alta?"
+    },
+    {
+      "id": "profundo-017",
+      "categoryId": "profundo",
+      "text": "Que hábito mudou a sua forma de ver o mundo?"
+    },
+    {
+      "id": "profundo-018",
+      "categoryId": "profundo",
+      "text": "Como você gostaria que as pessoas próximas se lembrassem de você?"
+    },
+    {
+      "id": "profundo-019",
+      "categoryId": "profundo",
+      "text": "O que te dá coragem quando tudo parece difícil?"
+    },
+    {
+      "id": "profundo-020",
+      "categoryId": "profundo",
+      "text": "Qual pergunta sobre a vida você ainda não conseguiu responder?"
+    },
+    {
+      "id": "casais-001",
+      "categoryId": "casais",
+      "text": "Qual foi a primeira coisa que te chamou atenção em mim?"
+    },
+    {
+      "id": "casais-002",
+      "categoryId": "casais",
+      "text": "Que momento nosso você guardaria numa cápsula do tempo?"
+    },
+    {
+      "id": "casais-003",
+      "categoryId": "casais",
+      "text": "Que pequeno gesto meu deixa o seu dia melhor?"
+    },
+    {
+      "id": "casais-004",
+      "categoryId": "casais",
+      "text": "Se a gente tirasse um dia inteiro só para nós, como ele seria?"
+    },
+    {
+      "id": "casais-005",
+      "categoryId": "casais",
+      "text": "Que música te lembra de mim?"
+    },
+    {
+      "id": "casais-006",
+      "categoryId": "casais",
+      "text": "O que você acha que a gente faz muito bem em dupla?"
+    },
+    {
+      "id": "casais-007",
+      "categoryId": "casais",
+      "text": "Qual hábito meu você achava estranho e hoje acha fofo?"
+    },
+    {
+      "id": "casais-008",
+      "categoryId": "casais",
+      "text": "O que você gostaria que a gente aprendesse em dupla?"
+    },
+    {
+      "id": "casais-009",
+      "categoryId": "casais",
+      "text": "Qual conversa nossa mais mexeu com você?"
+    },
+    {
+      "id": "casais-010",
+      "categoryId": "casais",
+      "text": "Como você prefere receber carinho: palavras, gestos, tempo de qualidade ou presentes?"
+    },
+    {
+      "id": "casais-011",
+      "categoryId": "casais",
+      "text": "Qual sonho seu você gostaria que eu conhecesse melhor?"
+    },
+    {
+      "id": "casais-012",
+      "categoryId": "casais",
+      "text": "Em que momento você percebeu que confiava em mim?"
+    },
+    {
+      "id": "casais-013",
+      "categoryId": "casais",
+      "text": "Que tradição só nossa você gostaria de criar?"
+    },
+    {
+      "id": "casais-014",
+      "categoryId": "casais",
+      "text": "Qual é a sua lembrança favorita de um dia comum ao meu lado?"
+    },
+    {
+      "id": "casais-015",
+      "categoryId": "casais",
+      "text": "O que eu faço que te faz rir mesmo sem querer?"
+    },
+    {
+      "id": "casais-016",
+      "categoryId": "casais",
+      "text": "Tem algo que você gostaria de me agradecer e ainda não disse?"
+    },
+    {
+      "id": "casais-017",
+      "categoryId": "casais",
+      "text": "Como seria o nosso dia perfeito daqui a dez anos?"
+    },
+    {
+      "id": "casais-018",
+      "categoryId": "casais",
+      "text": "Qual é o seu jeito favorito de fazer as pazes depois de uma discussão?"
+    },
+    {
+      "id": "casais-019",
+      "categoryId": "casais",
+      "text": "Que lugar te faz pensar em nós?"
+    },
+    {
+      "id": "casais-020",
+      "categoryId": "casais",
+      "text": "O que você mais admira na forma como eu lido com as coisas?"
+    },
+    {
+      "id": "happy-hour-001",
+      "categoryId": "happy-hour",
+      "text": "Qual é a história mais engraçada que você sempre conta em festas?"
+    },
+    {
+      "id": "happy-hour-002",
+      "categoryId": "happy-hour",
+      "text": "Se esta mesa fosse um programa de TV, que programa seria?"
+    },
+    {
+      "id": "happy-hour-003",
+      "categoryId": "happy-hour",
+      "text": "Qual foi o maior mico que você já pagou e hoje acha graça?"
+    },
+    {
+      "id": "happy-hour-004",
+      "categoryId": "happy-hour",
+      "text": "Qual música te faz levantar e dançar na hora?"
+    },
+    {
+      "id": "happy-hour-005",
+      "categoryId": "happy-hour",
+      "text": "Se você pudesse convidar qualquer pessoa, real ou fictícia, para esta mesa, quem seria?"
+    },
+    {
+      "id": "happy-hour-006",
+      "categoryId": "happy-hour",
+      "text": "Qual é a pior moda que você já seguiu com orgulho?"
+    },
+    {
+      "id": "happy-hour-007",
+      "categoryId": "happy-hour",
+      "text": "Que petisco nunca pode faltar num encontro com amigos?"
+    },
+    {
+      "id": "happy-hour-008",
+      "categoryId": "happy-hour",
+      "text": "Qual foi o rolê mais inesperado que você já viveu?"
+    },
+    {
+      "id": "happy-hour-009",
+      "categoryId": "happy-hour",
+      "text": "Se este grupo formasse uma banda, qual seria o nome e quem tocaria o quê?"
+    },
+    {
+      "id": "happy-hour-010",
+      "categoryId": "happy-hour",
+      "text": "Qual é o seu talento escondido no karaokê?"
+    },
+    {
+      "id": "happy-hour-011",
+      "categoryId": "happy-hour",
+      "text": "Que história inofensiva da sua infância você pode contar agora?"
+    },
+    {
+      "id": "happy-hour-012",
+      "categoryId": "happy-hour",
+      "text": "Qual apelido você já teve e como ele surgiu?"
+    },
+    {
+      "id": "happy-hour-013",
+      "categoryId": "happy-hour",
+      "text": "Se você pudesse transformar um dia da semana em feriado, qual seria e por quê?"
+    },
+    {
+      "id": "happy-hour-014",
+      "categoryId": "happy-hour",
+      "text": "Qual foi a mensagem mais constrangedora que você já mandou para a pessoa errada?"
+    },
+    {
+      "id": "happy-hour-015",
+      "categoryId": "happy-hour",
+      "text": "Que personagem de filme você seria numa festa?"
+    },
+    {
+      "id": "happy-hour-016",
+      "categoryId": "happy-hour",
+      "text": "Que tendência da internet você não entende de jeito nenhum?"
+    },
+    {
+      "id": "happy-hour-017",
+      "categoryId": "happy-hour",
+      "text": "Qual foi o melhor show, festa ou evento em que você já esteve?"
+    },
+    {
+      "id": "happy-hour-018",
+      "categoryId": "happy-hour",
+      "text": "Se você tivesse que fazer um brinde agora, a quem ou a que brindaria?"
+    },
+    {
+      "id": "happy-hour-019",
+      "categoryId": "happy-hour",
+      "text": "Qual foi a coisa mais aleatória que você já comprou?"
+    },
+    {
+      "id": "happy-hour-020",
+      "categoryId": "happy-hour",
+      "text": "Que jogo ou brincadeira você toparia agora com este grupo?"
+    },
+    {
+      "id": "dilemas-001",
+      "categoryId": "dilemas",
+      "text": "Você prefere poder voltar no tempo uma vez ou espiar o futuro uma vez?"
+    },
+    {
+      "id": "dilemas-002",
+      "categoryId": "dilemas",
+      "text": "Você prefere nunca mais usar o celular ou nunca mais assistir a filmes e séries?"
+    },
+    {
+      "id": "dilemas-003",
+      "categoryId": "dilemas",
+      "text": "Você contaria uma verdade dolorosa a alguém próximo ou guardaria para não magoar?"
+    },
+    {
+      "id": "dilemas-004",
+      "categoryId": "dilemas",
+      "text": "Você prefere ter muito tempo livre e pouco dinheiro, ou muito dinheiro e pouco tempo?"
+    },
+    {
+      "id": "dilemas-005",
+      "categoryId": "dilemas",
+      "text": "Você prefere ler a mente das pessoas ou fazer com que elas sempre digam a verdade?"
+    },
+    {
+      "id": "dilemas-006",
+      "categoryId": "dilemas",
+      "text": "Você aceitaria viver 200 anos se tivesse que passar todos eles na mesma cidade?"
+    },
+    {
+      "id": "dilemas-007",
+      "categoryId": "dilemas",
+      "text": "Você prefere deixar uma grande obra para o mundo ou viver feliz no anonimato?"
+    },
+    {
+      "id": "dilemas-008",
+      "categoryId": "dilemas",
+      "text": "Se você achasse uma carteira com muito dinheiro e nenhum documento, o que faria?"
+    },
+    {
+      "id": "dilemas-009",
+      "categoryId": "dilemas",
+      "text": "Você prefere falar todas as línguas do mundo ou conversar com animais?"
+    },
+    {
+      "id": "dilemas-010",
+      "categoryId": "dilemas",
+      "text": "Você mudaria um erro do passado sabendo que isso mudaria quem você é hoje?"
+    },
+    {
+      "id": "dilemas-011",
+      "categoryId": "dilemas",
+      "text": "Você prefere uma vida previsível e tranquila ou cheia de surpresas e incertezas?"
+    },
+    {
+      "id": "dilemas-012",
+      "categoryId": "dilemas",
+      "text": "Você prefere ter sempre razão ou ter sempre alguém que te escute de verdade?"
+    },
+    {
+      "id": "dilemas-013",
+      "categoryId": "dilemas",
+      "text": "Se você pudesse apagar uma única invenção da história, qual seria?"
+    },
+    {
+      "id": "dilemas-014",
+      "categoryId": "dilemas",
+      "text": "Você prefere viver sem música ou sem cores?"
+    },
+    {
+      "id": "dilemas-015",
+      "categoryId": "dilemas",
+      "text": "Você toparia saber, por um dia, tudo o que pensam de você?"
+    },
+    {
+      "id": "dilemas-016",
+      "categoryId": "dilemas",
+      "text": "Você prefere um trabalho que ama com salário baixo ou um que tolera com salário alto?"
+    },
+    {
+      "id": "dilemas-017",
+      "categoryId": "dilemas",
+      "text": "Se alguém que você ama fizesse algo errado, você contaria a verdade ou protegeria essa pessoa?"
+    },
+    {
+      "id": "dilemas-018",
+      "categoryId": "dilemas",
+      "text": "Você prefere poder pausar o tempo ou voltar dez segundos sempre que quiser?"
+    },
+    {
+      "id": "dilemas-019",
+      "categoryId": "dilemas",
+      "text": "Você prefere ser a pessoa mais engraçada ou a mais inteligente da sala?"
+    },
+    {
+      "id": "dilemas-020",
+      "categoryId": "dilemas",
+      "text": "Você abriria mão das redes sociais para sempre em troca de uma viagem por ano?"
+    },
+    {
+      "id": "viagens-001",
+      "categoryId": "viagens",
+      "text": "Se você pudesse acordar amanhã em qualquer lugar do mundo, onde seria?"
+    },
+    {
+      "id": "viagens-002",
+      "categoryId": "viagens",
+      "text": "Que lugar, perto ou longe, mudou o seu jeito de ver as coisas?"
+    },
+    {
+      "id": "viagens-003",
+      "categoryId": "viagens",
+      "text": "Você prefere praia, montanha, cidade grande ou interior? Por quê?"
+    },
+    {
+      "id": "viagens-004",
+      "categoryId": "viagens",
+      "text": "Qual cultura você tem curiosidade de conhecer de perto?"
+    },
+    {
+      "id": "viagens-005",
+      "categoryId": "viagens",
+      "text": "Que comida típica de outro lugar você mais tem vontade de provar?"
+    },
+    {
+      "id": "viagens-006",
+      "categoryId": "viagens",
+      "text": "Se você pudesse viajar no tempo em vez de no espaço, para quando iria?"
+    },
+    {
+      "id": "viagens-007",
+      "categoryId": "viagens",
+      "text": "Qual é o lugar mais bonito que você já viu, mesmo que por foto?"
+    },
+    {
+      "id": "viagens-008",
+      "categoryId": "viagens",
+      "text": "Você é de planejar cada detalhe ou de improvisar pelo caminho?"
+    },
+    {
+      "id": "viagens-009",
+      "categoryId": "viagens",
+      "text": "Que aventura você toparia viver pelo menos uma vez?"
+    },
+    {
+      "id": "viagens-010",
+      "categoryId": "viagens",
+      "text": "Qual lugar da sua própria cidade você ainda não conhece e quer conhecer?"
+    },
+    {
+      "id": "viagens-011",
+      "categoryId": "viagens",
+      "text": "Se você pudesse morar um ano em outro país, qual escolheria?"
+    },
+    {
+      "id": "viagens-012",
+      "categoryId": "viagens",
+      "text": "Que meio de transporte você acha mais charmoso: trem, barco, avião ou estrada?"
+    },
+    {
+      "id": "viagens-013",
+      "categoryId": "viagens",
+      "text": "Qual passeio simples virou uma ótima lembrança?"
+    },
+    {
+      "id": "viagens-014",
+      "categoryId": "viagens",
+      "text": "Com quem você faria uma viagem sem destino definido?"
+    },
+    {
+      "id": "viagens-015",
+      "categoryId": "viagens",
+      "text": "Que paisagem te deixa em paz só de imaginar?"
+    },
+    {
+      "id": "viagens-016",
+      "categoryId": "viagens",
+      "text": "Se você pudesse visitar um lugar de filme ou livro, qual seria?"
+    },
+    {
+      "id": "viagens-017",
+      "categoryId": "viagens",
+      "text": "Qual idioma você gostaria de falar para se virar em qualquer viagem?"
+    },
+    {
+      "id": "viagens-018",
+      "categoryId": "viagens",
+      "text": "O que não pode faltar na sua mala, ou na sua mochila de passeio?"
+    },
+    {
+      "id": "viagens-019",
+      "categoryId": "viagens",
+      "text": "Você prefere conhecer muitos lugares rapidinho ou um só, com calma?"
+    },
+    {
+      "id": "viagens-020",
+      "categoryId": "viagens",
+      "text": "Qual aventura da infância parecia uma grande expedição na época?"
+    },
+    {
+      "id": "nostalgia-001",
+      "categoryId": "nostalgia",
+      "text": "Qual desenho ou programa de TV marcou a sua infância?"
+    },
+    {
+      "id": "nostalgia-002",
+      "categoryId": "nostalgia",
+      "text": "Que brincadeira de criança você ainda jogaria hoje?"
+    },
+    {
+      "id": "nostalgia-003",
+      "categoryId": "nostalgia",
+      "text": "Qual cheiro te leva direto para a infância?"
+    },
+    {
+      "id": "nostalgia-004",
+      "categoryId": "nostalgia",
+      "text": "O que você queria ser quando crescesse?"
+    },
+    {
+      "id": "nostalgia-005",
+      "categoryId": "nostalgia",
+      "text": "Qual brinquedo você mais amava?"
+    },
+    {
+      "id": "nostalgia-006",
+      "categoryId": "nostalgia",
+      "text": "Que música te transporta para outra época da sua vida?"
+    },
+    {
+      "id": "nostalgia-007",
+      "categoryId": "nostalgia",
+      "text": "Qual era o seu lanche favorito na escola?"
+    },
+    {
+      "id": "nostalgia-008",
+      "categoryId": "nostalgia",
+      "text": "Que moda da sua infância você adoraria que voltasse?"
+    },
+    {
+      "id": "nostalgia-009",
+      "categoryId": "nostalgia",
+      "text": "Qual foi a primeira coisa que você comprou com o seu próprio dinheiro?"
+    },
+    {
+      "id": "nostalgia-010",
+      "categoryId": "nostalgia",
+      "text": "Que palavra ou gíria você usava muito e ninguém mais fala?"
+    },
+    {
+      "id": "nostalgia-011",
+      "categoryId": "nostalgia",
+      "text": "Qual lugar que você frequentava na infância você lembra com carinho?"
+    },
+    {
+      "id": "nostalgia-012",
+      "categoryId": "nostalgia",
+      "text": "Que medo bobo você tinha na infância?"
+    },
+    {
+      "id": "nostalgia-013",
+      "categoryId": "nostalgia",
+      "text": "Qual foi o presente mais marcante que você ganhou quando criança?"
+    },
+    {
+      "id": "nostalgia-014",
+      "categoryId": "nostalgia",
+      "text": "Que jogo de videogame, de tabuleiro ou de rua marcou você?"
+    },
+    {
+      "id": "nostalgia-015",
+      "categoryId": "nostalgia",
+      "text": "Quem te ensinou algo que você carrega até hoje?"
+    },
+    {
+      "id": "nostalgia-016",
+      "categoryId": "nostalgia",
+      "text": "Que filme você assistiu tantas vezes que sabia as falas de cor?"
+    },
+    {
+      "id": "nostalgia-017",
+      "categoryId": "nostalgia",
+      "text": "Qual foi a sua primeira grande amizade e como ela começou?"
+    },
+    {
+      "id": "nostalgia-018",
+      "categoryId": "nostalgia",
+      "text": "Que tecnologia antiga você tem saudade de usar?"
+    },
+    {
+      "id": "nostalgia-019",
+      "categoryId": "nostalgia",
+      "text": "Qual travessura de criança hoje te faz rir?"
+    },
+    {
+      "id": "nostalgia-020",
+      "categoryId": "nostalgia",
+      "text": "Se você pudesse reviver um dia da sua infância, qual seria?"
+    },
+    {
+      "id": "futuro-001",
+      "categoryId": "futuro",
+      "text": "Como você imagina um dia comum na sua vida daqui a dez anos?"
+    },
+    {
+      "id": "futuro-002",
+      "categoryId": "futuro",
+      "text": "Que sonho você ainda não contou para quase ninguém?"
+    },
+    {
+      "id": "futuro-003",
+      "categoryId": "futuro",
+      "text": "O que você quer aprender nos próximos anos?"
+    },
+    {
+      "id": "futuro-004",
+      "categoryId": "futuro",
+      "text": "Qual hábito você quer levar para o resto da vida?"
+    },
+    {
+      "id": "futuro-005",
+      "categoryId": "futuro",
+      "text": "Se você pudesse mandar uma mensagem para o seu eu do futuro, o que diria?"
+    },
+    {
+      "id": "futuro-006",
+      "categoryId": "futuro",
+      "text": "Que tecnologia você acha que vai mudar tudo nos próximos anos?"
+    },
+    {
+      "id": "futuro-007",
+      "categoryId": "futuro",
+      "text": "Qual meta pequena você quer cumprir ainda este ano?"
+    },
+    {
+      "id": "futuro-008",
+      "categoryId": "futuro",
+      "text": "Como seria a sua casa dos sonhos?"
+    },
+    {
+      "id": "futuro-009",
+      "categoryId": "futuro",
+      "text": "Que causa você gostaria de apoiar mais no futuro?"
+    },
+    {
+      "id": "futuro-010",
+      "categoryId": "futuro",
+      "text": "Se dinheiro não fosse problema, como você passaria os seus dias?"
+    },
+    {
+      "id": "futuro-011",
+      "categoryId": "futuro",
+      "text": "Que tipo de pessoa você quer ser para quem convive com você?"
+    },
+    {
+      "id": "futuro-012",
+      "categoryId": "futuro",
+      "text": "Que experiência está no topo da sua lista de coisas para viver?"
+    },
+    {
+      "id": "futuro-013",
+      "categoryId": "futuro",
+      "text": "O que você espera que o mundo tenha resolvido daqui a 30 anos?"
+    },
+    {
+      "id": "futuro-014",
+      "categoryId": "futuro",
+      "text": "Que projeto pessoal você adoraria tirar do papel?"
+    },
+    {
+      "id": "futuro-015",
+      "categoryId": "futuro",
+      "text": "Qual seria o seu trabalho dos sonhos, se pudesse inventar um?"
+    },
+    {
+      "id": "futuro-016",
+      "categoryId": "futuro",
+      "text": "Que conquista futura te deixaria mais feliz de contar para alguém?"
+    },
+    {
+      "id": "futuro-017",
+      "categoryId": "futuro",
+      "text": "O que você gostaria de estar comemorando no ano que vem?"
+    },
+    {
+      "id": "futuro-018",
+      "categoryId": "futuro",
+      "text": "Qual medo sobre o futuro você gostaria de deixar para trás?"
+    },
+    {
+      "id": "futuro-019",
+      "categoryId": "futuro",
+      "text": "Que tradição você gostaria de começar e manter por muitos anos?"
+    },
+    {
+      "id": "futuro-020",
+      "categoryId": "futuro",
+      "text": "Se você pudesse ver uma única cena do seu futuro, qual escolheria?"
+    }
+  ]
+}

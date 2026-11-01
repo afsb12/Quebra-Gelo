@@ -1,0 +1,44 @@
+{
+  "expo": {
+    "name": "Quebra-Gelo",
+    "slug": "quebra-gelo",
+    "scheme": "quebragelo",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./Assets/app/icon.png",
+    "userInterfaceStyle": "dark",
+    "backgroundColor": "#16131C",
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#16131C",
+        "foregroundImage": "./Assets/app/android-icon-foreground.png",
+        "backgroundImage": "./Assets/app/android-icon-background.png",
+        "monochromeImage": "./Assets/app/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "favicon": "./Assets/app/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-font",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./Assets/app/splash-icon.png",
+          "imageWidth": 160,
+          "resizeMode": "contain",
+          "backgroundColor": "#16131C"
+        }
+      ],
+      "expo-asset"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}
