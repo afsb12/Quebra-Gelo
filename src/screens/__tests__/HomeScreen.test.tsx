@@ -32,7 +32,7 @@ describe('HomeScreen — first-launch tutorial (005)', () => {
     expect(screen.queryByTestId('tutorial-backdrop')).toBeNull();
     expect(useOnboardingStore.getState().hasSeenTutorial).toBe(true);
     expect(JSON.parse((await AsyncStorage.getItem(ONBOARDING_STORAGE_KEY)) ?? 'null')).toMatchObject({
-      state: { hasSeenTutorial: true },
+      state: { hasSeenTutorial: true, tutorialVersion: 2 },
     });
 
     await fireEvent.press(screen.getByTestId('mini-card-casual'));
