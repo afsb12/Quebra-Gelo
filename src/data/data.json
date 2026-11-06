@@ -8,6 +8,13 @@
       "description": "Perguntas leves para começar o papo sem pressão."
     },
     {
+      "id": "primeiros-encontros",
+      "title": "Primeiros Encontros",
+      "icon": "glass-flute",
+      "color": "#FF8A80",
+      "description": "Perguntas leves e instigantes para quebrar o gelo e descobrir afinidades."
+    },
+    {
       "id": "profundo",
       "title": "Profundo",
       "icon": "lightbulb-on-outline",

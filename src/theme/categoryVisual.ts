@@ -7,6 +7,7 @@ import { inkOnCream, pickOnColor } from './color';
  */
 export const CATEGORY_INK: Record<CategoryId, string> = {
   casual: '#8A6100',
+  'primeiros-encontros': '#D71100',
   profundo: '#3D3FA6',
   casais: '#B01A34',
   'happy-hour': '#A84F00',

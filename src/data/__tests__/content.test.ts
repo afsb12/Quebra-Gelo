@@ -20,6 +20,7 @@ const questions: Json[] = Array.isArray(root.questions) ? root.questions.filter(
 // 002 research R1 — category back colors.
 const PALETTE: Record<string, string> = {
   casual: '#F5C230',
+  'primeiros-encontros': '#FF8A80',
   profundo: '#3D3FA6',
   casais: '#C41E3A',
   'happy-hour': '#F27A1F',
@@ -45,7 +46,7 @@ describe('data.json content', () => {
     expect(Array.isArray(root.questions)).toBe(true);
   });
 
-  it('2. lists exactly the 8 category IDs, in order, without duplicates', () => {
+  it('2. lists exactly the category IDs, in order, without duplicates', () => {
     expect(categories.map((c) => c.id)).toEqual([...CATEGORY_IDS]);
   });
 

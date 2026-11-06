@@ -23,7 +23,7 @@ and the existing suites pin the palette, order and category count, so they must 
 
 ## Phase 1: Setup
 
-- [ ] T001 Run `npm run typecheck`, `npm run lint` and `npm test` on the current branch and confirm all green before any change (baseline; no files changed)
+- [X] T001 Run `npm run typecheck`, `npm run lint` and `npm test` on the current branch and confirm all green before any change (baseline; no files changed)
 
 ---
 
@@ -36,12 +36,12 @@ edits must land together: `content.test.ts` #2 pins `data.json` order to `CATEGO
 **⚠️ Note**: after this phase `content.test.ts` #9 ("every category has at least 20 questions")
 fails until T008 adds the questions. That is expected; the gate is the US1 checkpoint.
 
-- [ ] T002 Insert `'primeiros-encontros'` at index 1 of `CATEGORY_IDS` (right after `'casual'`, before `'profundo'`) in src/data/types.ts
-- [ ] T003 Insert the category object at index 1 of the `categories` array (right after `casual`) in src/data/data.json, exactly: `{ "id": "primeiros-encontros", "title": "Primeiros Encontros", "icon": "glass-flute", "color": "#FF8A80", "description": "Perguntas leves e instigantes para quebrar o gelo e descobrir afinidades." }` (five keys only; title ≤ 30 chars, description ≤ 80 chars; `glass-flute` replaces 🥂 per research R1)
-- [ ] T004 [P] Add `'primeiros-encontros': '#D71100'` to `CATEGORY_INK` after `casual` in src/theme/categoryVisual.ts (= `inkOnCream('#FF8A80')`, 4.67:1 on cream, research R2: coral replaces the requested `#FF9F43`, too close to Happy Hour)
-- [ ] T005 [P] Add `'primeiros-encontros': '#FF8A80'` to `PALETTE` and rename test #2 from "lists exactly the 8 category IDs" to "lists exactly the category IDs" in src/data/__tests__/content.test.ts
-- [ ] T006 [P] Add the row `'primeiros-encontros': { color: '#FF8A80', onColor: 'dark', ink: '#D71100' }` to `TABLE` in src/theme/__tests__/categoryVisual.test.ts
-- [ ] T007 Run `npm run typecheck` and `npx jest src/theme src/data/__tests__/content.test.ts`: everything passes except #9 for `primeiros-encontros`
+- [X] T002 Insert `'primeiros-encontros'` at index 1 of `CATEGORY_IDS` (right after `'casual'`, before `'profundo'`) in src/data/types.ts
+- [X] T003 Insert the category object at index 1 of the `categories` array (right after `casual`) in src/data/data.json, exactly: `{ "id": "primeiros-encontros", "title": "Primeiros Encontros", "icon": "glass-flute", "color": "#FF8A80", "description": "Perguntas leves e instigantes para quebrar o gelo e descobrir afinidades." }` (five keys only; title ≤ 30 chars, description ≤ 80 chars; `glass-flute` replaces 🥂 per research R1)
+- [X] T004 [P] Add `'primeiros-encontros': '#D71100'` to `CATEGORY_INK` after `casual` in src/theme/categoryVisual.ts (= `inkOnCream('#FF8A80')`, 4.67:1 on cream, research R2: coral replaces the requested `#FF9F43`, too close to Happy Hour)
+- [X] T005 [P] Add `'primeiros-encontros': '#FF8A80'` to `PALETTE` and rename test #2 from "lists exactly the 8 category IDs" to "lists exactly the category IDs" in src/data/__tests__/content.test.ts
+- [X] T006 [P] Add the row `'primeiros-encontros': { color: '#FF8A80', onColor: 'dark', ink: '#D71100' }` to `TABLE` in src/theme/__tests__/categoryVisual.test.ts
+- [X] T007 Run `npm run typecheck` and `npx jest src/theme src/data/__tests__/content.test.ts`: everything passes except #9 for `primeiros-encontros`
 
 **Checkpoint**: category known to the type system, data and theme.
 

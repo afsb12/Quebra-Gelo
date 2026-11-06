@@ -1,5 +1,6 @@
 export const CATEGORY_IDS = [
   'casual',
+  'primeiros-encontros',
   'profundo',
   'casais',
   'happy-hour',
