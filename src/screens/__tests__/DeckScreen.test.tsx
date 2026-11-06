@@ -7,6 +7,7 @@ import * as Haptics from 'expo-haptics';
 
 import { getAllQuestions, getCategories, getQuestion, getQuestionsByCategory } from '../../data/content';
 import { useFavoritesStore } from '../../store/favorites';
+import { useMixFilterStore } from '../../store/mixFilter';
 import { useProgressStore } from '../../store/progress';
 import { DeckScreen } from '../DeckScreen';
 
@@ -132,5 +133,33 @@ describe('DeckScreen — Tudo Misturado (004)', () => {
       fireEvent.press(screen.getByTestId('favorite-button'));
     });
     expect(useFavoritesStore.getState().favorites.map((f) => f.questionId)).toEqual([question?.id]);
+  });
+});
+
+describe('DeckScreen — filtered mix (006)', () => {
+  beforeEach(() => {
+    useProgressStore.setState({ decks: {} });
+    useMixFilterStore.setState({ excluded: [] });
+  });
+
+  it('only deals questions of the chosen categories, each once, then ends', async () => {
+    useMixFilterStore.getState().save(['casais', 'futuro']);
+    const allowed = new Set([...getQuestionsByCategory('casais'), ...getQuestionsByCategory('futuro')].map((q) => q.id));
+    await render(<DeckScreen deckId="mixed" />, { wrapper });
+    const seen = new Set<string>();
+    for (let i = 0; i < allowed.size; i += 1) {
+      const deck = useProgressStore.getState().decks.mixed;
+      const id = deck?.order[deck.cursor];
+      if (id) seen.add(id);
+      await skip();
+    }
+    expect(seen).toEqual(allowed);
+    expect(screen.getByTestId('deck-complete')).toBeTruthy();
+  });
+
+  it('a category left out of the mix still has its full deck (FR-011)', async () => {
+    useMixFilterStore.getState().save(['casais', 'futuro']);
+    await render(<DeckScreen deckId="dilemas" />, { wrapper });
+    expect(screen.getByText(`Carta 1 de ${total}`)).toBeTruthy();
   });
 });

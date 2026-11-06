@@ -19,4 +19,14 @@ describe('deck IDs (004)', () => {
   it('a category deck lists only that category', () => {
     expect(getDeckQuestionIds('futuro')).toEqual(getQuestionsByCategory('futuro').map((q) => q.id));
   });
+
+  it('a filtered mixed deck lists only the chosen categories (006)', () => {
+    const ids = getDeckQuestionIds('mixed', ['casais', 'futuro']);
+    const expected = [...getQuestionsByCategory('casais'), ...getQuestionsByCategory('futuro')].map((q) => q.id);
+    expect([...ids].sort()).toEqual([...expected].sort());
+  });
+
+  it('category decks ignore the mix filter (006 FR-011)', () => {
+    expect(getDeckQuestionIds('dilemas', ['casais', 'futuro'])).toEqual(getQuestionsByCategory('dilemas').map((q) => q.id));
+  });
 });

@@ -14,6 +14,7 @@ module.exports = {
         ink: tokens.colors.questionInk,
         primary: tokens.colors.textPrimary,
         secondary: tokens.colors.textSecondary,
+        ice: tokens.colors.iceBlue,
       },
       fontFamily: {
         display: [tokens.fonts.display],

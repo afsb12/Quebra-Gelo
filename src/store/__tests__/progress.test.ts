@@ -7,8 +7,11 @@ jest.mock('../../data/content', () => {
   const questions = [...ids('casual', 3), ...ids('profundo', 5), ...ids('casais', 4), ...ids('futuro', 6)];
   return {
     getQuestionsByCategory: (cat: string) => questions.filter((q) => q.categoryId === cat),
-    getDeckQuestionIds: (deck: string) =>
-      (deck === 'mixed' ? questions : questions.filter((q) => q.categoryId === deck)).map((q) => q.id),
+    getDeckQuestionIds: (deck: string, mix?: readonly string[]) =>
+      (deck === 'mixed'
+        ? questions.filter((q) => !mix || mix.includes(q.categoryId))
+        : questions.filter((q) => q.categoryId === deck)
+      ).map((q) => q.id),
     getQuestion: (id: string) => questions.find((q) => q.id === id),
   };
 });
@@ -68,5 +71,16 @@ describe('useProgressStore (in memory)', () => {
     expect(useProgressStore.getState().decks.casais?.cursor).toBe(0);
     useProgressStore.getState().discard('casais');
     expect(useProgressStore.getState().decks.mixed?.cursor).toBe(2);
+  });
+
+  it('a filtered mixed deck only has the chosen categories; resetDeck drops it (006)', () => {
+    useProgressStore.getState().ensureDeck('mixed', ['casual', 'casais']);
+    expect(useProgressStore.getState().decks.mixed?.order).toHaveLength(7);
+    useProgressStore.getState().resetDeck('mixed');
+    expect(useProgressStore.getState().decks.mixed).toBeUndefined();
+    useProgressStore.getState().ensureDeck('mixed', ['futuro', 'profundo']);
+    expect(useProgressStore.getState().decks.mixed?.order).toHaveLength(11);
+    useProgressStore.getState().reshuffle('mixed', ['casual', 'futuro']);
+    expect(useProgressStore.getState().decks.mixed?.order).toHaveLength(9);
   });
 });

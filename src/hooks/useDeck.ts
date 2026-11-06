@@ -4,6 +4,7 @@ import { getCategory, getQuestion } from '../data/content';
 import { createDeck, currentQuestionId } from '../data/deck';
 import { MIXED_DECK_ID, type Category, type DeckId, type DeckProgress, type Question } from '../data/types';
 import { strings } from '../i18n/strings';
+import { useMixCategories } from '../store/mixFilter';
 import { useProgressStore } from '../store/progress';
 
 export interface UseDeckResult {
@@ -30,13 +31,17 @@ export const useDeck = (deckId: DeckId): UseDeckResult => {
   const ensureDeck = useProgressStore((state) => state.ensureDeck);
   const discardInStore = useProgressStore((state) => state.discard);
   const reshuffleInStore = useProgressStore((state) => state.reshuffle);
-
-  // Create the shuffled deck on first entry; keep it (resume) on later entries.
-  useEffect(() => {
-    ensureDeck(deckId);
-  }, [deckId, ensureDeck]);
-
   const mixed = deckId === MIXED_DECK_ID;
+  const mixFilter = useMixCategories();
+  const mixCategories = mixed ? mixFilter : undefined;
+  const missing = deck === undefined;
+
+  // Create the shuffled deck on first entry (or after the mix filter reset it); keep it (resume)
+  // on later entries.
+  useEffect(() => {
+    if (missing) ensureDeck(deckId, mixCategories);
+  }, [deckId, ensureDeck, missing, mixCategories]);
+
   const deckCategory = mixed ? undefined : getCategory(deckId);
   if (!mixed && !deckCategory) throw new Error(`Unknown category: ${deckId}`);
 
@@ -46,7 +51,7 @@ export const useDeck = (deckId: DeckId): UseDeckResult => {
   const currentCategory = current ? getCategory(current.categoryId) : undefined;
 
   const discard = useCallback(() => discardInStore(deckId), [deckId, discardInStore]);
-  const reshuffle = useCallback(() => reshuffleInStore(deckId), [deckId, reshuffleInStore]);
+  const reshuffle = useCallback(() => reshuffleInStore(deckId, mixCategories), [deckId, mixCategories, reshuffleInStore]);
 
   const position = useMemo(
     () => ({ index: Math.min(active.cursor + 1, active.order.length), total: active.order.length }),
