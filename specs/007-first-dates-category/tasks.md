@@ -77,7 +77,7 @@ the automated tone test and the manual review (quickstart §2).
 **Independent Test**: Home renders 9 tiles in the order Descontraído, Primeiros Encontros,
 Profundo, Casais, Happy Hour, Dilemas, Viagens e Aventuras, Nostalgia e Infância, Futuro e Sonhos.
 
-- [ ] T013 [US2] Update "renders exactly the 8 categories as mini cards, in data.json order" to "renders every category as mini cards, in data.json order", assert 9 tiles, and add an explicit assertion that the tile right after `casual` is `primeiros-encontros` in src/screens/__tests__/HomeScreen.test.tsx
+- [X] T013 [US2] Update "renders exactly the 8 categories as mini cards, in data.json order" to "renders every category as mini cards, in data.json order", assert 9 tiles, and add an explicit assertion that the tile right after `casual` is `primeiros-encontros` in src/screens/__tests__/HomeScreen.test.tsx
 - [ ] T014 [US2] Run the app (`npm start`) and check quickstart §3.1: new tile 2nd and visible without scrolling on a ≈6" screen, coral with dark text and flute icon, the 9th tile alone on the left of the last row at normal size (research R7); compare against the Happy Hour, Nostalgia and Casais tiles (quickstart §3.6). No code change expected
 
 **Checkpoint**: Home order verified by test and on device.
@@ -91,10 +91,10 @@ Profundo, Casais, Happy Hour, Dilemas, Viagens e Aventuras, Nostalgia e Infânci
 **Independent Test**: filter lists 9 categories with the new one on; a filter saved before
 (e.g. Casais off) keeps Casais off and the new category on; summary reads "7 de 9 categorias".
 
-- [ ] T015 [P] [US3] Add a case to src/data/__tests__/mixFilter.test.ts: `sanitizeExcluded(['casais'], CATEGORY_IDS)` returns `['casais']` and `activeMixCategories(['casais'], CATEGORY_IDS)` includes `'primeiros-encontros'` (upgrade path, FR-012 / research R6)
-- [ ] T016 [P] [US3] Rename "lists the 8 categories with labeled switches" → "lists every category with labeled switches" in src/components/__tests__/MixFilterSheet.test.tsx
-- [ ] T017 [P] [US3] Change the summary fixture "6 de 8 categorias" → "7 de 9 categorias" in src/components/__tests__/MixedHeroCard.test.tsx and the comment example in src/components/MixedHeroCard.tsx
-- [ ] T018 [US3] Update "switching off 2 categories and saving filters the mix and shows \"6 de 8 categorias\"" to expect "7 de 9 categorias" in src/screens/__tests__/HomeScreen.test.tsx (same file as T013, run after it)
+- [X] T015 [P] [US3] Add a case to src/data/__tests__/mixFilter.test.ts: `sanitizeExcluded(['casais'], CATEGORY_IDS)` returns `['casais']` and `activeMixCategories(['casais'], CATEGORY_IDS)` includes `'primeiros-encontros'` (upgrade path, FR-012 / research R6)
+- [X] T016 [P] [US3] Rename "lists the 8 categories with labeled switches" → "lists every category with labeled switches" in src/components/__tests__/MixFilterSheet.test.tsx
+- [X] T017 [P] [US3] Change the summary fixture "6 de 8 categorias" → "7 de 9 categorias" in src/components/__tests__/MixedHeroCard.test.tsx and the comment example in src/components/MixedHeroCard.tsx
+- [X] T018 [US3] Update "switching off 2 categories and saving filters the mix and shows \"6 de 8 categorias\"" to expect "7 de 9 categorias" in src/screens/__tests__/HomeScreen.test.tsx (same file as T013, run after it)
 
 **Checkpoint**: all stories green.
 
@@ -102,9 +102,9 @@ Profundo, Casais, Happy Hour, Dilemas, Viagens e Aventuras, Nostalgia e Infânci
 
 ## Phase 6: Polish & Cross-Cutting
 
-- [ ] T019 [P] Search `src/` for remaining hard-coded "8 categorias" / "8 categories" / `toHaveLength(8)` tied to the category count (`grep -rn "8 categor" src`) and make them generic
+- [X] T019 [P] Search `src/` for remaining hard-coded "8 categorias" / "8 categories" / `toHaveLength(8)` tied to the category count (`grep -rn "8 categor" src`) and make them generic
 - [ ] T020 Run `npm run typecheck`, `npm run lint`, `npm test` (merge gate) and walk through quickstart §3 (deck, favorites, mixed mode, upgrade path)
-- [ ] T021 Commit at each checkpoint (Foundational, US1, US2, US3, Polish) with Conventional Commits (`content:` for data.json, `test:`/`feat:` otherwise, suffix `(007)`) and the Co-Authored-By trailer
+- [X] T021 Commit at each checkpoint (Foundational, US1, US2, US3, Polish) with Conventional Commits (`content:` for data.json, `test:`/`feat:` otherwise, suffix `(007)`) and the Co-Authored-By trailer
 
 ---
 

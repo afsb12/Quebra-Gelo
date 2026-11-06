@@ -32,6 +32,13 @@ describe('mix filter rules (006)', () => {
     expect(activeMixCategories(sanitizeExcluded(['casual'], before), CATEGORY_IDS)).toContain('futuro');
   });
 
+  it('a filter saved before 007 keeps its exclusions and turns primeiros-encontros on', () => {
+    expect(sanitizeExcluded(['casais'], CATEGORY_IDS)).toEqual(['casais']);
+    const active = activeMixCategories(['casais'], CATEGORY_IDS);
+    expect(active).toContain('primeiros-encontros');
+    expect(active).not.toContain('casais');
+  });
+
   it('compares selections as sets', () => {
     expect(sameSelection(['casais', 'futuro'], ['futuro', 'casais'])).toBe(true);
     expect(sameSelection(['casais', 'futuro'], ['casais'])).toBe(false);

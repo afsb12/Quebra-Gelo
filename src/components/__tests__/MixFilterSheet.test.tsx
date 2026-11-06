@@ -19,7 +19,7 @@ describe('MixFilterSheet (006)', () => {
     expect(screen.queryByTestId('mix-filter-sheet')).toBeNull();
   });
 
-  it('lists the 8 categories with labeled switches reflecting the selection', async () => {
+  it('lists every category with labeled switches reflecting the selection', async () => {
     await setup({ selected: ids.filter((id) => id !== 'casais') });
     expect(screen.getByText('Categorias da mistura')).toBeTruthy();
     for (const { category } of options) {
