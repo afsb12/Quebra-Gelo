@@ -32,6 +32,20 @@ feature **substitui** essa regra: esquerda avança e direita volta. Ela também 
 005, a regra de "exatamente três dicas de no máximo 50 caracteres" (FR-012/FR-013 da 005) por
 quatro dicas, e, na 008, a suposição "não existe navegação para trás".
 
+## Clarifications
+
+### Session 2026-11-06
+
+- Q: A carta que volta aparece virada para cima ou para baixo? → A: Para cima (pergunta à mostra),
+  porque o objetivo de voltar é rever a pergunta; a carta que saiu pela direita, quando reaparecer
+  avançando, vem virada para baixo como qualquer carta seguinte.
+- Q: Quem já viu o tutorial antigo deve ver o novo? → A: Sim, uma única vez, porque o gesto para a
+  direita mudou de significado ("pular" → "voltar") para quem já jogava.
+- Q: Qual vibração confirma avançar e voltar? → A: A vibração de descarte já existente para os dois;
+  nenhuma vibração quando o voltar é bloqueado na primeira carta.
+- Q: Depois de voltar, o re-embaralhar (008) mexe em quais cartas? → A: Só nas cartas nunca
+  exibidas; as já vistas "à frente" continuam na ordem em que apareceram.
+
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - Avançar pela esquerda, voltar pela direita (Priority: P1)
