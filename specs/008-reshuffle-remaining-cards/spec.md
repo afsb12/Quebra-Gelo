@@ -31,6 +31,19 @@ devolve ao baralho as cartas já vistas, não troca a carta da mesa e não zera 
 para a esquerda ou para a direita continua significando "pular/descartar e ir para a próxima"; não
 existe "voltar carta".
 
+## Clarifications
+
+### Session 2026-11-06
+
+- Q: Qual vibração confirma o re-embaralhamento? → A: O padrão de notificação de "sucesso" do
+  sistema (curto e leve), diferente do impacto leve de virar e do impacto médio de descartar.
+- Q: Onde aparece o aviso "Cartas embaralhadas"? → A: Uma pílula pequena, centralizada logo acima
+  dos controles inferiores (acima do botão de favoritar), sobre o fundo da mesa e nunca sobre a
+  carta; aparece e some com esmaecimento e não recebe toques.
+- Q: Onde fica o botão em relação ao botão de favoritar, inclusive em telas de 320pt? → A: Na
+  mesma linha do botão de favoritar, alinhado à borda direita da tela; o botão de favoritar
+  permanece centralizado e a dica de gestos continua abaixo dessa linha.
+
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - Re-embaralhar a fila no meio do jogo (Priority: P1)
@@ -164,15 +177,18 @@ posição, cor, tamanho de toque, contraste e que tocar no botão não vira nem 
   categoria na mesma sessão retoma a partir da mesma carta seguindo a nova ordem.
 - **FR-009**: O descarte por deslize (esquerda ou direita), o contador e a tela "Fim do Baralho"
   MUST continuar funcionando como antes depois de um ou mais re-embaralhamentos.
-- **FR-010**: Ao acionar o botão ativado, o aparelho MUST emitir uma vibração leve do tipo
-  "sucesso", distinta das vibrações de virar e descartar; aparelhos sem vibração simplesmente
-  não vibram.
+- **FR-010**: Ao acionar o botão ativado, o aparelho MUST emitir a vibração padrão de notificação
+  de "sucesso" do sistema, distinta das vibrações de virar (impacto leve) e descartar (impacto
+  médio); aparelhos sem vibração simplesmente não vibram.
 - **FR-011**: Ao acionar o botão ativado, o sistema MUST exibir um aviso discreto
-  "Cartas embaralhadas" que some sozinho em cerca de 2 segundos, sem cobrir a pergunta e sem
-  bloquear toques ou gestos; toques repetidos MUST NOT empilhar avisos.
+  "Cartas embaralhadas" em forma de pílula centralizada logo acima dos controles inferiores, que
+  some sozinho em cerca de 2 segundos (aparecendo e sumindo por esmaecimento), sem cobrir a carta e
+  sem bloquear toques ou gestos; toques repetidos MUST NOT empilhar avisos (o aviso visível
+  reinicia sua contagem).
 - **FR-012**: Ao acionar o botão ativado, o ícone MUST dar um giro rápido de uma volta (≤ 0,5 s);
   com movimento reduzido ativado, o giro MUST ser omitido, mantendo vibração e aviso.
-- **FR-013**: O botão MUST ficar no canto inferior direito, fora da área de gesto da carta; tocá-lo
+- **FR-013**: O botão MUST ficar no canto inferior direito, na mesma linha do botão de favoritar
+  (que continua centralizado), fora da área de gesto da carta; tocá-lo
   MUST NOT virar nem descartar a carta, e ele MUST NOT sobrepor a carta, o botão de favoritar ou a
   dica de gestos em telas a partir de 320pt.
 - **FR-014**: O botão MUST ser minimalista (ícone de embaralhar, sem fundo preenchido ou com fundo
