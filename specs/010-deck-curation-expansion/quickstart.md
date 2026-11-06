@@ -22,11 +22,10 @@ Expected: every category `30`, total `270`.
 Favorites compatibility: every ID from before 010 still exists:
 
 ```bash
-git show 12fc478:src/data/data.json > /tmp/old.json
-node -e "const o=require('/tmp/old.json'),n=require('./src/data/data.json');const ids=new Set(n.questions.map(q=>q.id));console.log(o.questions.filter(q=>!ids.has(q.id)))"
+git show 12fc478:src/data/data.json | node -e "let s='';process.stdin.on('data',d=>s+=d).on('end',()=>{const o=JSON.parse(s),n=require('./src/data/data.json');const cat=new Map(n.questions.map(q=>[q.id,q.categoryId]));console.log(o.questions.filter(q=>cat.get(q.id)!==q.categoryId).map(q=>q.id), JSON.stringify(o.categories)===JSON.stringify(n.categories))})"
 ```
 
-Expected: `[]`.
+Expected: `[] true` (no ID missing or moved; categories unchanged).
 
 ## Manual content review (SC-002, SC-003, SC-004)
 

@@ -21,7 +21,7 @@ kept. Everything lands in `src/data/data.json` (one file, so content tasks are s
 
 ## Phase 1: Setup
 
-- [ ] T001 Run `npm run typecheck`, `npm run lint`, `npm test` and confirm all green (baseline); save the pre-010 question IDs with `git show 12fc478:src/data/data.json` for the T016 check
+- [ ] T001 Run `npm run typecheck`, `npm run lint`, `npm test` and confirm all green (baseline); save the pre-010 question IDs with `git show 12fc478:src/data/data.json` for the T018 check
 
 ---
 
@@ -87,11 +87,11 @@ satisfy FR-009.
 
 ### Tests for User Story 3
 
-- [ ] T016 [US3] In src/data/__tests__/content.test.ts add rule "14. happy-hour questions are workplace-safe": for every `happy-hour` question, ` ${normalize(text)} ` MUST NOT match `/ (alcool|bebida|bebad|ressaca|drink|cerveja|salari|dinheiro|chefe|demiss|promoc|desempenho|namor|ex|sexo|sexual|religi|igreja|politic|partido) /` with word-prefix semantics like `DATE_UNSAFE` (prefix match for stems, whole word for `ex`). Run it; fix any hit in src/data/data.json (e.g. `happy-hour-018` "brinde" is fine, but no drink mention)
+- [ ] T016 [US3] In src/data/__tests__/content.test.ts add rule "14. happy-hour questions are workplace-safe": for every `happy-hour` question, ` ${normalize(text)} ` MUST NOT match `/ (alcool|bebida|bebad|ressaca|drink|cerveja|salari|dinheiro|chefe|demiss|promoc|desempenho|namor|sexo|sexual|religi|igreja|politic|partido)/` (stem prefix, like `DATE_UNSAFE`) nor the whole word `/ ex /`, declared as a `WORKPLACE_UNSAFE: RegExp[]` list. Run it; fix any hit in src/data/data.json (e.g. `happy-hour-018` "brinde" is fine, but no drink mention)
 
 ### Implementation for User Story 3
 
-- [ ] T017 [US3] Read each category section of content-review.md against its FR-008 tone row and FR-010/FR-011 inclusion rules; rewrite any off-tone question in src/data/data.json (keeping ID and theme) and update the review
+- [ ] T017 [US3] Read each category section of content-review.md against its FR-008 tone row, FR-010/FR-011 inclusion rules and FR-013 originality (no text taken from commercial games, books or known lists; the `Assets/` reference games are never used), and check cross-category near-duplicates (same theme MUST have a clearly different angle); rewrite any off-tone question in src/data/data.json (keeping ID and theme) and update the review
 
 **Checkpoint**: rules 1–14 green; tone review signed off in content-review.md.
 
@@ -103,7 +103,7 @@ satisfy FR-009.
 
 **Independent Test**: quickstart favorites check prints `[]`.
 
-- [ ] T018 [US4] Run the quickstart compatibility check (old IDs from `git show 12fc478:src/data/data.json` vs current `src/data/data.json`; also compare each old ID's `categoryId`) and confirm no ID is missing or moved; note the result at the end of content-review.md
+- [ ] T018 [US4] Run the quickstart compatibility check (old IDs from `git show 12fc478:src/data/data.json` vs current `src/data/data.json`; also compare each old ID's `categoryId`) and confirm no ID is missing or moved; also confirm the `categories` array is identical to the old one (FR-015); note the result at the end of content-review.md
 
 ---
 
