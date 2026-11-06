@@ -8,7 +8,7 @@ import { DeckComplete } from '../components/DeckComplete';
 import { FavoriteButton } from '../components/FavoriteButton';
 import { HintLine } from '../components/HintLine';
 import { ReshuffleButton } from '../components/ReshuffleButton';
-import { SwipeCard, type CardFace } from '../components/SwipeCard';
+import { SwipeCard, type CardFace, type SwipeDirection } from '../components/SwipeCard';
 import { MIXED_DECK_ID, type DeckId } from '../data/types';
 import { useDeck } from '../hooks/useDeck';
 import { useHaptics } from '../hooks/useHaptics';
@@ -37,6 +37,8 @@ export function DeckScreen({ deckId }: DeckScreenProps) {
     position,
     ready,
     discard,
+    canGoBack,
+    goBack,
     reshuffle,
     canReshuffleRemaining,
     reshuffleRemaining,
@@ -61,10 +63,19 @@ export function DeckScreen({ deckId }: DeckScreenProps) {
     [haptics],
   );
 
-  const handleDiscard = useCallback(() => {
-    setFace('down');
-    discard();
-  }, [discard]);
+  // Left = next card (face down); right = previous card, back face up to re-read it (009).
+  const handleDiscard = useCallback(
+    (direction: SwipeDirection) => {
+      if (direction === 'right') {
+        setFace('up');
+        goBack();
+      } else {
+        setFace('down');
+        discard();
+      }
+    },
+    [discard, goBack],
+  );
 
   // Each press bumps the nonce, restarting the 2 s timer: toasts never stack.
   const [toastNonce, setToastNonce] = useState(0);
@@ -116,6 +127,8 @@ export function DeckScreen({ deckId }: DeckScreenProps) {
             category={currentCategory}
             visual={getCategoryVisual(currentCategory)}
             isFavorite={isFavorite}
+            canGoBack={canGoBack}
+            initialFace={face}
             width={geometry.width}
             height={geometry.height}
             screenWidth={window.width}

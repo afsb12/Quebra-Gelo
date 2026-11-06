@@ -108,6 +108,31 @@ describe('useDeck', () => {
     expect(useProgressStore.getState().decks.casual?.order).toEqual(order);
   });
 
+  it('goBack returns to the previous card (009)', async () => {
+    const { result } = await renderHook(() => useDeck('casual'));
+    expect(result.current.canGoBack).toBe(false);
+    const first = result.current.current?.id;
+    await act(async () => result.current.discard());
+    expect(result.current.canGoBack).toBe(true);
+    await act(async () => result.current.goBack());
+    expect(result.current.current?.id).toBe(first);
+    expect(result.current.position.index).toBe(1);
+    expect(result.current.canGoBack).toBe(false);
+  });
+
+  it('canReshuffleRemaining counts only never-shown cards (009)', async () => {
+    const { result } = await renderHook(() => useDeck('casual'));
+    await act(async () => {
+      for (let i = 0; i < total - 2; i += 1) result.current.discard();
+    });
+    expect(result.current.canReshuffleRemaining).toBe(false);
+    await act(async () => {
+      for (let i = 0; i < 5; i += 1) result.current.goBack();
+    });
+    expect(result.current.position.index).toBe(total - 6);
+    expect(result.current.canReshuffleRemaining).toBe(false);
+  });
+
   it('mixed deck: title "Tudo Misturado", no deck category, current category follows the question (004)', async () => {
     const { result } = await renderHook(() => useDeck('mixed'));
     expect(result.current.title).toBe('Tudo Misturado');

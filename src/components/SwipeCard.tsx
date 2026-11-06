@@ -30,6 +30,10 @@ export interface SwipeCardProps {
   category: Category;
   visual: CategoryVisual;
   isFavorite: boolean;
+  /** False on the first card: a right drag only resists (`resistX`) and springs back (009). */
+  canGoBack: boolean;
+  /** Side shown when the card mounts (a card brought back by "voltar" starts face up, 009). */
+  initialFace?: CardFace;
   width: number;
   height: number;
   /** Screen width, used for the discard threshold and fly-off distance. */
@@ -39,7 +43,7 @@ export interface SwipeCardProps {
   onFlip: (face: CardFace) => void;
   /** Called the moment a discard is confirmed (release past the threshold) — haptic timing. */
   onSwipeConfirmed?: (direction: SwipeDirection) => void;
-  /** Called exactly once per card, after the exit animation finishes. */
+  /** Called exactly once per card, after the exit animation: 'left' = next card, 'right' = previous (009). */
   onDiscard: (direction: SwipeDirection) => void;
   /** Only used by the "favoritar" accessibility action; the star button lives outside the card. */
   onToggleFavorite: () => void;
@@ -51,6 +55,14 @@ const MAX_ROTATION = 15;
 const FLIP_MS = 320;
 const EXIT_MS = 220;
 const FADE_MS = 150;
+const RESIST_FACTOR = 0.2;
+const RESIST_MAX = 40;
+
+/** Elastic resistance for a blocked right drag: follows the finger a little, never past 40 pt (009). */
+export const resistX = (translationX: number): number => {
+  'worklet';
+  return Math.min(Math.max(translationX, 0) * RESIST_FACTOR, RESIST_MAX);
+};
 
 export function SwipeCard({
   mode = 'category',
@@ -58,6 +70,8 @@ export function SwipeCard({
   category,
   visual,
   isFavorite,
+  canGoBack,
+  initialFace = 'down',
   width,
   height,
   screenWidth,
@@ -69,11 +83,17 @@ export function SwipeCard({
 }: SwipeCardProps) {
   const reducedMotion = useReducedMotion();
   const translateX = useSharedValue(0);
-  const rotation = useSharedValue(0); // 0 = face down, 180 = face up
+  const rotation = useSharedValue(initialFace === 'up' ? 180 : 0); // 0 = face down, 180 = face up
   const opacity = useSharedValue(1);
   const isAnimating = useSharedValue(false);
-  const faceUp = useSharedValue(false);
-  const [face, setFace] = useState<CardFace>('down');
+  const faceUp = useSharedValue(initialFace === 'up');
+  const [face, setFace] = useState<CardFace>(initialFace);
+  // Mirrored into a shared value so the gesture worklets always read the current value.
+  const canGoBackSV = useSharedValue(canGoBack);
+
+  useEffect(() => {
+    canGoBackSV.set(canGoBack);
+  }, [canGoBack, canGoBackSV]);
 
   // Each card is mounted with key={question.id}: just settle in once.
   useEffect(() => {
@@ -144,16 +164,19 @@ export function SwipeCard({
     onUpdate: (event) => {
       'worklet';
       if (isAnimating.get()) return;
-      translateX.set(event.translationX);
+      const blocked = !canGoBackSV.get() && event.translationX > 0;
+      translateX.set(blocked ? resistX(event.translationX) : event.translationX);
     },
     onDeactivate: (event) => {
       'worklet';
       if (isAnimating.get()) return;
       const passed = Math.abs(event.translationX) > screenWidth * DISCARD_RATIO;
       const flicked = Math.abs(event.velocityX) > DISCARD_VELOCITY;
-      if (passed || flicked) {
-        const sign = passed ? event.translationX : event.velocityX;
-        discard(sign < 0 ? 'left' : 'right');
+      const direction: SwipeDirection = (passed ? event.translationX : event.velocityX) < 0 ? 'left' : 'right';
+      // On the first card there is nothing to go back to: always spring back (009 FR-006).
+      const blocked = direction === 'right' && !canGoBackSV.get();
+      if ((passed || flicked) && !blocked) {
+        discard(direction);
       } else {
         translateX.set(withSpring(0, { damping: 18, stiffness: 220 }));
       }
@@ -201,6 +224,11 @@ export function SwipeCard({
         onToggleFavorite();
         break;
       case 'skip':
+        onSwipeConfirmed?.('left');
+        onDiscard('left');
+        break;
+      case 'previous':
+        if (!canGoBack) break;
         onSwipeConfirmed?.('right');
         onDiscard('right');
         break;
@@ -224,6 +252,7 @@ export function SwipeCard({
           { name: 'activate', label: strings.card.actions.flip },
           { name: 'favorite', label: strings.card.actions.favorite },
           { name: 'skip', label: strings.card.actions.next },
+          ...(canGoBack ? [{ name: 'previous', label: strings.card.actions.previous }] : []),
         ]}
         onAccessibilityAction={onAccessibilityAction}
       >

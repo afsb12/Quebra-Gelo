@@ -252,3 +252,43 @@ describe('DeckScreen — reshuffle the remaining cards (008)', () => {
     expect(screen.getByText('Toque para virar · ← próxima · anterior →')).toBeTruthy();
   });
 });
+
+describe('DeckScreen — directional navigation (009)', () => {
+  const deck = () => useProgressStore.getState().decks.dilemas;
+  const action = async (actionName: string) => {
+    await act(async () => {
+      fireEvent(screen.getByTestId('swipe-card'), 'accessibilityAction', { nativeEvent: { actionName } });
+    });
+  };
+  const actions = () =>
+    (screen.getByTestId('swipe-card').props.accessibilityActions as { name: string }[]).map((a) => a.name);
+
+  beforeEach(() => {
+    useProgressStore.setState({ decks: {} });
+    useFavoritesStore.setState({ favorites: [] });
+    jest.clearAllMocks();
+  });
+
+  it('"voltar" brings back the previous card face up, and "próxima" replays the history', async () => {
+    await render(<DeckScreen deckId="dilemas" />, { wrapper });
+    expect(actions()).not.toContain('previous');
+    await skip();
+    await skip();
+    await skip();
+    const order = deck()?.order ?? [];
+
+    await action('previous');
+    expect(Haptics.impactAsync).toHaveBeenCalledWith(Haptics.ImpactFeedbackStyle.Medium);
+    await action('previous');
+    expect(screen.getByText(`Carta 2 de ${total}`)).toBeTruthy();
+    expect(screen.getByTestId('swipe-card').props.accessibilityLabel).toBe(getQuestion(order[1])?.text);
+    expect(screen.getByTestId('favorite-button')).toBeEnabled();
+
+    await skip();
+    expect(deck()?.order[deck()?.cursor ?? 0]).toBe(order[2]);
+    await skip();
+    expect(deck()?.order[deck()?.cursor ?? 0]).toBe(order[3]);
+    expect(screen.getByText(`Carta 4 de ${total}`)).toBeTruthy();
+    expect(screen.getByTestId('favorite-button')).toBeDisabled();
+  });
+});
