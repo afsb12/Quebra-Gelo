@@ -12,24 +12,24 @@
   as text (breaks the icon contract, renders differently per OS, and fails test #4); a custom SVG
   (new asset for a marginal gain).
 
-## R2. Color `#FF9F43` and the closeness to Happy Hour
+## R2. Color: coral `#FF8A80` instead of `#FF9F43`
 
-- **Decision**: keep `#FF9F43` as requested. Back text = dark (`onColorDark`, 8.45:1, picked
-  automatically). Front ink fixed in `CATEGORY_INK` as `#AE5500` (= `inkOnCream('#FF9F43')`,
-  4.52:1 on cream), pinned in the palette tests like the others.
-- **Finding**: the color is unique (test #3 passes) but close to Happy Hour `#F27A1F` (contrast
-  1.36:1 between backs), and its front ink is nearly identical to Happy Hour's `#A84F00` (1.08:1).
-  On the Home grid the two tiles are told apart by icon and title; in the mixed deck the front
-  shows the category badge with the name. So identity holds, but by shape and text rather than
-  color.
-- **Rationale**: the color is an explicit part of the request; changing it is the user's call.
-- **Alternatives** (for the user to pick, if wanted): a peach/coral back such as `#FF8A80` would
-  be clearly distinct from Happy Hour while keeping the warm "toast" mood; a hand-picked ink with
-  a hue shift toward red (e.g. `#B5472E`) would separate the fronts without changing the back.
+- **Decision**: use coral `#FF8A80` (user decision after `/speckit-analyze`, option C). Back text = dark (`onColorDark`, 7.56:1, picked
+  automatically). Front ink fixed in `CATEGORY_INK` as `#D71100` (= `inkOnCream('#FF8A80')`,
+  4.67:1 on cream), pinned in the palette tests like the others.
+- **Finding**: the requested `#FF9F43` was unique but almost the same as Happy Hour: perceptual
+  distance (CIE76 ΔE) 16 between backs and only 3 between front inks (`#AE5500` vs `#A84F00`).
+  Coral `#FF8A80` keeps the warm "toast" mood and is distinct from every category on both faces
+  (back / front ΔE): Happy Hour 40 / 36, Nostalgia 29 / 68, Casais 34 / 36, Descontraído 62 / 60,
+  others ≥ 83. Its closest neighbors (Nostalgia pink, Casais red) still read as different colors.
+- **Rationale**: each category MUST have its own visual identity (constitution); coral achieves it
+  by color, not only by icon and name.
+- **Alternatives**: keep `#FF9F43` and rely on icon/name (rejected: fronts practically identical to
+  Happy Hour); keep the back and hand-pick a redder ink `#B5472E` (rejected: backs still similar).
 
 ## R3. Content: what a "first date" question is
 
-- **Decision**: 20 questions in pt-BR, ≤ 200 characters, IDs `primeiros-encontros-001…020`,
+- **Decision**: 20 questions in pt-BR, ≤ 200 characters, IDs from `primeiros-encontros-001`,
   written from scratch, following this mix:
   - **Gostos e manias** (~6): pequenas preferências, rituais, manias inofensivas.
   - **Histórias leves** (~5): situações engraçadas, descobertas, "a última vez que…".
@@ -48,16 +48,20 @@
 ## R4. Enforcing the tone rules automatically
 
 - **Decision**: add a content test scoped to `primeiros-encontros` that rejects:
-  - shared-history words: `\b(em mim|comigo|a gente|nós|nosso|nossa)\b`;
+  - shared-history words (whole word/phrase): `em mim`, `comigo`, `a gente`, `nosso`, `nossa`.
+    `nós` is deliberately left out: accent removal turns it into the common "nos" (em + os), as
+    in "nos últimos anos";
   - forbidden topics: whole word `ex` (also `ex-namorad…`), and the stems `namor`, `casad`,
     `casament`, `salari`, `dinheiro`, `religi`, `igreja`, `deus`, `partido`, `politic`, `filho`,
-    `sexo`, `sexual`, `corpo`, `peso`, `doenca` at a word start (so `exemplo` or `adeus` pass);
-  - interview phrases: `defeito`, `qualidade`, `daqui a \d+ anos`, `onde você se vê`;
+    `sexo`, `sexual`, `corpo`, `peso`, `doenca`, `aparencia`, `bonit`, `solteir` at a word start (so `exemplo` or `adeus` pass);
+  - interview phrases: `defeito`, `daqui a \d+ anos`, `onde você se vê` (`qualidade` is left out:
+    it blocks harmless phrases such as "tempo de qualidade");
   - text not ending in `?`.
-  Matching runs on the normalized text (lowercase, accents removed), like test #10.
+  The `?` check runs on the raw trimmed text; term matching runs on the normalized text
+  (lowercase, accents removed, punctuation turned into spaces), like test #10.
 - **Rationale**: the constitution requires content validated by an automated test; a cheap
-  keyword guard catches regressions when questions are edited later. It is a floor, not proof:
-  the manual review in quickstart remains the real check (SC-002).
+  keyword guard catches regressions when questions are edited later. This list is only a minimum check:
+  the manual review in T011 / quickstart §2 is what actually guarantees the tone (SC-002).
 - **Alternatives**: manual review only (no regression guard); applying the list to every
   category (would flag legitimate `casais`/`profundo` questions).
 

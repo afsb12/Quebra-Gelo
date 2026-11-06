@@ -6,7 +6,7 @@
 
 ## Summary
 
-Add a 9th category, `primeiros-encontros` ("Primeiros Encontros", `#FF9F43`, icon `glass-flute`),
+Add a 9th category, `primeiros-encontros` ("Primeiros Encontros", `#FF8A80`, icon `glass-flute`),
 with 20 original, date-safe questions, placed right after `casual` ("Descontraído"). This is a
 **content + registry** change: the category ID joins the `CATEGORY_IDS` tuple at index 1, the
 category and its questions join `data.json` at the same position, the front-of-card ink joins
@@ -49,16 +49,15 @@ filter (formats unchanged)
 | III. Tipagem Estrita | ✅ | New ID enters the `CATEGORY_IDS` tuple, so `CategoryId`, `Record<CategoryId, …>` (ink) and guards cover it at compile time |
 | IV. Arquitetura Limpa | ✅ | Change confined to Data (`types.ts`, `data.json`) and theme (`categoryVisual.ts`); no UI/screen logic changes |
 | Stack (Managed, NativeWind, Zustand) | ✅ | No new packages, no new stores |
-| Jogo: categories with name, description, own visual identity | ✅ | Title, description, color, icon and ink; see R2 for the closeness to Happy Hour |
+| Jogo: categories with name, description, own visual identity | ✅ | Title, description, color, icon and ink; coral chosen over the requested `#FF9F43` to stay distinct from Happy Hour (R2) |
 | Jogo: no repeat until all cards shown; skip any card | ✅ | Existing deck logic, generic over categories |
 | Conteúdo: original, pt-BR, inclusive, no assumptions (gender, orientation, religion, marital status, finances, family) | ✅ | Questions written for this feature (R3); forbidden-topic test (R4); manual review in quickstart |
 | Conteúdo: original vs. `Assets/` references | ✅ | Questions written from scratch, not taken from the reference games |
-| Conteúdo: AA contrast | ✅ | Back: dark text on `#FF9F43` = 8.45:1; front ink `#AE5500` on cream = 4.52:1 |
+| Conteúdo: AA contrast | ✅ | Back: dark text on `#FF8A80` = 7.56:1; front ink `#D71100` on cream = 4.67:1 |
 | Conteúdo validated by test | ✅ | Existing suite + updated palette + new tone test |
 | Qualidade gates | ✅ | quickstart |
 
-**Post-design re-check**: all ✅, no violations. One accepted risk, not a violation: front ink and
-back color are close to Happy Hour (R2).
+**Post-design re-check**: all ✅, no violations.
 
 ## Project Structure
 
@@ -81,16 +80,18 @@ specs/007-first-dates-category/
 src/
 ├── data/
 │   ├── types.ts                     # CATEGORY_IDS: insert 'primeiros-encontros' at index 1
-│   ├── data.json                    # category at index 1 + primeiros-encontros-001…020
+│   ├── data.json                    # category at index 1 + primeiros-encontros-001…
 │   └── __tests__/
 │       ├── content.test.ts          # PALETTE + names "9"; new tone/forbidden-topic test
 │       └── deckIds.test.ts          # test names "8" → generic
 ├── theme/
-│   ├── categoryVisual.ts            # CATEGORY_INK['primeiros-encontros'] = '#AE5500'
+│   ├── categoryVisual.ts            # CATEGORY_INK['primeiros-encontros'] = '#D71100'
 │   └── __tests__/categoryVisual.test.ts   # TABLE row
-├── components/__tests__/
-│   ├── MixFilterSheet.test.tsx      # test name "8" → generic
-│   └── MixedHeroCard.test.tsx       # summary fixture "6 de 8" → "7 de 9" (cosmetic)
+├── components/
+│   ├── MixedHeroCard.tsx            # doc comment example "6 de 8" → "7 de 9"
+│   └── __tests__/
+│       ├── MixFilterSheet.test.tsx  # test name "8" → generic
+│       └── MixedHeroCard.test.tsx   # summary fixture "6 de 8" → "7 de 9" (cosmetic)
 └── screens/__tests__/
     └── HomeScreen.test.tsx          # 9 tiles, order, "7 de 9 categorias"
 ```

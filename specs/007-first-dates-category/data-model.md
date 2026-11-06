@@ -21,20 +21,20 @@ Effects through the type system: `CategoryId` gains `'primeiros-encontros'`;
 | `id` | `primeiros-encontros` | in `CATEGORY_IDS`, index 1 |
 | `title` | `Primeiros Encontros` | ≤ 30 chars (19) |
 | `icon` | `glass-flute` | exists in MaterialCommunityIcons (R1) |
-| `color` | `#FF9F43` | `#RRGGBB`, unique among categories (R2) |
+| `color` | `#FF8A80` | `#RRGGBB`, unique among categories (R2) |
 | `description` | `Perguntas leves e instigantes para quebrar o gelo e descobrir afinidades.` | ≤ 80 chars (73) |
 
-Derived visual (`getCategoryVisual`): `color #FF9F43`, `onColor = onColorDark`, `ink #AE5500`.
+Derived visual (`getCategoryVisual`): `color #FF8A80`, `onColor = onColorDark`, `ink #D71100`.
 
 ## Question entries
 
 | Field | Rule |
 |---|---|
-| `id` | `primeiros-encontros-001` … `-020`, unique, never reused |
+| `id` | `primeiros-encontros-001` onwards, consecutive, unique, never reused |
 | `categoryId` | `primeiros-encontros` |
 | `text` | pt-BR, trimmed, 1–200 chars, ends with `?`, unique (normalized) across all categories, passes R4 |
 
-Count: exactly 20 (≥ 20 required by test #9).
+Count: 20 in this feature (≥ 20 required by tests #9 and #11).
 
 ## Persisted state (unchanged)
 

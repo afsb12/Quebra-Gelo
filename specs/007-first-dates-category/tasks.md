@@ -37,10 +37,10 @@ edits must land together: `content.test.ts` #2 pins `data.json` order to `CATEGO
 fails until T008 adds the questions. That is expected; the gate is the US1 checkpoint.
 
 - [ ] T002 Insert `'primeiros-encontros'` at index 1 of `CATEGORY_IDS` (right after `'casual'`, before `'profundo'`) in src/data/types.ts
-- [ ] T003 Insert the category object at index 1 of the `categories` array (right after `casual`) in src/data/data.json, exactly: `{ "id": "primeiros-encontros", "title": "Primeiros Encontros", "icon": "glass-flute", "color": "#FF9F43", "description": "Perguntas leves e instigantes para quebrar o gelo e descobrir afinidades." }` (five keys only; title ≤ 30 chars, description ≤ 80 chars; `glass-flute` replaces 🥂 per research R1)
-- [ ] T004 [P] Add `'primeiros-encontros': '#AE5500'` to `CATEGORY_INK` after `casual` in src/theme/categoryVisual.ts (= `inkOnCream('#FF9F43')`, 4.52:1 on cream, research R2)
-- [ ] T005 [P] Add `'primeiros-encontros': '#FF9F43'` to `PALETTE` and rename test #2 from "lists exactly the 8 category IDs" to "lists exactly the category IDs" in src/data/__tests__/content.test.ts
-- [ ] T006 [P] Add the row `'primeiros-encontros': { color: '#FF9F43', onColor: 'dark', ink: '#AE5500' }` to `TABLE` in src/theme/__tests__/categoryVisual.test.ts
+- [ ] T003 Insert the category object at index 1 of the `categories` array (right after `casual`) in src/data/data.json, exactly: `{ "id": "primeiros-encontros", "title": "Primeiros Encontros", "icon": "glass-flute", "color": "#FF8A80", "description": "Perguntas leves e instigantes para quebrar o gelo e descobrir afinidades." }` (five keys only; title ≤ 30 chars, description ≤ 80 chars; `glass-flute` replaces 🥂 per research R1)
+- [ ] T004 [P] Add `'primeiros-encontros': '#D71100'` to `CATEGORY_INK` after `casual` in src/theme/categoryVisual.ts (= `inkOnCream('#FF8A80')`, 4.67:1 on cream, research R2: coral replaces the requested `#FF9F43`, too close to Happy Hour)
+- [ ] T005 [P] Add `'primeiros-encontros': '#FF8A80'` to `PALETTE` and rename test #2 from "lists exactly the 8 category IDs" to "lists exactly the category IDs" in src/data/__tests__/content.test.ts
+- [ ] T006 [P] Add the row `'primeiros-encontros': { color: '#FF8A80', onColor: 'dark', ink: '#D71100' }` to `TABLE` in src/theme/__tests__/categoryVisual.test.ts
 - [ ] T007 Run `npm run typecheck` and `npx jest src/theme src/data/__tests__/content.test.ts`: everything passes except #9 for `primeiros-encontros`
 
 **Checkpoint**: category known to the type system, data and theme.
@@ -57,7 +57,7 @@ the automated tone test and the manual review (quickstart §2).
 
 ### Tests for User Story 1
 
-- [ ] T008 [US1] Add test "11. primeiros-encontros questions are date-safe" in src/data/__tests__/content.test.ts, scoped to `categoryId === 'primeiros-encontros'`, on `normalize(text)` (lowercase, no accents): fail if the text does not end with `?`; matches a shared-history term as a whole word/phrase (`em mim`, `comigo`, `a gente`, `nos`, `nosso`, `nossa`); matches the whole word `ex` or starts a word with any of `namor`, `casad`, `casament`, `salari`, `dinheiro`, `religi`, `igreja`, `deus`, `partido`, `politic`, `filho`, `sexo`, `sexual`, `corpo`, `peso`, `doenca`; or contains `defeito`, `qualidade`, `onde voce se ve`, or `daqui a <n> anos` (research R4). Report the offending ID and term in the assertion like the existing tests. Also assert the category has exactly 20 questions numbered `primeiros-encontros-001`…`-020` without gaps (contracts C3). Confirm it fails (no questions yet)
+- [ ] T008 [US1] Add test "11. primeiros-encontros questions are date-safe" in src/data/__tests__/content.test.ts, scoped to `categoryId === 'primeiros-encontros'`. (a) On the **raw trimmed text**: fail if it does not end with `?`. (b) On `normalize(text)` (lowercase, no accents, punctuation turned into spaces): fail if it matches a shared-history term as a whole word/phrase (`em mim`, `comigo`, `a gente`, `nosso`, `nossa`); matches the whole word `ex` or starts a word with any of `namor`, `casad`, `casament`, `salari`, `dinheiro`, `religi`, `igreja`, `deus`, `partido`, `politic`, `filho`, `sexo`, `sexual`, `corpo`, `peso`, `doenca`, `aparencia`, `bonit`, `solteir`; or contains `defeito`, `onde voce se ve`, or `daqui a <n> anos` (research R4). Report the offending ID and term in the assertion like the existing tests. Also assert the category has ≥ 20 questions, numbered consecutively from `primeiros-encontros-001` without gaps (contracts C3). Confirm it fails (no questions yet)
 
 ### Implementation for User Story 1
 
@@ -78,7 +78,7 @@ the automated tone test and the manual review (quickstart §2).
 Profundo, Casais, Happy Hour, Dilemas, Viagens e Aventuras, Nostalgia e Infância, Futuro e Sonhos.
 
 - [ ] T013 [US2] Update "renders exactly the 8 categories as mini cards, in data.json order" to "renders every category as mini cards, in data.json order", assert 9 tiles, and add an explicit assertion that the tile right after `casual` is `primeiros-encontros` in src/screens/__tests__/HomeScreen.test.tsx
-- [ ] T014 [US2] Run the app (`npm start`) and check quickstart §3.1: new tile 2nd and visible without scrolling on a ≈6" screen, peach-orange with dark text and flute icon, the 9th tile alone on the left of the last row at normal size (research R7); compare against the Happy Hour tile (quickstart §3.6). No code change expected
+- [ ] T014 [US2] Run the app (`npm start`) and check quickstart §3.1: new tile 2nd and visible without scrolling on a ≈6" screen, coral with dark text and flute icon, the 9th tile alone on the left of the last row at normal size (research R7); compare against the Happy Hour, Nostalgia and Casais tiles (quickstart §3.6). No code change expected
 
 **Checkpoint**: Home order verified by test and on device.
 
@@ -104,7 +104,7 @@ Profundo, Casais, Happy Hour, Dilemas, Viagens e Aventuras, Nostalgia e Infânci
 
 - [ ] T019 [P] Search `src/` for remaining hard-coded "8 categorias" / "8 categories" / `toHaveLength(8)` tied to the category count (`grep -rn "8 categor" src`) and make them generic
 - [ ] T020 Run `npm run typecheck`, `npm run lint`, `npm test` (merge gate) and walk through quickstart §3 (deck, favorites, mixed mode, upgrade path)
-- [ ] T021 Commit as `content: add Primeiros Encontros category (007)` with the Co-Authored-By trailer
+- [ ] T021 Commit at each checkpoint (Foundational, US1, US2, US3, Polish) with Conventional Commits (`content:` for data.json, `test:`/`feat:` otherwise, suffix `(007)`) and the Co-Authored-By trailer
 
 ---
 
@@ -140,5 +140,4 @@ Task: "MixedHeroCard fixture"          # T017
 ## Notes
 
 - No new dependencies, stores, persisted keys or migrations.
-- The color stays `#FF9F43` as requested; research R2 lists alternatives if the closeness to
-  Happy Hour is a problem on device (T014).
+- The color is coral `#FF8A80` instead of the requested `#FF9F43` (user decision, research R2).

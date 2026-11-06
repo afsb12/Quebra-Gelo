@@ -10,12 +10,12 @@ The app's only external interface touched by this feature is the bundled content
   "id": "primeiros-encontros",
   "title": "Primeiros Encontros",
   "icon": "glass-flute",
-  "color": "#FF9F43",
+  "color": "#FF8A80",
   "description": "Perguntas leves e instigantes para quebrar o gelo e descobrir afinidades."
 }
 ```
 
-Exactly these five keys (test #3). `icon` replaces the 🥂 of the request (research R1).
+Exactly these five keys (test #3). `icon` replaces the 🥂 of the request (research R1); `color` replaces the requested `#FF9F43` (research R2).
 
 ## C2. Order
 
@@ -25,14 +25,14 @@ Exactly these five keys (test #3). `icon` replaces the 🥂 of the request (rese
 ## C3. Questions
 
 - 20 objects `{ "id", "categoryId", "text" }`, exactly these keys (test #5).
-- `id` matches `^primeiros-encontros-\d{3}$`, numbered 001–020 without gaps.
+- `id` matches `^primeiros-encontros-\d{3}$`, at least 20, numbered from 001 without gaps.
 - `text` rules: see [data-model.md](../data-model.md#question-entries) and research R3/R4.
 - Placed in the `questions` array after the last `casual-*` entry.
 
 ## C4. Visual
 
-`CATEGORY_INK['primeiros-encontros'] = '#AE5500'`; palette tables in `content.test.ts` (PALETTE)
-and `categoryVisual.test.ts` (TABLE: color `#FF9F43`, onColor `dark`, ink `#AE5500`).
+`CATEGORY_INK['primeiros-encontros'] = '#D71100'`; palette tables in `content.test.ts` (PALETTE)
+and `categoryVisual.test.ts` (TABLE: color `#FF8A80`, onColor `dark`, ink `#D71100`).
 
 ## C5. Backward compatibility
 
