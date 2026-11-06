@@ -22,7 +22,7 @@ export function FavoriteButton({ active, disabled, onPress }: FavoriteButtonProp
       disabled={disabled}
       onPress={onPress}
       hitSlop={8}
-      className={`h-14 flex-row items-center justify-center gap-2 rounded-full px-6 ${
+      className={`h-14 shrink flex-row items-center justify-center gap-2 rounded-full px-6 ${
         disabled ? 'bg-surface opacity-40' : active ? 'bg-cream' : 'bg-surface'
       }`}
     >
@@ -31,7 +31,9 @@ export function FavoriteButton({ active, disabled, onPress }: FavoriteButtonProp
         size={24}
         color={active ? tokens.colors.questionInk : tokens.colors.textPrimary}
       />
-      <Text className={`font-body text-base ${active ? 'text-ink' : 'text-primary'}`}>{label}</Text>
+      <Text numberOfLines={1} className={`shrink font-body text-base ${active ? 'text-ink' : 'text-primary'}`}>
+        {label}
+      </Text>
     </Pressable>
   );
 }

@@ -1,6 +1,7 @@
 import { act, fireEvent, render, screen } from '@testing-library/react-native';
 import { router } from 'expo-router';
 import type { ReactNode } from 'react';
+import { AccessibilityInfo } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import * as Haptics from 'expo-haptics';
@@ -161,5 +162,93 @@ describe('DeckScreen — filtered mix (006)', () => {
     useMixFilterStore.getState().save(['casais', 'futuro']);
     await render(<DeckScreen deckId="dilemas" />, { wrapper });
     expect(screen.getByText(`Carta 1 de ${total}`)).toBeTruthy();
+  });
+});
+
+describe('DeckScreen — reshuffle the remaining cards (008)', () => {
+  const currentText = () => getQuestion(useProgressStore.getState().decks.dilemas?.order[useProgressStore.getState().decks.dilemas?.cursor ?? 0] ?? '')?.text ?? '';
+  const press = async () => {
+    await act(async () => {
+      fireEvent.press(screen.getByTestId('reshuffle-button'));
+    });
+  };
+
+  beforeEach(() => {
+    useProgressStore.setState({ decks: {} });
+    useFavoritesStore.setState({ favorites: [] });
+    jest.clearAllMocks();
+  });
+
+  afterEach(() => {
+    jest.useRealTimers();
+  });
+
+  it('keeps the face-up card and counter, and vibrates with the success pattern', async () => {
+    await render(<DeckScreen deckId="dilemas" />, { wrapper });
+    await skip();
+    await skip();
+    await act(async () => {
+      fireEvent(screen.getByTestId('swipe-card'), 'accessibilityAction', { nativeEvent: { actionName: 'activate' } });
+    });
+    const text = currentText();
+    const before = useProgressStore.getState().decks.dilemas?.order.slice(3);
+
+    await press();
+
+    expect(currentText()).toBe(text);
+    expect(screen.getByText(`Carta 3 de ${total}`)).toBeTruthy();
+    expect(screen.getByTestId('favorite-button')).toBeEnabled();
+    expect(useProgressStore.getState().decks.dilemas?.order.slice(3)).not.toEqual(before);
+    expect(Haptics.notificationAsync).toHaveBeenCalledTimes(1);
+    expect(Haptics.notificationAsync).toHaveBeenCalledWith('success');
+  });
+
+  it('pressing it with the card face down neither flips nor discards it', async () => {
+    await render(<DeckScreen deckId="dilemas" />, { wrapper });
+    await press();
+    expect(screen.getByTestId('favorite-button')).toBeDisabled();
+    expect(screen.getByText(`Carta 1 de ${total}`)).toBeTruthy();
+  });
+
+  it('is disabled on the last two cards and hidden on "Fim do Baralho"', async () => {
+    await render(<DeckScreen deckId="dilemas" />, { wrapper });
+    for (let i = 0; i < total - 2; i += 1) await skip();
+    expect(screen.getByTestId('reshuffle-button')).toBeDisabled();
+    await press();
+    expect(Haptics.notificationAsync).not.toHaveBeenCalled();
+    expect(screen.queryByTestId('deck-toast')).toBeNull();
+    await skip();
+    expect(screen.getByTestId('reshuffle-button')).toBeDisabled();
+    await skip();
+    expect(screen.getByTestId('deck-complete')).toBeTruthy();
+    expect(screen.queryByTestId('reshuffle-button')).toBeNull();
+  });
+
+  it('shows "Cartas embaralhadas" for 2 s, announces it, and never stacks toasts', async () => {
+    jest.useFakeTimers();
+    const announce = jest.spyOn(AccessibilityInfo, 'announceForAccessibility');
+    await render(<DeckScreen deckId="dilemas" />, { wrapper });
+
+    await press();
+    expect(screen.getByTestId('deck-toast')).toHaveTextContent('Cartas embaralhadas');
+    expect(screen.queryByText('Toque para virar · deslize para pular')).toBeNull();
+    expect(announce).toHaveBeenCalledWith('Cartas embaralhadas');
+
+    await act(async () => {
+      jest.advanceTimersByTime(1500);
+    });
+    await press();
+    expect(screen.getAllByTestId('deck-toast')).toHaveLength(1);
+
+    await act(async () => {
+      jest.advanceTimersByTime(1500);
+    });
+    expect(screen.getByTestId('deck-toast')).toBeTruthy();
+
+    await act(async () => {
+      jest.advanceTimersByTime(600);
+    });
+    expect(screen.queryByTestId('deck-toast')).toBeNull();
+    expect(screen.getByText('Toque para virar · deslize para pular')).toBeTruthy();
   });
 });
