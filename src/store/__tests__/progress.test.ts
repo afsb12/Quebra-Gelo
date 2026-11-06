@@ -89,6 +89,23 @@ describe('useProgressStore (in memory)', () => {
     expect(useProgressStore.getState().decks).toBe(decks);
   });
 
+  it('goBack is a no-op on a missing deck and on the first card (009)', () => {
+    useProgressStore.getState().goBack('casual');
+    expect(useProgressStore.getState().decks.casual).toBeUndefined();
+    useProgressStore.getState().ensureDeck('casual');
+    const decks = useProgressStore.getState().decks;
+    useProgressStore.getState().goBack('casual');
+    expect(useProgressStore.getState().decks).toBe(decks);
+  });
+
+  it('goBack moves back one card and keeps furthest (009)', () => {
+    useProgressStore.getState().ensureDeck('futuro');
+    useProgressStore.getState().discard('futuro');
+    useProgressStore.getState().discard('futuro');
+    useProgressStore.getState().goBack('futuro');
+    expect(useProgressStore.getState().decks.futuro).toMatchObject({ cursor: 1, furthest: 2 });
+  });
+
   it('is not persisted (no persist API)', () => {
     expect('persist' in useProgressStore).toBe(false);
   });

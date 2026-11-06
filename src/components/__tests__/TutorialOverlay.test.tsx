@@ -4,7 +4,8 @@ import { strings } from '../../i18n/strings';
 import { TutorialOverlay } from '../TutorialOverlay';
 
 const hints = [
-  ['tutorial-hint-swipe', 'Deslize para os lados para a próxima carta'],
+  ['tutorial-hint-next', 'Deslize para a esquerda para passar a carta'],
+  ['tutorial-hint-back', 'Deslize para a direita para voltar à carta anterior'],
   ['tutorial-hint-flip', 'Toque na carta para revelar a pergunta'],
   ['tutorial-hint-deck', 'Toque em um baralho para começar'],
 ] as const;
@@ -15,16 +16,17 @@ describe('TutorialOverlay (005)', () => {
     expect(screen.queryByTestId('tutorial-backdrop')).toBeNull();
   });
 
-  it('shows exactly the 3 short hints, their icons and the face-down brand card', async () => {
+  it('shows exactly the 4 short directional hints, in reading order, with their icons (009)', async () => {
     await render(<TutorialOverlay visible onClose={jest.fn()} />);
-    expect(screen.getAllByTestId(/^tutorial-hint-/)).toHaveLength(3);
+    expect(screen.getAllByTestId(/^tutorial-hint-/).map((h) => h.props.testID)).toEqual(hints.map(([id]) => id));
     for (const [id, text] of hints) {
       expect(within(screen.getByTestId(id)).getByText(text)).toBeTruthy();
-      expect(text.length).toBeLessThanOrEqual(50);
+      expect(text.length).toBeLessThanOrEqual(55);
     }
     for (const icon of ['chevron-left', 'chevron-right', 'gesture-tap', 'chevron-double-down']) {
       expect(screen.getByTestId(`tutorial-icon-${icon}`)).toBeTruthy();
     }
+    expect(within(screen.getByTestId('tutorial-card')).getByTestId('tutorial-icon-gesture-tap')).toBeTruthy();
     expect(screen.getByTestId('brand-card-back')).toBeTruthy();
     expect(screen.getByTestId('tutorial-content').props.accessibilityViewIsModal).toBe(true);
     expect(screen.getByLabelText(strings.tutorial.skipLabel)).toBeTruthy();

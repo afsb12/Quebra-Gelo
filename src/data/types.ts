@@ -45,6 +45,8 @@ export interface DeckProgress {
   order: string[];
   /** Index of the current card in `order`; `order.length` means completed. */
   cursor: number;
+  /** Highest index ever shown, 0 ≤ furthest ≤ max(0, order.length - 1); history = order[0..furthest] (009). */
+  furthest: number;
 }
 
 export interface Content {

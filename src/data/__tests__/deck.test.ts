@@ -1,4 +1,4 @@
-import { advance, canReshuffleRemaining, createDeck, currentQuestionId, isCompleted, remainingCount, reshuffleRemaining, shuffle } from '../deck';
+import { advance, canGoBack, canReshuffleRemaining, createDeck, currentQuestionId, goBack, isCompleted, remainingCount, reshuffleRemaining, shuffle } from '../deck';
 
 /** Deterministic pseudo-random generator for reproducible shuffles. */
 const seeded = (seed: number) => () => {
@@ -60,7 +60,11 @@ describe('deck lifecycle', () => {
 });
 
 describe('reshuffleRemaining (008)', () => {
-  const at = (cursor: number, order: readonly string[] = IDS) => ({ order: [...order], cursor });
+  const at = (cursor: number, order: readonly string[] = IDS) => ({
+    order: [...order],
+    cursor,
+    furthest: Math.max(0, Math.min(cursor, order.length - 1)),
+  });
 
   it('keeps the shown prefix and cursor, and reorders only the tail', () => {
     const deck = at(3);
@@ -114,5 +118,64 @@ describe('reshuffleRemaining (008)', () => {
     for (let seed = 1; seed <= 200; seed += 1) {
       expect(reshuffleRemaining(deck, seeded(seed)).order.slice(1)).not.toEqual(['b', 'c', 'd', 'e']);
     }
+  });
+});
+
+describe('navigation (009)', () => {
+  const walk = (deck: ReturnType<typeof createDeck>, steps: number) => {
+    let d = deck;
+    for (let i = 0; i < steps; i += 1) d = advance(d);
+    return d;
+  };
+
+  it('canGoBack is false on the first card and once completed', () => {
+    const deck = createDeck(IDS, seeded(1));
+    expect(canGoBack(deck)).toBe(false);
+    expect(canGoBack(advance(deck))).toBe(true);
+    expect(canGoBack(walk(deck, IDS.length))).toBe(false);
+  });
+
+  it('goBack on the first card returns the same object', () => {
+    const deck = createDeck(IDS, seeded(1));
+    expect(goBack(deck)).toBe(deck);
+  });
+
+  it('goBack moves the cursor and keeps furthest; advancing replays the history in order', () => {
+    const deck = walk(createDeck(IDS, seeded(2)), 3);
+    expect(deck).toMatchObject({ cursor: 3, furthest: 3 });
+    const back = goBack(goBack(deck));
+    expect(back).toMatchObject({ cursor: 1, furthest: 3 });
+    const replay1 = advance(back);
+    const replay2 = advance(replay1);
+    expect(currentQuestionId(replay1)).toBe(deck.order[2]);
+    expect(currentQuestionId(replay2)).toBe(deck.order[3]);
+    expect(replay2.furthest).toBe(3);
+    expect(advance(replay2).furthest).toBe(4);
+  });
+
+  it('any mix of next/back deals every never-shown card once, in deck order', () => {
+    const random = seeded(77);
+    let deck = createDeck(IDS, seeded(5));
+    const firstSeen: string[] = [];
+    let guard = 0;
+    while (!isCompleted(deck) && guard < 1000) {
+      const id = currentQuestionId(deck);
+      if (id && !firstSeen.includes(id)) firstSeen.push(id);
+      deck = random() < 0.35 ? goBack(deck) : advance(deck);
+      guard += 1;
+    }
+    expect(isCompleted(deck)).toBe(true);
+    expect(firstSeen).toEqual(deck.order);
+  });
+
+  it('remainingCount and reshuffleRemaining only consider never-shown cards', () => {
+    const deck = goBack(goBack(goBack(walk(createDeck(IDS, seeded(3)), 5))));
+    expect(deck).toMatchObject({ cursor: 2, furthest: 5 });
+    expect(remainingCount(deck)).toBe(14);
+    const next = reshuffleRemaining(deck, seeded(9));
+    expect(next).toMatchObject({ cursor: 2, furthest: 5 });
+    expect(next.order.slice(0, 6)).toEqual(deck.order.slice(0, 6));
+    expect([...next.order.slice(6)].sort()).toEqual([...deck.order.slice(6)].sort());
+    expect(next.order.slice(6)).not.toEqual(deck.order.slice(6));
   });
 });
