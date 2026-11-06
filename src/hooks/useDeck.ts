@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo } from 'react';
 
 import { getCategory, getQuestion } from '../data/content';
-import { createDeck, currentQuestionId } from '../data/deck';
+import { canReshuffleRemaining, createDeck, currentQuestionId } from '../data/deck';
 import { MIXED_DECK_ID, type Category, type DeckId, type DeckProgress, type Question } from '../data/types';
 import { strings } from '../i18n/strings';
 import { useMixCategories } from '../store/mixFilter';
@@ -21,7 +21,12 @@ export interface UseDeckResult {
   /** False only on the very first render, before the deck is created. */
   ready: boolean;
   discard: () => void;
+  /** Full restart from card 1 (used by the "Fim do Baralho" screen). */
   reshuffle: () => void;
+  /** True while a card is on the table and at least 2 cards come after it (008). */
+  canReshuffleRemaining: boolean;
+  /** Reorders only the cards not shown yet; keeps the current card, counter and seen cards (008). */
+  reshuffleRemaining: () => void;
 }
 
 const EMPTY_DECK: DeckProgress = createDeck([]);
@@ -31,6 +36,7 @@ export const useDeck = (deckId: DeckId): UseDeckResult => {
   const ensureDeck = useProgressStore((state) => state.ensureDeck);
   const discardInStore = useProgressStore((state) => state.discard);
   const reshuffleInStore = useProgressStore((state) => state.reshuffle);
+  const reshuffleRemainingInStore = useProgressStore((state) => state.reshuffleRemaining);
   const mixed = deckId === MIXED_DECK_ID;
   const mixFilter = useMixCategories();
   const mixCategories = mixed ? mixFilter : undefined;
@@ -52,6 +58,7 @@ export const useDeck = (deckId: DeckId): UseDeckResult => {
 
   const discard = useCallback(() => discardInStore(deckId), [deckId, discardInStore]);
   const reshuffle = useCallback(() => reshuffleInStore(deckId, mixCategories), [deckId, mixCategories, reshuffleInStore]);
+  const reshuffleRemaining = useCallback(() => reshuffleRemainingInStore(deckId), [deckId, reshuffleRemainingInStore]);
 
   const position = useMemo(
     () => ({ index: Math.min(active.cursor + 1, active.order.length), total: active.order.length }),
@@ -68,5 +75,7 @@ export const useDeck = (deckId: DeckId): UseDeckResult => {
     ready: deck !== undefined,
     discard,
     reshuffle,
+    canReshuffleRemaining: current !== undefined && canReshuffleRemaining(active),
+    reshuffleRemaining,
   };
 };

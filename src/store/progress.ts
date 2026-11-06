@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 
 import { getDeckQuestionIds } from '../data/content';
-import { advance, createDeck } from '../data/deck';
+import { advance, createDeck, reshuffleRemaining } from '../data/deck';
 import type { CategoryId, DeckId, DeckProgress } from '../data/types';
 
 /**
@@ -13,7 +13,10 @@ interface ProgressState {
   decks: Partial<Record<DeckId, DeckProgress>>;
   ensureDeck: (deckId: DeckId, mixCategories?: readonly CategoryId[]) => void;
   discard: (deckId: DeckId) => void;
+  /** Full restart: a new shuffled deck from card 1 ("Fim do Baralho" → "Embaralhar de novo"). */
   reshuffle: (deckId: DeckId, mixCategories?: readonly CategoryId[]) => void;
+  /** Reorders only the cards not shown yet; keeps the current card and counter (008). */
+  reshuffleRemaining: (deckId: DeckId) => void;
   /** Drops a deck so the next `ensureDeck` builds a fresh one (mix filter changed, 006 FR-010). */
   resetDeck: (deckId: DeckId) => void;
 }
@@ -34,6 +37,13 @@ export const useProgressStore = create<ProgressState>()((set, get) => ({
     }),
   reshuffle: (deckId, mixCategories) =>
     set((state) => ({ decks: { ...state.decks, [deckId]: newDeck(deckId, mixCategories) } })),
+  reshuffleRemaining: (deckId) =>
+    set((state) => {
+      const deck = state.decks[deckId];
+      if (!deck) return state;
+      const next = reshuffleRemaining(deck);
+      return next === deck ? state : { decks: { ...state.decks, [deckId]: next } };
+    }),
   resetDeck: (deckId) =>
     set((state) => {
       if (!state.decks[deckId]) return state;
