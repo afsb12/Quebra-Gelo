@@ -31,6 +31,8 @@ export const strings = {
     backHint: 'Volta para a escolha de baralho',
     position: (index: number, total: number) => `Carta ${index} de ${total}`,
     tapHint: 'Toque para virar · deslize para pular',
+    reshuffleLabel: 'Embaralhar as próximas cartas',
+    reshuffled: 'Cartas embaralhadas',
   },
   card: {
     faceDownLabel: (category: string) => `Carta de ${category}, virada para baixo`,
