@@ -38,6 +38,15 @@ const normalize = (text: string) =>
     .replace(/[^a-z0-9]+/g, ' ')
     .trim();
 
+// Matched against ` ${normalize(text)} ` (lowercase, no accents, punctuation → spaces). `nos` is
+// left out on purpose: without accents it is also the common "em + os".
+const DATE_UNSAFE: RegExp[] = [
+  / (em mim|comigo|a gente|nosso|nossa|nossos|nossas) /,
+  / ex /,
+  / (namor|casad|casament|salari|dinheiro|religi|igreja|deus|partido|politic|filho|sexo|sexual|corpo|peso|doenca|aparencia|bonit|solteir)/,
+  / (defeito|onde voce se ve|daqui a \d+ anos)/,
+];
+
 describe('data.json content', () => {
   it('1. has exactly the top-level keys categories and questions (arrays)', () => {
     expect(isObject(data)).toBe(true);
@@ -132,6 +141,25 @@ describe('data.json content', () => {
       const key = normalize(String(q.text));
       expect({ id: q.id, duplicateOf: seen.get(key) }).toEqual({ id: q.id, duplicateOf: undefined });
       seen.set(key, String(q.id));
+    }
+  });
+
+  // 007 research R4: a minimum guard for the date-safe tone; the manual review is the real check.
+  it('11. primeiros-encontros questions are date-safe', () => {
+    const deck = questions.filter((q) => q.categoryId === 'primeiros-encontros');
+    expect(deck.length).toBeGreaterThanOrEqual(20);
+    expect(deck.map((q) => q.id)).toEqual(
+      deck.map((_, i) => `primeiros-encontros-${String(i + 1).padStart(3, '0')}`),
+    );
+    for (const q of deck) {
+      const text = String(q.text).trim();
+      const words = ` ${normalize(text)} `;
+      const term = DATE_UNSAFE.find((pattern) => pattern.test(words));
+      expect({ id: q.id, question: text.endsWith('?'), term: term?.source }).toEqual({
+        id: q.id,
+        question: true,
+        term: undefined,
+      });
     }
   });
 });
