@@ -31,6 +31,16 @@ agradecer e ainda não disse?" ou "Você toparia saber, por um dia, tudo o que p
 algumas rígidas ou clichês, e o tom de cada baralho ainda não segue uma intenção psicológica
 explícita. Esta feature é **só de conteúdo**: nenhuma tela, gesto ou regra de jogo muda.
 
+## Clarifications
+
+### Session 2026-11-06
+
+- Q: Os IDs devem seguir o formato do pedido (`casais-1`…`casais-30`) ou o formato atual com três dígitos (`casais-001`…`casais-030`)? → A: Formato atual com três dígitos; IDs existentes preservados, novas perguntas em `-021`…`-030` (favoritos salvos continuam válidos).
+- Q: Como garantir variedade de assuntos, já que o app embaralha as cartas a cada partida? → A: Por cobertura de assuntos, não por ordem no arquivo: cada categoria cobre pelo menos 6 assuntos e nenhum assunto ocupa mais de 5 das 30 cartas.
+- Q: Até onde uma reescrita pode ir mantendo o mesmo ID? → A: Pode mudar a forma (abrir a pergunta, deixar mais natural, puxar o tom da categoria), mas mantém o tema; se o tema mudaria, a pergunta é melhorada de outro jeito.
+- Q: Perguntas de escolha ("Você prefere A ou B?") são aceitas fora de "Dilemas"? → A: Só com um complemento explícito que peça a justificativa ou a história (ex.: "… Por quê?", "… e o que isso diz de você?"); em "Dilemas" a escolha simples é aceita.
+- Q: Como a validação automática deve detectar perguntas fechadas? → A: Lista de aberturas de sim/não proibidas ("Você já…", "Você toparia…", "Tem algo…", etc.), aceitas apenas quando a pergunta oferece alternativas com " ou "; a revisão manual completa o controle.
+
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - Jogar baralhos mais longos e variados (Priority: P1)
@@ -38,13 +48,15 @@ explícita. Esta feature é **só de conteúdo**: nenhuma tela, gesto ou regra d
 Um grupo abre qualquer categoria e joga uma rodada inteira. Cada baralho agora tem 30 cartas, os
 assuntos se alternam (uma pergunta sobre comida não é seguida por outra sobre comida) e o tom é
 coerente com a categoria do início ao fim, então a conversa não esfria nem fica repetitiva antes do
-fim do baralho.
+fim do baralho. Como o app embaralha as cartas, a variedade vem da cobertura de assuntos, não da
+ordem no arquivo.
 
 **Why this priority**: é o valor central: mais conversa por baralho, com qualidade constante. Com
 20 cartas, grupos frequentes esgotam um baralho em uma noite.
 
 **Independent Test**: percorrer cada categoria até o aviso de baralho concluído e contar 30 cartas
-diferentes; ler a sequência no arquivo de conteúdo e verificar a alternância de assuntos.
+diferentes; classificar as perguntas de cada categoria por assunto e verificar a distribuição
+(FR-009).
 
 **Acceptance Scenarios**:
 
@@ -127,16 +139,17 @@ categoria certa.
 
 ### Edge Cases
 
-- **Reescrita que muda a ideia**: se uma pergunta precisa virar outra completamente, ela não
-  reaproveita o ID antigo de forma enganosa; a pergunta nova mantém o tema da antiga (o favorito do
-  usuário continua fazendo sentido).
+- **Reescrita que muda a ideia**: uma reescrita pode mudar a forma (abrir a pergunta, deixá-la mais
+  natural, puxar o tom da categoria), mas MUST manter o tema; se o único jeito de melhorar mudaria o
+  tema, a pergunta é melhorada de outro jeito. Assim o favorito do usuário continua fazendo sentido.
 - **Duplicatas entre categorias**: com 270 perguntas, aumenta o risco de perguntas quase iguais em
   categorias diferentes (ex.: "cheiro de infância" em Nostalgia e "cheiro de casa" em Primeiros
   Encontros); nenhum texto pode repetir outro, e temas parecidos devem ter ângulos claramente
   distintos.
 - **Alternativas sem justificativa**: "Você prefere A ou B?" admite resposta de uma palavra; em
-  "Dilemas" esse formato é a essência do baralho e é aceito; nas outras categorias a escolha vem
-  acompanhada de um pedido de porquê/como.
+  "Dilemas" esse formato é a essência do baralho e é aceito; nas outras categorias a escolha MUST
+  vir com um complemento explícito que peça a justificativa ou a história ("… Por quê?", "… e o que
+  isso diz de você?").
 - **Texto longo demais**: perguntas mais ricas tendem a crescer; o limite de 200 caracteres continua
   valendo e a carta deve caber na tela de 320pt sem rolagem.
 - **Progresso em andamento**: o progresso dos baralhos vive só na memória; ao atualizar o app, os
@@ -180,9 +193,10 @@ categoria certa.
   | Viagens e Aventuras (`viagens`) | Memória autobiográfica | Cheiros, sensações, descobertas, choques culturais, lições de estrada |
   | Nostalgia e Infância (`nostalgia`) | Memória autobiográfica | Cheiros, sons, objetos, lugares e lições de outras fases da vida |
 
-- **FR-009**: Dentro de cada categoria, os assuntos MUST variar ao longo do baralho: perguntas
-  vizinhas na ordem do arquivo MUST NOT tratar do mesmo assunto (ex.: duas de comida seguidas), e
-  cada categoria MUST cobrir pelo menos 6 assuntos diferentes.
+- **FR-009**: Dentro de cada categoria, os assuntos MUST variar: como o app embaralha as cartas a
+  cada partida, a variedade é garantida por cobertura, não por ordem. Cada categoria MUST cobrir
+  pelo menos 6 assuntos diferentes (ex.: comida, música, hábitos, lugares, pessoas, imaginação), e
+  nenhum assunto MUST ocupar mais de 5 das 30 cartas.
 - **FR-010**: As perguntas MUST continuar acolhedoras e inclusivas: sem pressupor gênero,
   orientação, religião, estado civil, situação financeira, estrutura familiar, saúde ou capacidade
   física, e sem pressupor experiências que nem todos tiveram (ex.: ter viajado ao exterior, ter tido
@@ -199,9 +213,10 @@ categoria certa.
 **Validação e integração**
 
 - **FR-014**: A validação automática do conteúdo MUST exigir exatamente 30 perguntas por categoria
-  e IDs sequenciais por categoria, e MUST barrar os formatos fechados mais comuns (perguntas que
-  começam com verbo de sim/não sem oferecer alternativa, como "Você já…?", "Você toparia…?", "Tem
-  algo…?").
+  e IDs sequenciais por categoria (`-001` a `-030`), e MUST barrar os formatos fechados mais comuns
+  por uma lista de aberturas de sim/não proibidas ("Você já…?", "Você toparia…?", "Você
+  aceitaria…?", "Tem algo…?", etc.), aceitas apenas quando a pergunta oferece alternativas com
+  " ou ". A revisão manual (SC-002) completa o controle.
 - **FR-015**: Categorias (nomes, descrições, cores, ícones e ordem), telas, gestos, favoritos, modo
   misto e filtro MUST permanecer inalterados.
 - **FR-016**: Favoritos salvos antes da atualização MUST continuar válidos e visíveis.
@@ -224,15 +239,15 @@ categoria certa.
   "sim" ou "não".
 - **SC-003**: Numa revisão manual, 100% das perguntas de cada categoria seguem o tom da tabela de
   FR-008, e 0 perguntas de "Happy Hour" ou "Primeiros Encontros" tocam em temas proibidos.
-- **SC-004**: Em cada categoria, nenhuma dupla de perguntas vizinhas trata do mesmo assunto e há
-  pelo menos 6 assuntos diferentes.
+- **SC-004**: Em cada categoria há pelo menos 6 assuntos diferentes e nenhum assunto passa de 5
+  das 30 cartas.
 - **SC-005**: 100% dos favoritos salvos antes da atualização continuam visíveis depois dela.
 - **SC-006**: Em rodadas de teste, pelo menos 8 de cada 10 cartas geram uma resposta de mais de uma
   frase, sem que alguém peça para pular por desconforto.
 
 ## Assumptions
 
-- **Padrão de ID**: o pedido sugere `casais-1` a `casais-30`, mas o app já usa `casais-001` com
+- **Padrão de ID** (confirmado no clarify): o pedido sugere `casais-1` a `casais-30`, mas o app já usa `casais-001` com
   três dígitos e os favoritos salvos dependem desses IDs. Mantém-se o padrão atual (`-001` a
   `-030`), que atende ao objetivo do pedido ("prefixos claros") sem quebrar favoritos.
 - **Formato de saída**: o pedido pede "exclusivamente um bloco JSON"; aqui o resultado é o próprio
@@ -241,7 +256,8 @@ categoria certa.
 - **Reescritas mantêm o ID**: uma pergunta reescrita preserva a ideia original e o ID; nenhuma
   pergunta existente é descartada, então nenhum favorito fica órfão.
 - **Alternativas em "Dilemas"**: "Você prefere A ou B?" é aceito em "Dilemas", porque escolher e
-  defender é a dinâmica do baralho; nas demais categorias a escolha vem com porquê/como.
+  defender é a dinâmica do baralho; nas demais categorias a escolha vem com um complemento explícito
+  de porquê/como.
 - **Happy Hour**: a descrição da categoria ("Assuntos divertidos para a mesa do bar ou do café")
   continua; o novo tom SFW serve tanto para amigos quanto para colegas.
 - **Persona**: a curadoria segue a abordagem de um psicólogo de dinâmicas de grupo, mas as cartas
