@@ -74,7 +74,8 @@ decisions taken while reading the existing code (`src/data/deck.ts`, `src/store/
 
 ## R7. Toast "Cartas embaralhadas" (FR-011, FR-015)
 
-- **Decision**: new dumb component `HintLine` that renders, in a fixed-height row (`h-7`), either
+- **Decision**: new dumb component `HintLine` (StyleSheet only, since it is animated) that
+  renders, in a fixed-height row (28 pt), either
   the gestures hint text or — when `toast` is set — a small pill with the toast text, fading in
   and out via Reanimated opacity (`withTiming`, 150 ms), `pointerEvents="none"`. The screen owns
   the timing: `toastNonce` state bumped on each enabled press, a `useEffect` clears it after
