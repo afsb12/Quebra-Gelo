@@ -37,9 +37,11 @@ existe "voltar carta".
 
 - Q: Qual vibração confirma o re-embaralhamento? → A: O padrão de notificação de "sucesso" do
   sistema (curto e leve), diferente do impacto leve de virar e do impacto médio de descartar.
-- Q: Onde aparece o aviso "Cartas embaralhadas"? → A: Uma pílula pequena, centralizada logo acima
-  dos controles inferiores (acima do botão de favoritar), sobre o fundo da mesa e nunca sobre a
-  carta; aparece e some com esmaecimento e não recebe toques.
+- Q: Onde aparece o aviso "Cartas embaralhadas"? → A: Uma pílula pequena, centralizada na linha da
+  dica de gestos ("Toque para virar · deslize para pular"), que ela substitui temporariamente; a
+  linha tem altura fixa, então nada se desloca, e o aviso nunca fica sobre a carta. Aparece e some
+  com esmaecimento e não recebe toques. (Revisado no planejamento: a versão anterior, "acima do
+  botão de favoritar", podia encostar na carta em telas baixas.)
 - Q: Onde fica o botão em relação ao botão de favoritar, inclusive em telas de 320pt? → A: Na
   mesma linha do botão de favoritar, alinhado à borda direita da tela; o botão de favoritar
   permanece centralizado e a dica de gestos continua abaixo dessa linha.
@@ -181,10 +183,10 @@ posição, cor, tamanho de toque, contraste e que tocar no botão não vira nem 
   de "sucesso" do sistema, distinta das vibrações de virar (impacto leve) e descartar (impacto
   médio); aparelhos sem vibração simplesmente não vibram.
 - **FR-011**: Ao acionar o botão ativado, o sistema MUST exibir um aviso discreto
-  "Cartas embaralhadas" em forma de pílula centralizada logo acima dos controles inferiores, que
-  some sozinho em cerca de 2 segundos (aparecendo e sumindo por esmaecimento), sem cobrir a carta e
-  sem bloquear toques ou gestos; toques repetidos MUST NOT empilhar avisos (o aviso visível
-  reinicia sua contagem).
+  "Cartas embaralhadas" em forma de pílula centralizada no lugar da dica de gestos, que some
+  sozinho em cerca de 2 segundos (aparecendo e sumindo por esmaecimento), sem cobrir a carta, sem
+  deslocar outros elementos e sem bloquear toques ou gestos; ao sumir, a dica de gestos volta;
+  toques repetidos MUST NOT empilhar avisos (o aviso visível reinicia sua contagem).
 - **FR-012**: Ao acionar o botão ativado, o ícone MUST dar um giro rápido de uma volta (≤ 0,5 s);
   com movimento reduzido ativado, o giro MUST ser omitido, mantendo vibração e aviso.
 - **FR-013**: O botão MUST ficar no canto inferior direito, na mesma linha do botão de favoritar
