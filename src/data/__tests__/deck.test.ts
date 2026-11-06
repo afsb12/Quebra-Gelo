@@ -60,7 +60,11 @@ describe('deck lifecycle', () => {
 });
 
 describe('reshuffleRemaining (008)', () => {
-  const at = (cursor: number, order: readonly string[] = IDS) => ({ order: [...order], cursor });
+  const at = (cursor: number, order: readonly string[] = IDS) => ({
+    order: [...order],
+    cursor,
+    furthest: Math.max(0, Math.min(cursor, order.length - 1)),
+  });
 
   it('keeps the shown prefix and cursor, and reorders only the tail', () => {
     const deck = at(3);

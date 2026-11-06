@@ -231,7 +231,7 @@ describe('DeckScreen — reshuffle the remaining cards (008)', () => {
 
     await press();
     expect(screen.getByTestId('deck-toast')).toHaveTextContent('Cartas embaralhadas');
-    expect(screen.queryByText('Toque para virar · deslize para pular')).toBeNull();
+    expect(screen.queryByText('Toque para virar · ← próxima · anterior →')).toBeNull();
     expect(announce).toHaveBeenCalledWith('Cartas embaralhadas');
 
     await act(async () => {
@@ -249,6 +249,6 @@ describe('DeckScreen — reshuffle the remaining cards (008)', () => {
       jest.advanceTimersByTime(600);
     });
     expect(screen.queryByTestId('deck-toast')).toBeNull();
-    expect(screen.getByText('Toque para virar · deslize para pular')).toBeTruthy();
+    expect(screen.getByText('Toque para virar · ← próxima · anterior →')).toBeTruthy();
   });
 });

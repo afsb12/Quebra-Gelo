@@ -223,7 +223,7 @@ export function SwipeCard({
         accessibilityActions={[
           { name: 'activate', label: strings.card.actions.flip },
           { name: 'favorite', label: strings.card.actions.favorite },
-          { name: 'skip', label: strings.card.actions.skip },
+          { name: 'skip', label: strings.card.actions.next },
         ]}
         onAccessibilityAction={onAccessibilityAction}
       >
