@@ -39,6 +39,28 @@ describe('HomeScreen — first-launch tutorial (005)', () => {
     expect(router.push).toHaveBeenCalledWith({ pathname: '/deck/[deckId]', params: { deckId: 'casual' } });
   });
 
+  it('a launch after closing it reads the stored flag and does not show the tutorial (012)', async () => {
+    const first = await render(<HomeScreen />);
+    await act(async () => {
+      fireEvent.press(screen.getByTestId('tutorial-skip'));
+    });
+    await first.unmount();
+    const stored = await AsyncStorage.getItem(ONBOARDING_STORAGE_KEY);
+    expect(stored).not.toBeNull();
+
+    // Simulated relaunch: in-memory state is gone, only what was saved on the device remains.
+    // (Resetting the store persists `false`, so the saved value is put back before reading it.)
+    useOnboardingStore.setState({ hasSeenTutorial: false, readFailed: false });
+    await AsyncStorage.setItem(ONBOARDING_STORAGE_KEY, stored ?? '');
+    await act(async () => {
+      await useOnboardingStore.persist.rehydrate();
+    });
+    expect(useOnboardingStore.getState().hasSeenTutorial).toBe(true);
+
+    await render(<HomeScreen />);
+    expect(screen.queryByTestId('tutorial-backdrop')).toBeNull();
+  });
+
   it('is not shown once seen', async () => {
     useOnboardingStore.setState({ hasSeenTutorial: true });
     await render(<HomeScreen />);

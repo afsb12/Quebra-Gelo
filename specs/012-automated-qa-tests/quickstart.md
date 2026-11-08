@@ -61,3 +61,14 @@ within 10 minutes.
 ## 6. No player-visible change (SC-006)
 
 Run the app (`npm start`): swipe, flip, back, reshuffle and the tutorial behave exactly as in 1.4.0.
+
+### Mutation results (2026-11-08)
+
+| Rule | Failing tests under the mutation |
+|------|----------------------------------|
+| FR-006 (shuffle swap removed) | 1 — `shuffle › reorders … (012)` (only the new test catches a no-op shuffle) |
+| FR-007 (`MIN_MIX_CATEGORIES = 1`) | 4 |
+| FR-008 (`canGoBack` allows cursor 0) | 4 |
+| FR-009 (`toggle` never removes) | 1 |
+| FR-010 (persisted flag always `false`) | 3 |
+| FR-011 (persisted `excluded` always `[]`) | 1 |

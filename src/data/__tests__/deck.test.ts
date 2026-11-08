@@ -20,6 +20,19 @@ describe('shuffle', () => {
   it('is deterministic with an injected random source', () => {
     expect(shuffle(IDS, seeded(7))).toEqual(shuffle(IDS, seeded(7)));
   });
+
+  it('reorders: seeded runs differ from the input order, never losing or repeating an id (012)', () => {
+    const sorted = [...IDS].sort();
+    const results = Array.from({ length: 50 }, (_, seed) => shuffle(IDS, seeded(seed + 1)));
+    for (const result of results) {
+      expect(result).toHaveLength(IDS.length);
+      expect(new Set(result).size).toBe(IDS.length);
+      expect([...result].sort()).toEqual(sorted);
+    }
+    // A fair shuffle may rarely keep the order, but 50 different sources never all do.
+    expect(results.filter((result) => result.join() !== IDS.join()).length).toBeGreaterThan(45);
+    expect(shuffle(IDS, seeded(42))).not.toEqual(IDS);
+  });
 });
 
 describe('deck lifecycle', () => {
@@ -56,6 +69,22 @@ describe('deck lifecycle', () => {
     }
     expect(seen).toHaveLength(IDS.length);
     expect(new Set(seen).size).toBe(IDS.length);
+  });
+});
+
+describe('navigation (012)', () => {
+  it('advance is +1 and goBack is −1, never below the first card', () => {
+    const start = createDeck(['a', 'b', 'c', 'd'], seeded(11));
+    const atTwo = advance(advance(start));
+    expect(atTwo.cursor).toBe(2);
+    const atOne = goBack(atTwo);
+    expect(atOne.cursor).toBe(1);
+    const atZero = goBack(atOne);
+    expect(atZero.cursor).toBe(0);
+    expect(goBack(atZero)).toBe(atZero);
+    expect(goBack(goBack(atZero)).cursor).toBe(0);
+    expect(advance(atZero).cursor).toBe(1);
+    expect(currentQuestionId(atZero)).toBe(start.order[0]);
   });
 });
 
