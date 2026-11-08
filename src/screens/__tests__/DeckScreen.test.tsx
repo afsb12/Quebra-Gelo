@@ -165,94 +165,6 @@ describe('DeckScreen — filtered mix (006)', () => {
   });
 });
 
-describe('DeckScreen — reshuffle the remaining cards (008)', () => {
-  const currentText = () => getQuestion(useProgressStore.getState().decks.dilemas?.order[useProgressStore.getState().decks.dilemas?.cursor ?? 0] ?? '')?.text ?? '';
-  const press = async () => {
-    await act(async () => {
-      fireEvent.press(screen.getByTestId('reshuffle-button'));
-    });
-  };
-
-  beforeEach(() => {
-    useProgressStore.setState({ decks: {} });
-    useFavoritesStore.setState({ favorites: [] });
-    jest.clearAllMocks();
-  });
-
-  afterEach(() => {
-    jest.useRealTimers();
-  });
-
-  it('keeps the face-up card and counter, and vibrates with the success pattern', async () => {
-    await render(<DeckScreen deckId="dilemas" />, { wrapper });
-    await skip();
-    await skip();
-    await act(async () => {
-      fireEvent(screen.getByTestId('swipe-card'), 'accessibilityAction', { nativeEvent: { actionName: 'activate' } });
-    });
-    const text = currentText();
-    const before = useProgressStore.getState().decks.dilemas?.order.slice(3);
-
-    await press();
-
-    expect(currentText()).toBe(text);
-    expect(screen.getByText(`Carta 3 de ${total}`)).toBeTruthy();
-    expect(screen.getByTestId('favorite-button')).toBeEnabled();
-    expect(useProgressStore.getState().decks.dilemas?.order.slice(3)).not.toEqual(before);
-    expect(Haptics.notificationAsync).toHaveBeenCalledTimes(1);
-    expect(Haptics.notificationAsync).toHaveBeenCalledWith('success');
-  });
-
-  it('pressing it with the card face down neither flips nor discards it', async () => {
-    await render(<DeckScreen deckId="dilemas" />, { wrapper });
-    await press();
-    expect(screen.getByTestId('favorite-button')).toBeDisabled();
-    expect(screen.getByText(`Carta 1 de ${total}`)).toBeTruthy();
-  });
-
-  it('is disabled on the last two cards and hidden on "Fim do Baralho"', async () => {
-    await render(<DeckScreen deckId="dilemas" />, { wrapper });
-    for (let i = 0; i < total - 2; i += 1) await skip();
-    expect(screen.getByTestId('reshuffle-button')).toBeDisabled();
-    await press();
-    expect(Haptics.notificationAsync).not.toHaveBeenCalled();
-    expect(screen.queryByTestId('deck-toast')).toBeNull();
-    await skip();
-    expect(screen.getByTestId('reshuffle-button')).toBeDisabled();
-    await skip();
-    expect(screen.getByTestId('deck-complete')).toBeTruthy();
-    expect(screen.queryByTestId('reshuffle-button')).toBeNull();
-  });
-
-  it('shows "Cartas embaralhadas" for 2 s, announces it, and never stacks toasts', async () => {
-    jest.useFakeTimers();
-    const announce = jest.spyOn(AccessibilityInfo, 'announceForAccessibility');
-    await render(<DeckScreen deckId="dilemas" />, { wrapper });
-
-    await press();
-    expect(screen.getByTestId('deck-toast')).toHaveTextContent('Cartas embaralhadas');
-    expect(screen.queryByText('Toque para virar · ← próxima · anterior →')).toBeNull();
-    expect(announce).toHaveBeenCalledWith('Cartas embaralhadas');
-
-    await act(async () => {
-      jest.advanceTimersByTime(1500);
-    });
-    await press();
-    expect(screen.getAllByTestId('deck-toast')).toHaveLength(1);
-
-    await act(async () => {
-      jest.advanceTimersByTime(1500);
-    });
-    expect(screen.getByTestId('deck-toast')).toBeTruthy();
-
-    await act(async () => {
-      jest.advanceTimersByTime(600);
-    });
-    expect(screen.queryByTestId('deck-toast')).toBeNull();
-    expect(screen.getByText('Toque para virar · ← próxima · anterior →')).toBeTruthy();
-  });
-});
-
 describe('DeckScreen — directional navigation (009)', () => {
   const deck = () => useProgressStore.getState().decks.dilemas;
   const action = async (actionName: string) => {
@@ -290,5 +202,136 @@ describe('DeckScreen — directional navigation (009)', () => {
     expect(deck()?.order[deck()?.cursor ?? 0]).toBe(order[3]);
     expect(screen.getByText(`Carta 4 de ${total}`)).toBeTruthy();
     expect(screen.getByTestId('favorite-button')).toBeDisabled();
+  });
+});
+
+describe('DeckScreen — change the mood (011)', () => {
+  const mixed = () => useProgressStore.getState().decks.mixed;
+  const currentQuestion = () => getQuestion(mixed()?.order[mixed()?.cursor ?? 0] ?? '');
+  const titles = getCategories().map((c) => c.title);
+  const action = async (actionName: string) => {
+    await act(async () => {
+      fireEvent(screen.getByTestId('swipe-card'), 'accessibilityAction', { nativeEvent: { actionName } });
+    });
+  };
+  const press = async () => {
+    await act(async () => {
+      fireEvent.press(screen.getByTestId('change-mood-button'));
+    });
+  };
+
+  beforeEach(() => {
+    useProgressStore.setState({ decks: {} });
+    useFavoritesStore.setState({ favorites: [] });
+    useMixFilterStore.setState({ excluded: [] });
+    jest.clearAllMocks();
+  });
+
+  afterEach(() => {
+    jest.useRealTimers();
+  });
+
+  it('deals a face-down card of another category, advances the counter and vibrates', async () => {
+    await render(<DeckScreen deckId="mixed" />, { wrapper });
+    const totalCards = mixed()?.order.length ?? 0;
+    for (let i = 0; i < 5; i += 1) {
+      await action('activate');
+      const before = currentQuestion();
+      await press();
+      const after = currentQuestion();
+      expect(after?.categoryId).not.toBe(before?.categoryId);
+      expect(screen.getByText(`Carta ${i + 2} de ${totalCards}`)).toBeTruthy();
+      expect(screen.getByTestId('favorite-button')).toBeDisabled();
+      // Face down: nothing names the new card's category before it is flipped (004, FR-008).
+      expect(screen.getByTestId('swipe-card').props.accessibilityLabel).toBe('Carta do Quebra-Gelo, virada para baixo');
+      expect(screen.getByTestId('brand-card-back')).toBeTruthy();
+      expect(screen.queryByTestId('card-back-title')).toBeNull();
+      for (const title of titles) expect(screen.getByTestId('deck-toast')).not.toHaveTextContent(title);
+    }
+    expect(Haptics.notificationAsync).toHaveBeenCalledTimes(5);
+    expect(Haptics.notificationAsync).toHaveBeenCalledWith('success');
+  });
+
+  it('swiping right brings back the replaced card face up; the button is off while reviewing', async () => {
+    await render(<DeckScreen deckId="mixed" />, { wrapper });
+    await action('activate');
+    const replaced = currentQuestion();
+    await press();
+    await action('previous');
+    expect(currentQuestion()?.id).toBe(replaced?.id);
+    expect(screen.getByTestId('favorite-button')).toBeEnabled();
+    expect(screen.getByTestId('change-mood-button')).toBeDisabled();
+    await press();
+    expect(currentQuestion()?.id).toBe(replaced?.id);
+
+    await action('skip');
+    expect(screen.getByTestId('change-mood-button')).toBeDisabled();
+    await action('activate');
+    expect(screen.getByTestId('change-mood-button')).toBeEnabled();
+  });
+
+  it('is disabled while the card is face down: pressing does nothing', async () => {
+    await render(<DeckScreen deckId="mixed" />, { wrapper });
+    const id = currentQuestion()?.id;
+    expect(screen.getByTestId('change-mood-button')).toBeDisabled();
+    await press();
+    expect(currentQuestion()?.id).toBe(id);
+    expect(Haptics.notificationAsync).not.toHaveBeenCalled();
+    expect(screen.queryByTestId('deck-toast')).toBeNull();
+  });
+
+  it('is disabled when only cards of the current category are left, and gone on "Fim do Baralho"', async () => {
+    const casais = getQuestionsByCategory('casais').map((q) => q.id);
+    const futuro = getQuestionsByCategory('futuro').map((q) => q.id);
+    useMixFilterStore.getState().save(['casais', 'futuro']);
+    useProgressStore.setState({ decks: { mixed: { order: [...futuro, ...casais], cursor: futuro.length, furthest: futuro.length } } });
+    await render(<DeckScreen deckId="mixed" />, { wrapper });
+    await action('activate');
+    expect(screen.getByTestId('change-mood-button')).toBeDisabled();
+    for (let i = 0; i < casais.length; i += 1) await action('skip');
+    expect(screen.getByTestId('deck-complete')).toBeTruthy();
+    expect(screen.queryByTestId('change-mood-button')).toBeNull();
+  });
+
+  it('shows "Clima trocado" for 2 s, announces it, and never stacks toasts', async () => {
+    jest.useFakeTimers();
+    const announce = jest.spyOn(AccessibilityInfo, 'announceForAccessibility');
+    await render(<DeckScreen deckId="mixed" />, { wrapper });
+
+    await action('activate');
+    await press();
+    expect(screen.getByTestId('deck-toast')).toHaveTextContent('Clima trocado');
+    expect(announce).toHaveBeenCalledWith('Clima trocado');
+
+    await act(async () => {
+      jest.advanceTimersByTime(1500);
+    });
+    await action('activate');
+    await press();
+    expect(screen.getAllByTestId('deck-toast')).toHaveLength(1);
+
+    await act(async () => {
+      jest.advanceTimersByTime(2100);
+    });
+    expect(screen.queryByTestId('deck-toast')).toBeNull();
+    expect(screen.getByText('Toque para virar · ← próxima · anterior →')).toBeTruthy();
+  });
+});
+
+describe('DeckScreen — category decks have no shuffle or mood button (011)', () => {
+  beforeEach(() => {
+    useProgressStore.setState({ decks: {} });
+    jest.clearAllMocks();
+  });
+
+  it('shows only the favorite button, before and after flipping', async () => {
+    await render(<DeckScreen deckId="dilemas" />, { wrapper });
+    expect(screen.queryByTestId('change-mood-button')).toBeNull();
+    expect(screen.queryByTestId('reshuffle-button')).toBeNull();
+    await act(async () => {
+      fireEvent(screen.getByTestId('swipe-card'), 'accessibilityAction', { nativeEvent: { actionName: 'activate' } });
+    });
+    expect(screen.getByTestId('favorite-button')).toBeEnabled();
+    expect(screen.queryByTestId('change-mood-button')).toBeNull();
   });
 });

@@ -4,10 +4,10 @@ import { useCallback, useEffect, useState } from 'react';
 import { AccessibilityInfo, Pressable, Text, useWindowDimensions, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { ChangeMoodButton } from '../components/ChangeMoodButton';
 import { DeckComplete } from '../components/DeckComplete';
 import { FavoriteButton } from '../components/FavoriteButton';
 import { HintLine } from '../components/HintLine';
-import { ReshuffleButton } from '../components/ReshuffleButton';
 import { SwipeCard, type CardFace, type SwipeDirection } from '../components/SwipeCard';
 import { MIXED_DECK_ID, type DeckId } from '../data/types';
 import { useDeck } from '../hooks/useDeck';
@@ -20,7 +20,7 @@ export interface DeckScreenProps {
   deckId: DeckId;
 }
 
-/** How long the "Cartas embaralhadas" toast stays on screen (008 FR-011). */
+/** How long the "Clima trocado" toast stays on screen (011 FR-007). */
 const TOAST_MS = 2000;
 
 const goHome = () => {
@@ -40,8 +40,8 @@ export function DeckScreen({ deckId }: DeckScreenProps) {
     canGoBack,
     goBack,
     reshuffle,
-    canReshuffleRemaining,
-    reshuffleRemaining,
+    canChangeMood,
+    changeMood,
   } = useDeck(deckId);
   const mixed = deckId === MIXED_DECK_ID;
   const haptics = useHaptics();
@@ -85,13 +85,17 @@ export function DeckScreen({ deckId }: DeckScreenProps) {
     return () => clearTimeout(timer);
   }, [toastNonce]);
 
-  const handleReshuffle = useCallback(() => {
-    if (!canReshuffleRemaining) return;
-    reshuffleRemaining();
-    haptics.reshuffle();
+  // "Mudar o clima" (011): only on a face-up card; the new card comes face down and the toast
+  // never names its category (004).
+  const moodEnabled = face === 'up' && canChangeMood;
+  const handleChangeMood = useCallback(() => {
+    if (!moodEnabled) return;
+    setFace('down');
+    changeMood();
+    haptics.changeMood();
     setToastNonce((n) => n + 1);
-    AccessibilityInfo.announceForAccessibility(strings.deck.reshuffled);
-  }, [canReshuffleRemaining, haptics, reshuffleRemaining]);
+    AccessibilityInfo.announceForAccessibility(strings.deck.moodChanged);
+  }, [changeMood, haptics, moodEnabled]);
 
   const completeVisual = deckCategory ? getCategoryVisual(deckCategory) : MIXED_VISUAL;
 
@@ -150,10 +154,10 @@ export function DeckScreen({ deckId }: DeckScreenProps) {
             <View className="flex-1" />
             <FavoriteButton active={isFavorite} disabled={face === 'down'} onPress={handleToggleFavorite} />
             <View className="min-w-11 flex-1 items-end">
-              <ReshuffleButton disabled={!canReshuffleRemaining} onPress={handleReshuffle} />
+              {mixed ? <ChangeMoodButton disabled={!moodEnabled} onPress={handleChangeMood} /> : null}
             </View>
           </View>
-          <HintLine hint={strings.deck.tapHint} toast={toastNonce > 0 ? strings.deck.reshuffled : undefined} />
+          <HintLine hint={strings.deck.tapHint} toast={toastNonce > 0 ? strings.deck.moodChanged : undefined} />
         </View>
       ) : null}
     </SafeAreaView>

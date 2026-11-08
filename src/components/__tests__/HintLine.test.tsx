@@ -10,8 +10,8 @@ describe('HintLine (008)', () => {
   });
 
   it('replaces the hint with the toast pill', async () => {
-    await render(<HintLine hint="Toque para virar" toast="Cartas embaralhadas" />);
-    expect(screen.getByTestId('deck-toast')).toHaveTextContent('Cartas embaralhadas');
+    await render(<HintLine hint="Toque para virar" toast="Clima trocado" />);
+    expect(screen.getByTestId('deck-toast')).toHaveTextContent('Clima trocado');
     expect(screen.queryByText('Toque para virar')).toBeNull();
   });
 });

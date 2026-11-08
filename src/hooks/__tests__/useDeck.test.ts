@@ -50,64 +50,6 @@ describe('useDeck', () => {
     expect(again.result.current.current?.id).toBe(seenId);
   });
 
-  it('reshuffleRemaining keeps the current card and position (008)', async () => {
-    const { result } = await renderHook(() => useDeck('casual'));
-    await act(async () => result.current.discard());
-    const id = result.current.current?.id;
-    const position = result.current.position;
-    await act(async () => result.current.reshuffleRemaining());
-    expect(result.current.current?.id).toBe(id);
-    expect(result.current.position).toEqual(position);
-  });
-
-  it('canReshuffleRemaining is false on the last two cards (008)', async () => {
-    const { result } = await renderHook(() => useDeck('casual'));
-    expect(result.current.canReshuffleRemaining).toBe(true);
-    await act(async () => {
-      for (let i = 0; i < total - 2; i += 1) result.current.discard();
-    });
-    expect(result.current.canReshuffleRemaining).toBe(false);
-    await act(async () => result.current.discard());
-    expect(result.current.canReshuffleRemaining).toBe(false);
-    await act(async () => result.current.discard());
-    expect(result.current.current).toBeUndefined();
-    expect(result.current.canReshuffleRemaining).toBe(false);
-  });
-
-  it('after a reshuffle every unseen card shows once and no seen card returns (008)', async () => {
-    const { result } = await renderHook(() => useDeck('casual'));
-    const seen: string[] = [];
-    await act(async () => {
-      for (let i = 0; i < 3; i += 1) {
-        seen.push(result.current.current?.id ?? '');
-        result.current.discard();
-      }
-    });
-    await act(async () => result.current.reshuffleRemaining());
-    const rest: string[] = [];
-    while (result.current.current) {
-      rest.push(result.current.current.id);
-      await act(async () => result.current.discard());
-    }
-    expect(rest).toHaveLength(total - 3);
-    expect(new Set(rest).size).toBe(total - 3);
-    expect(rest.some((id) => seen.includes(id))).toBe(false);
-  });
-
-  it('the reshuffled order survives leaving and returning to the deck (008)', async () => {
-    const first = await renderHook(() => useDeck('casual'));
-    await act(async () => first.result.current.discard());
-    await act(async () => first.result.current.reshuffleRemaining());
-    const id = first.result.current.current?.id;
-    const order = useProgressStore.getState().decks.casual?.order;
-    await first.unmount();
-
-    const again = await renderHook(() => useDeck('casual'));
-    expect(again.result.current.current?.id).toBe(id);
-    expect(again.result.current.position.index).toBe(2);
-    expect(useProgressStore.getState().decks.casual?.order).toEqual(order);
-  });
-
   it('goBack returns to the previous card (009)', async () => {
     const { result } = await renderHook(() => useDeck('casual'));
     expect(result.current.canGoBack).toBe(false);
@@ -118,19 +60,6 @@ describe('useDeck', () => {
     expect(result.current.current?.id).toBe(first);
     expect(result.current.position.index).toBe(1);
     expect(result.current.canGoBack).toBe(false);
-  });
-
-  it('canReshuffleRemaining counts only never-shown cards (009)', async () => {
-    const { result } = await renderHook(() => useDeck('casual'));
-    await act(async () => {
-      for (let i = 0; i < total - 2; i += 1) result.current.discard();
-    });
-    expect(result.current.canReshuffleRemaining).toBe(false);
-    await act(async () => {
-      for (let i = 0; i < 5; i += 1) result.current.goBack();
-    });
-    expect(result.current.position.index).toBe(total - 6);
-    expect(result.current.canReshuffleRemaining).toBe(false);
   });
 
   it('mixed deck: title "Tudo Misturado", no deck category, current category follows the question (004)', async () => {

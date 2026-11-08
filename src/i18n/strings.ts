@@ -32,8 +32,6 @@ export const strings = {
     backHint: 'Volta para a escolha de baralho',
     position: (index: number, total: number) => `Carta ${index} de ${total}`,
     tapHint: 'Toque para virar · ← próxima · anterior →',
-    reshuffleLabel: 'Embaralhar as próximas cartas',
-    reshuffled: 'Cartas embaralhadas',
     changeMoodLabel: 'Mudar o clima: próxima carta de outra categoria',
     moodChanged: 'Clima trocado',
   },

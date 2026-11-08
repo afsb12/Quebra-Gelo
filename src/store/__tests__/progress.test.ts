@@ -52,43 +52,6 @@ describe('useProgressStore (in memory)', () => {
     expect(deck?.order).toHaveLength(getQuestionsByCategory('futuro').length);
   });
 
-  it('reshuffleRemaining keeps the cursor, the shown cards and the set of ids (008)', () => {
-    const store = useProgressStore.getState();
-    store.ensureDeck('futuro');
-    store.discard('futuro');
-    store.discard('futuro');
-    const before = useProgressStore.getState().decks.futuro;
-    useProgressStore.getState().reshuffleRemaining('futuro');
-    const after = useProgressStore.getState().decks.futuro;
-    expect(after?.cursor).toBe(2);
-    expect(after?.order.slice(0, 3)).toEqual(before?.order.slice(0, 3));
-    expect([...(after?.order ?? [])].sort()).toEqual([...(before?.order ?? [])].sort());
-    expect(after?.order.slice(3)).not.toEqual(before?.order.slice(3));
-  });
-
-  it('reshuffleRemaining on a missing deck is a no-op (008)', () => {
-    useProgressStore.getState().reshuffleRemaining('casual');
-    expect(useProgressStore.getState().decks.casual).toBeUndefined();
-  });
-
-  it('reshuffleRemaining keeps the mixed deck within its filter (008)', () => {
-    useProgressStore.getState().ensureDeck('mixed', ['futuro', 'profundo']);
-    const before = useProgressStore.getState().decks.mixed?.order ?? [];
-    useProgressStore.getState().reshuffleRemaining('mixed');
-    const after = useProgressStore.getState().decks.mixed?.order ?? [];
-    expect(after).toHaveLength(11);
-    expect([...after].sort()).toEqual([...before].sort());
-    expect(after.every((id) => id.startsWith('futuro-') || id.startsWith('profundo-'))).toBe(true);
-  });
-
-  it('reshuffleRemaining does nothing with fewer than 2 cards left (008)', () => {
-    useProgressStore.getState().ensureDeck('casual');
-    useProgressStore.getState().discard('casual');
-    const decks = useProgressStore.getState().decks;
-    useProgressStore.getState().reshuffleRemaining('casual');
-    expect(useProgressStore.getState().decks).toBe(decks);
-  });
-
   it('goBack is a no-op on a missing deck and on the first card (009)', () => {
     useProgressStore.getState().goBack('casual');
     expect(useProgressStore.getState().decks.casual).toBeUndefined();
