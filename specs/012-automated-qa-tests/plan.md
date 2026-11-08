@@ -21,7 +21,7 @@ map documents coverage. No player-visible change.
 
 **Primary Dependencies**: Expo SDK 58, React Native 0.88, Jest 30 + jest-expo 58, RNTL 14, Gesture
 Handler 3.3 (jest-utils), Reanimated 4.7 mock, Worklets 0.13 mock. **New devDependencies**: `husky`
-(^9), `lint-staged` (^16) — tooling only, not bundled in the app.
+(^9), `lint-staged` (^17) — tooling only, not bundled in the app.
 
 **Storage**: N/A (tests use the AsyncStorage jest mock)
 

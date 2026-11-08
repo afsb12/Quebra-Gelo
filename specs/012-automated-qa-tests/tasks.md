@@ -92,16 +92,16 @@ mutations each make ≥ 1 test fail.
 
 **Independent Test**: quickstart §5 — PR shows the CI status.
 
-- [ ] T021 [US2] Create .github/workflows/ci.yml per contracts/quality-gates.md: `on: pull_request` (any branch) and `push: branches: [main]`; `concurrency: { group: ci-${{ github.ref }}, cancel-in-progress: true }`; job `checks` on `ubuntu-latest` with `actions/checkout@v4`, `actions/setup-node@v4` (`node-version: 24`, `cache: npm`), steps `npm ci`, `npm run typecheck`, `npm run lint`, `npm test -- --ci`; `timeout-minutes: 10`
+- [X] T021 [US2] Create .github/workflows/ci.yml per contracts/quality-gates.md: `on: pull_request` (any branch) and `push: branches: [main]`; `concurrency: { group: ci-${{ github.ref }}, cancel-in-progress: true }`; job `checks` on `ubuntu-latest` with `actions/checkout@v4`, `actions/setup-node@v4` (`node-version: 24`, `cache: npm`), steps `npm ci`, `npm run typecheck`, `npm run lint`, `npm test -- --ci`; `timeout-minutes: 10`
 - [ ] T022 [US2] After pushing the branch and opening the PR, confirm the CI check runs and reports on the PR (if the push of the workflow is rejected for missing `workflow` token scope, report it — research R3)
 
 ---
 
 ## Phase 7: Polish & Cross-Cutting
 
-- [ ] T023 [P] Update specs/012-automated-qa-tests/contracts/coverage-map.md: replace every "(new)" with the final test names and set Status to **implemented**
-- [ ] T024 [P] Document the gates in CLAUDE.md (Commands: hook runs lint-staged → typecheck → tests on every commit, activated by `npm install`; CI on PRs; `--no-verify` is not the normal path) and in README.md
-- [ ] T025 Run the suite 10× in a row per quickstart §1 (SC-004) and the full gates `npm run typecheck && npm run lint && npm test -- --ci`; mark tasks complete
+- [X] T023 [P] Update specs/012-automated-qa-tests/contracts/coverage-map.md: replace every "(new)" with the final test names and set Status to **implemented**
+- [X] T024 [P] Document the gates in CLAUDE.md (Commands: hook runs lint-staged → typecheck → tests on every commit, activated by `npm install`; CI on PRs; `--no-verify` is not the normal path) and in README.md
+- [X] T025 Run the suite 10× in a row per quickstart §1 (SC-004) and the full gates `npm run typecheck && npm run lint && npm test -- --ci`; mark tasks complete
 
 ---
 

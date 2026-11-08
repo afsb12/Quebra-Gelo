@@ -12,7 +12,7 @@ npm run typecheck && npm run lint && npm test -- --ci
 for i in 1 2 3 4 5 6 7 8 9 10; do npx jest --ci --silent || { echo "FAIL run $i"; break; }; done
 ```
 
-Expected: all green, 10/10 runs pass.
+Expected: all green, 10/10 runs pass. Verified 2026-11-08: 10/10 (248 tests).
 
 ## 2. Pre-commit blocks a broken rule (US1, SC-001)
 
