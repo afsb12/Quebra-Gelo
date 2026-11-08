@@ -52,10 +52,11 @@ describe('HomeScreen', () => {
     useOnboardingStore.setState({ hasSeenTutorial: true, readFailed: false });
   });
 
-  it('renders exactly the 8 categories as mini cards, in data.json order', async () => {
+  it('renders every category as mini cards, in data.json order', async () => {
     await render(<HomeScreen />);
     const ids = getCategories().map((c) => c.id);
-    expect(ids).toHaveLength(8);
+    expect(ids).toHaveLength(9);
+    expect(ids.slice(0, 2)).toEqual(['casual', 'primeiros-encontros']);
     for (const category of getCategories()) {
       expect(screen.getByTestId(`mini-card-${category.id}`)).toBeTruthy();
       expect(screen.getByText(category.description)).toBeTruthy();
@@ -104,7 +105,7 @@ describe('HomeScreen — mix filter (006)', () => {
     useMixFilterStore.setState({ excluded: [] });
   });
 
-  it('switching off 2 categories and saving filters the mix and shows "6 de 8 categorias"', async () => {
+  it('switching off 2 categories and saving filters the mix and shows "7 de 9 categorias"', async () => {
     await render(<HomeScreen />);
     expect(screen.queryByTestId('mix-filter-summary')).toBeNull();
     await open();
@@ -116,7 +117,7 @@ describe('HomeScreen — mix filter (006)', () => {
     });
     expect(screen.queryByTestId('mix-filter-sheet')).toBeNull();
     expect(useMixFilterStore.getState().excluded).toEqual(['happy-hour', 'dilemas']);
-    expect(screen.getByTestId('mix-filter-summary')).toHaveTextContent('6 de 8 categorias');
+    expect(screen.getByTestId('mix-filter-summary')).toHaveTextContent('7 de 9 categorias');
 
     await open();
     expect(screen.getByTestId('mix-filter-switch-dilemas').props.value).toBe(false);

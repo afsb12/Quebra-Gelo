@@ -45,7 +45,7 @@ regras de segurança (FR-006 a FR-008).
 **Acceptance Scenarios**:
 
 1. **Given** a tela inicial, **When** o usuário toca em "Primeiros Encontros", **Then** abre o
-   baralho dessa categoria, com a identidade visual dela (cor laranja-pêssego e ícone de brinde),
+   baralho dessa categoria, com a identidade visual dela (cor coral e ícone de taça de espumante),
    mostrando uma carta por vez.
 2. **Given** o baralho aberto, **When** o usuário vira, descarta ou pula cartas, **Then** o
    comportamento é o mesmo das outras categorias (gestos, resposta tátil, sem repetição até ver
@@ -109,13 +109,16 @@ anteriormente.
 
 - **Grade com número ímpar de categorias**: com 9 categorias a última linha da grade fica
   incompleta; a tela deve continuar alinhada e equilibrada, sem bloco esticado ou espaço quebrado.
-- **Cor parecida com "Happy Hour"**: a cor pedida (#FF9F43) é um laranja claro, próximo do laranja
-  de "Happy Hour" (#F27A1F). As duas devem continuar distinguíveis lado a lado (o ícone e o nome
-  reforçam a diferença) e a cor não pode ser idêntica à de outra categoria.
-- **Legibilidade sobre a cor**: texto e ícone desenhados sobre o laranja claro devem ter contraste
+- **Cor parecida com outra categoria**: a cor pedida originalmente (#FF9F43) ficava quase igual à
+  de "Happy Hour" (#F27A1F), no verso e na frente da carta. Adota-se o coral `#FF8A80`, que mantém
+  o clima quente de brinde e se distingue de todas as categorias pela cor, no verso e na frente
+  (diferença perceptual ΔE ≥ 25 em relação a cada uma; ver research R2). A cor não pode ser
+  idêntica à de outra categoria.
+- **Legibilidade sobre a cor**: texto e ícone desenhados sobre o coral devem ter contraste
   legível, como já acontece com a categoria amarela "Descontraído".
 - **Ícone em emoji**: o ícone das categorias vem de um conjunto de ícones do app, não de emojis.
-  Usa-se o ícone equivalente de taças brindando; o emoji 🥂 não é exibido como texto.
+  Usa-se uma taça de espumante, o equivalente mais próximo disponível; o emoji 🥂 não é exibido
+  como texto.
 - **Progresso de outras categorias**: incluir a categoria não altera o progresso nem os favoritos
   existentes de nenhuma outra.
 - **Modo misto em andamento ao atualizar**: como o progresso dos baralhos vive só na memória, o app
@@ -130,8 +133,8 @@ anteriormente.
 - **FR-001**: O app MUST incluir a categoria com ID estável `primeiros-encontros`, título
   "Primeiros Encontros" e descrição "Perguntas leves e instigantes para quebrar o gelo e descobrir
   afinidades.".
-- **FR-002**: A identidade visual da categoria MUST usar a cor `#FF9F43` e um ícone de taças
-  brindando (equivalente ao 🥂) do conjunto de ícones já usado pelas demais categorias.
+- **FR-002**: A identidade visual da categoria MUST usar a cor coral `#FF8A80` e o ícone de taça
+  de espumante (`glass-flute`, equivalente ao 🥂) do conjunto de ícones já usado pelas demais categorias.
 - **FR-003**: Na tela inicial, a categoria MUST ser listada imediatamente depois de "Descontraído"
   e antes de "Profundo"; a ordem relativa das demais categorias não muda.
 - **FR-004**: A categoria MUST se comportar como qualquer outra: uma carta por vez, sem repetição
@@ -174,8 +177,8 @@ anteriormente.
 
 ### Key Entities
 
-- **Categoria "Primeiros Encontros"**: ID `primeiros-encontros`, título, descrição, cor `#FF9F43`,
-  ícone de brinde; posição fixa logo após "Descontraído" na ordem das categorias.
+- **Categoria "Primeiros Encontros"**: ID `primeiros-encontros`, título, descrição, cor coral `#FF8A80`,
+  ícone de taça de espumante; posição fixa logo após "Descontraído" na ordem das categorias.
 - **Pergunta**: ID único estável (`primeiros-encontros-NNN`), categoria `primeiros-encontros`,
   texto (≤ 200 caracteres).
 
@@ -204,8 +207,9 @@ anteriormente.
 - **"Casual" = "Descontraído"**: o deck "Casual" do pedido é a categoria `casual`, cujo título
   exibido é "Descontraído".
 - **Ícone**: como as categorias usam ícones do conjunto do app, o 🥂 do pedido é atendido pelo ícone
-  equivalente de taças brindando; o emoji não é usado literalmente.
-- **Cor**: mantém-se `#FF9F43` como pedido; é diferente das cores existentes, e o app já ajusta a
+  de taça de espumante (`glass-flute`), o equivalente mais próximo; o emoji não é usado literalmente.
+- **Cor**: o pedido trazia `#FF9F43`, quase igual a "Happy Hour"; por decisão do usuário (análise
+  2026-11-06, opção C) usa-se o coral `#FF8A80`, distinto de todas as categorias. O app já ajusta a
   cor do texto sobre fundos claros para manter a leitura.
 - **Quantidade de perguntas**: 20 perguntas, igual às demais categorias, salvo se a revisão do
   conteúdo pedir mais.

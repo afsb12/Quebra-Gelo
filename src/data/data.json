@@ -8,6 +8,13 @@
       "description": "Perguntas leves para começar o papo sem pressão."
     },
     {
+      "id": "primeiros-encontros",
+      "title": "Primeiros Encontros",
+      "icon": "glass-flute",
+      "color": "#FF8A80",
+      "description": "Perguntas leves e instigantes para quebrar o gelo e descobrir afinidades."
+    },
+    {
       "id": "profundo",
       "title": "Profundo",
       "icon": "lightbulb-on-outline",
@@ -157,6 +164,106 @@
       "id": "casual-020",
       "categoryId": "casual",
       "text": "Qual foi o elogio mais inesperado que você já recebeu?"
+    },
+    {
+      "id": "primeiros-encontros-001",
+      "categoryId": "primeiros-encontros",
+      "text": "Qual é a combinação de comida mais estranha que você jura que funciona?"
+    },
+    {
+      "id": "primeiros-encontros-002",
+      "categoryId": "primeiros-encontros",
+      "text": "Você é de planejar tudo com antecedência ou de decidir na hora, e qual foi a última prova disso?"
+    },
+    {
+      "id": "primeiros-encontros-003",
+      "categoryId": "primeiros-encontros",
+      "text": "Qual pequeno luxo do dia a dia você não troca por nada?"
+    },
+    {
+      "id": "primeiros-encontros-004",
+      "categoryId": "primeiros-encontros",
+      "text": "Que cheiro faz você se sentir em casa na hora?"
+    },
+    {
+      "id": "primeiros-encontros-005",
+      "categoryId": "primeiros-encontros",
+      "text": "Qual app você abre mais vezes por dia do que gostaria de admitir?"
+    },
+    {
+      "id": "primeiros-encontros-006",
+      "categoryId": "primeiros-encontros",
+      "text": "Qual é a sua opinião polêmica sobre algo totalmente sem importância?"
+    },
+    {
+      "id": "primeiros-encontros-007",
+      "categoryId": "primeiros-encontros",
+      "text": "Qual foi a coisa mais inesperada que você aprendeu a fazer vendo vídeos na internet?"
+    },
+    {
+      "id": "primeiros-encontros-008",
+      "categoryId": "primeiros-encontros",
+      "text": "Qual foi a melhor descoberta que você fez completamente por acaso?"
+    },
+    {
+      "id": "primeiros-encontros-009",
+      "categoryId": "primeiros-encontros",
+      "text": "Qual foi a última vez que você tentou algo totalmente novo, e como foi?"
+    },
+    {
+      "id": "primeiros-encontros-010",
+      "categoryId": "primeiros-encontros",
+      "text": "Que lugar da sua cidade você indicaria para alguém de fora conhecer?"
+    },
+    {
+      "id": "primeiros-encontros-011",
+      "categoryId": "primeiros-encontros",
+      "text": "Qual plano deu completamente errado, mas virou uma ótima lembrança?"
+    },
+    {
+      "id": "primeiros-encontros-012",
+      "categoryId": "primeiros-encontros",
+      "text": "Se você pudesse aprender qualquer coisa num estalar de dedos, o que escolheria primeiro?"
+    },
+    {
+      "id": "primeiros-encontros-013",
+      "categoryId": "primeiros-encontros",
+      "text": "Se a sua semana ganhasse um dia extra só para você, como ele seria?"
+    },
+    {
+      "id": "primeiros-encontros-014",
+      "categoryId": "primeiros-encontros",
+      "text": "Se você fosse um prato de restaurante, qual seria e como ele apareceria no cardápio?"
+    },
+    {
+      "id": "primeiros-encontros-015",
+      "categoryId": "primeiros-encontros",
+      "text": "Se você pudesse experimentar outra profissão por um mês, só por curiosidade, qual testaria?"
+    },
+    {
+      "id": "primeiros-encontros-016",
+      "categoryId": "primeiros-encontros",
+      "text": "Se você ganhasse um troféu por algo bem banal do dia a dia, qual seria a categoria?"
+    },
+    {
+      "id": "primeiros-encontros-017",
+      "categoryId": "primeiros-encontros",
+      "text": "Que filme, livro ou série você usa para descobrir se vai se dar bem com alguém?"
+    },
+    {
+      "id": "primeiros-encontros-018",
+      "categoryId": "primeiros-encontros",
+      "text": "Que programa simples você topa sempre, em qualquer dia da semana?"
+    },
+    {
+      "id": "primeiros-encontros-019",
+      "categoryId": "primeiros-encontros",
+      "text": "Sobre qual assunto você daria uma palestra de improviso, sem preparar nada?"
+    },
+    {
+      "id": "primeiros-encontros-020",
+      "categoryId": "primeiros-encontros",
+      "text": "Que detalhe pequeno faz você pensar \"essa pessoa é das minhas\"?"
     },
     {
       "id": "profundo-001",

@@ -19,7 +19,7 @@ import { getCardGeometry, getCategoryVisual, tokens } from '../theme';
 const openDeck = (deckId: DeckId) => router.push({ pathname: '/deck/[deckId]', params: { deckId } });
 
 /**
- * Home: the "Tudo Misturado" hero card (with its category filter, 006) above the 8 categories as
+ * Home: the "Tudo Misturado" hero card (with its category filter, 006) above the categories as
  * mini card backs in a 2-column grid (≤ 2 taps to the first card), with the first-launch tutorial
  * on top (005).
  */

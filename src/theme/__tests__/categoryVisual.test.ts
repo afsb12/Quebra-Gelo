@@ -7,6 +7,7 @@ import { tokens } from '../tokens';
 // 002 research R1: color (back), onColor, ink (on cream).
 const TABLE: Record<CategoryId, { color: string; onColor: 'dark' | 'white'; ink: string }> = {
   casual: { color: '#F5C230', onColor: 'dark', ink: '#8A6100' },
+  'primeiros-encontros': { color: '#FF8A80', onColor: 'dark', ink: '#D71100' },
   profundo: { color: '#3D3FA6', onColor: 'white', ink: '#3D3FA6' },
   casais: { color: '#C41E3A', onColor: 'white', ink: '#B01A34' },
   'happy-hour': { color: '#F27A1F', onColor: 'dark', ink: '#A84F00' },
