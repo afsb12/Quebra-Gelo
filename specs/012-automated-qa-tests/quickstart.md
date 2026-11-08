@@ -72,3 +72,12 @@ Run the app (`npm start`): swipe, flip, back, reshuffle and the tutorial behave 
 | FR-009 (`toggle` never removes) | 1 |
 | FR-010 (persisted flag always `false`) | 3 |
 | FR-011 (persisted `excluded` always `[]`) | 1 |
+| FR-012 (`showOriginBadge={false}`) | 2 |
+| FR-013 (`DISCARD_RATIO = 2`) | 7 |
+| FR-013 (first-card right release no longer blocked) | 3 |
+| FR-014 (discard haptic unwired) | 2 |
+| FR-014 (flip haptic fired twice) | 1 |
+
+Note: in Jest the Reanimated mock recreates shared values on every render, so tests flip a card
+with one tap only (a second tap would start from the initial face — a mock artefact, not app
+behaviour).

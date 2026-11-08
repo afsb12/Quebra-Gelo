@@ -8,5 +8,6 @@ module.exports = {
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
   },
-  testPathIgnorePatterns: ['/node_modules/', '/specs/', '/.specify/', '/.claude/'],
+  // <rootDir>-anchored: worktrees live under .claude/ themselves, so a bare '/.claude/' skipped every test there (012).
+  testPathIgnorePatterns: ['/node_modules/', '/specs/', '/.specify/', '<rootDir>/.claude/'],
 };
