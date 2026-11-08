@@ -96,10 +96,10 @@
 
 ## R9 — Tutorial persistence at screen level
 
-- **Decision**: extend `HomeScreen.test.tsx` "Pular" test to also read AsyncStorage
-  (`quebra-gelo/onboarding`) after closing, and keep the "is not shown once seen" test as the
-  "subsequent launch" proof. The request's `hasSeenTutorial` maps to the store's `seen` flag +
-  `tutorialVersion` (spec Assumptions).
+- **Decision**: the existing "Pular" test already reads AsyncStorage
+  (`quebra-gelo/onboarding`) after closing; add a relaunch test that rehydrates from storage and renders
+  HomeScreen (the "is not shown once seen" test sets state directly). The store field is literally
+  `hasSeenTutorial`, plus `tutorialVersion` (009).
 
 ## R10 — Coverage map
 
