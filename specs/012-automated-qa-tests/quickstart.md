@@ -21,8 +21,11 @@ Expected: all green, 10/10 runs pass.
    failing `goBack … first card` test(s).
 3. Revert the mutation; commit again → commit created with no extra step.
 
+Verified 2026-11-08: commit aborted, `deck.test.ts` and `progress.test.ts` (2 tests) failed, "husky -
+pre-commit script failed (code 1)".
+
 Lint variant (acceptance 4): add `const x: any = 1;` to a staged `.ts` file → commit aborted by
-lint-staged naming `@typescript-eslint/no-explicit-any`.
+lint-staged naming `@typescript-eslint/no-explicit-any` — verified 2026-11-08.
 
 ## 3. Hook time budget (SC-003)
 
@@ -30,7 +33,8 @@ lint-staged naming `@typescript-eslint/no-explicit-any`.
 time sh .husky/pre-commit
 ```
 
-Expected ≤ 60 s. Record the measurement here: _(filled during implementation)_.
+Expected ≤ 60 s. Measured 2026-11-08 (Windows 11, warm Jest cache): **~21 s** for the whole hook
+(typecheck ~14 s cold; the first Jest run on a fresh clone has no cache and took ~74 s, later runs ~10–20 s).
 
 ## 4. Mutation checks (SC-002)
 

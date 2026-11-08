@@ -43,10 +43,10 @@ US2 PR check (P2). US3 comes right after US1 because the gate only protects what
 **Independent Test**: quickstart §2 — mutate `goBack`, commit is aborted naming the failing test;
 revert, commit succeeds.
 
-- [ ] T006 [US1] In package.json add `"prepare": "husky"` to scripts and a `"lint-staged"` block: `"*.{js,jsx,ts,tsx}": "eslint --max-warnings=0"` (if existing warnings make `--max-warnings=0` fail on untouched files, use plain `eslint` and note it in research.md)
-- [ ] T007 [US1] Run `npx husky init` (or `npm run prepare`) and write .husky/pre-commit with, in order, `npx lint-staged`, `npm run typecheck`, `npm test -- --ci` (contract quality-gates.md, fail-fast); confirm `git config core.hooksPath` is `.husky/_`
-- [ ] T008 [US1] Verify US1 per quickstart §2: apply the FR-008 mutation in src/data/deck.ts, attempt a commit, confirm it is aborted with the failing test named, revert; also the `any` lint variant on a scratch staged file; record the outcome in quickstart.md
-- [ ] T009 [US1] Time `sh .husky/pre-commit` and record it in quickstart.md §3 (must be ≤ 60 s, SC-003; if over, add `--maxWorkers=50%` to the hook's test step and re-measure)
+- [X] T006 [US1] In package.json add `"prepare": "husky"` to scripts and a `"lint-staged"` block: `"*.{js,jsx,ts,tsx}": "eslint --max-warnings=0"` (if existing warnings make `--max-warnings=0` fail on untouched files, use plain `eslint` and note it in research.md)
+- [X] T007 [US1] Run `npx husky init` (or `npm run prepare`) and write .husky/pre-commit with, in order, `npx lint-staged`, `npm run typecheck`, `npm test -- --ci` (contract quality-gates.md, fail-fast); confirm `git config core.hooksPath` is `.husky/_`
+- [X] T008 [US1] Verify US1 per quickstart §2: apply the FR-008 mutation in src/data/deck.ts, attempt a commit, confirm it is aborted with the failing test named, revert; also the `any` lint variant on a scratch staged file; record the outcome in quickstart.md
+- [X] T009 [US1] Time `sh .husky/pre-commit` and record it in quickstart.md §3 (must be ≤ 60 s, SC-003; if over, add `--maxWorkers=50%` to the hook's test step and re-measure)
 
 **Checkpoint**: the gate is live — every following commit is verified by it.
 
