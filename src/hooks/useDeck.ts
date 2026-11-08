@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo } from 'react';
 
 import { getCategory, getQuestion } from '../data/content';
-import { canGoBack, canReshuffleRemaining, createDeck, currentQuestionId } from '../data/deck';
+import { canChangeMood, canGoBack, canReshuffleRemaining, createDeck, currentQuestionId } from '../data/deck';
 import { MIXED_DECK_ID, type Category, type DeckId, type DeckProgress, type Question } from '../data/types';
 import { strings } from '../i18n/strings';
 import { useMixCategories } from '../store/mixFilter';
@@ -32,9 +32,15 @@ export interface UseDeckResult {
   canReshuffleRemaining: boolean;
   /** Reorders only the never-shown cards; keeps the current card, counter and history (008, 009). */
   reshuffleRemaining: () => void;
+  /** Mixed deck only: the newest card is on the table and another category has cards left (011). */
+  canChangeMood: boolean;
+  /** Mixed deck only: next card from another category ("Mudar o clima", 011); no-op elsewhere. */
+  changeMood: () => void;
 }
 
 const EMPTY_DECK: DeckProgress = createDeck([]);
+
+const categoryOfQuestion = (id: string): string | undefined => getQuestion(id)?.categoryId;
 
 export const useDeck = (deckId: DeckId): UseDeckResult => {
   const deck = useProgressStore((state) => state.decks[deckId]);
@@ -43,6 +49,7 @@ export const useDeck = (deckId: DeckId): UseDeckResult => {
   const goBackInStore = useProgressStore((state) => state.goBack);
   const reshuffleInStore = useProgressStore((state) => state.reshuffle);
   const reshuffleRemainingInStore = useProgressStore((state) => state.reshuffleRemaining);
+  const changeMoodInStore = useProgressStore((state) => state.changeMood);
   const mixed = deckId === MIXED_DECK_ID;
   const mixFilter = useMixCategories();
   const mixCategories = mixed ? mixFilter : undefined;
@@ -66,6 +73,9 @@ export const useDeck = (deckId: DeckId): UseDeckResult => {
   const goBack = useCallback(() => goBackInStore(deckId), [deckId, goBackInStore]);
   const reshuffle = useCallback(() => reshuffleInStore(deckId, mixCategories), [deckId, mixCategories, reshuffleInStore]);
   const reshuffleRemaining = useCallback(() => reshuffleRemainingInStore(deckId), [deckId, reshuffleRemainingInStore]);
+  const changeMood = useCallback(() => {
+    if (mixed) changeMoodInStore(deckId);
+  }, [changeMoodInStore, deckId, mixed]);
 
   const position = useMemo(
     () => ({ index: Math.min(active.cursor + 1, active.order.length), total: active.order.length }),
@@ -86,5 +96,7 @@ export const useDeck = (deckId: DeckId): UseDeckResult => {
     reshuffle,
     canReshuffleRemaining: current !== undefined && canReshuffleRemaining(active),
     reshuffleRemaining,
+    canChangeMood: mixed && current !== undefined && canChangeMood(active, categoryOfQuestion),
+    changeMood,
   };
 };

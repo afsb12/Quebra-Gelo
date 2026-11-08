@@ -13,16 +13,21 @@ export interface UseHapticsResult {
   discard: () => void;
   /** System "success" notification pattern when the remaining cards are reshuffled (008). */
   reshuffle: () => void;
+  /** System "success" notification pattern when the mood is changed in the mixed deck (011). */
+  changeMood: () => void;
 }
+
+const success = () => {
+  Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success).catch(() => undefined);
+};
 
 export const useHaptics = (): UseHapticsResult =>
   useMemo(
     () => ({
       flip: () => fire(Haptics.ImpactFeedbackStyle.Light),
       discard: () => fire(Haptics.ImpactFeedbackStyle.Medium),
-      reshuffle: () => {
-        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success).catch(() => undefined);
-      },
+      reshuffle: success,
+      changeMood: success,
     }),
     [],
   );

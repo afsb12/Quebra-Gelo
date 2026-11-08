@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 
-import { getDeckQuestionIds } from '../data/content';
-import { advance, createDeck, goBack, reshuffleRemaining } from '../data/deck';
+import { getDeckQuestionIds, getQuestion } from '../data/content';
+import { advance, changeMood, createDeck, goBack, reshuffleRemaining } from '../data/deck';
 import type { CategoryId, DeckId, DeckProgress } from '../data/types';
 
 /**
@@ -19,9 +19,13 @@ interface ProgressState {
   reshuffle: (deckId: DeckId, mixCategories?: readonly CategoryId[]) => void;
   /** Reorders only the cards not shown yet; keeps the current card and counter (008). */
   reshuffleRemaining: (deckId: DeckId) => void;
+  /** "Mudar o clima": next card from another category, keeping history and no-repeat (011). */
+  changeMood: (deckId: DeckId) => void;
   /** Drops a deck so the next `ensureDeck` builds a fresh one (mix filter changed, 006 FR-010). */
   resetDeck: (deckId: DeckId) => void;
 }
+
+const categoryOfQuestion = (id: string): string | undefined => getQuestion(id)?.categoryId;
 
 const newDeck = (deckId: DeckId, mixCategories?: readonly CategoryId[]): DeckProgress =>
   createDeck(getDeckQuestionIds(deckId, mixCategories));
@@ -51,6 +55,13 @@ export const useProgressStore = create<ProgressState>()((set, get) => ({
       const deck = state.decks[deckId];
       if (!deck) return state;
       const next = reshuffleRemaining(deck);
+      return next === deck ? state : { decks: { ...state.decks, [deckId]: next } };
+    }),
+  changeMood: (deckId) =>
+    set((state) => {
+      const deck = state.decks[deckId];
+      if (!deck) return state;
+      const next = changeMood(deck, categoryOfQuestion);
       return next === deck ? state : { decks: { ...state.decks, [deckId]: next } };
     }),
   resetDeck: (deckId) =>

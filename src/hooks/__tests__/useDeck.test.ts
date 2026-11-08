@@ -141,6 +141,27 @@ describe('useDeck', () => {
     expect(result.current.currentCategory?.id).toBe(result.current.current?.categoryId);
   });
 
+  it('changeMood deals a card of another category in the mixed deck (011)', async () => {
+    const { result } = await renderHook(() => useDeck('mixed'));
+    expect(result.current.canChangeMood).toBe(true);
+    const before = result.current.current;
+    await act(async () => result.current.changeMood());
+    expect(result.current.position.index).toBe(2);
+    expect(result.current.current?.categoryId).not.toBe(before?.categoryId);
+    await act(async () => result.current.goBack());
+    expect(result.current.current?.id).toBe(before?.id);
+    expect(result.current.canChangeMood).toBe(false);
+  });
+
+  it('category decks never change the mood (011)', async () => {
+    const { result } = await renderHook(() => useDeck('casual'));
+    expect(result.current.canChangeMood).toBe(false);
+    const id = result.current.current?.id;
+    await act(async () => result.current.changeMood());
+    expect(result.current.current?.id).toBe(id);
+    expect(result.current.position.index).toBe(1);
+  });
+
   it('mixed deck follows the saved filter (006)', async () => {
     useMixFilterStore.getState().save(['casais', 'futuro']);
     const { result } = await renderHook(() => useDeck('mixed'));

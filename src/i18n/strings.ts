@@ -34,6 +34,8 @@ export const strings = {
     tapHint: 'Toque para virar · ← próxima · anterior →',
     reshuffleLabel: 'Embaralhar as próximas cartas',
     reshuffled: 'Cartas embaralhadas',
+    changeMoodLabel: 'Mudar o clima: próxima carta de outra categoria',
+    moodChanged: 'Clima trocado',
   },
   card: {
     faceDownLabel: (category: string) => `Carta de ${category}, virada para baixo`,

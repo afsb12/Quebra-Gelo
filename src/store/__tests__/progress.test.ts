@@ -106,6 +106,25 @@ describe('useProgressStore (in memory)', () => {
     expect(useProgressStore.getState().decks.futuro).toMatchObject({ cursor: 1, furthest: 2 });
   });
 
+  it('changeMood deals a card of another category and keeps the history (011)', () => {
+    useProgressStore.getState().ensureDeck('mixed');
+    useProgressStore.getState().discard('mixed');
+    const before = useProgressStore.getState().decks.mixed;
+    const category = (id: string | undefined) => id?.replace(/-d+$/, '');
+    useProgressStore.getState().changeMood('mixed');
+    const after = useProgressStore.getState().decks.mixed;
+    expect(after).toMatchObject({ cursor: 2, furthest: 2 });
+    expect(after?.order.slice(0, 2)).toEqual(before?.order.slice(0, 2));
+    expect(category(after?.order[2])).not.toBe(category(before?.order[1]));
+    expect([...(after?.order ?? [])].sort()).toEqual([...(before?.order ?? [])].sort());
+  });
+
+  it('changeMood on a missing deck is a no-op (011)', () => {
+    const state = useProgressStore.getState();
+    state.changeMood('mixed');
+    expect(useProgressStore.getState()).toBe(state);
+  });
+
   it('is not persisted (no persist API)', () => {
     expect('persist' in useProgressStore).toBe(false);
   });
