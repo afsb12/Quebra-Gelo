@@ -26,6 +26,16 @@ chance, então o toque não tem efeito perceptível. A própria spec 008 descrev
 botão: "a roda quer mudar o clima da conversa". No modo misturado isso tem uma resposta concreta:
 trocar a carta da mesa por uma de **outra categoria**.
 
+## Clarifications
+
+### Session 2026-11-08
+
+- Q: "Mudar o clima" pode ser usado com a carta ainda virada para baixo? → A: Não; só com a carta virada para cima (o jogador precisa ver o clima para querer trocá-lo; com a carta virada para baixo, deslizar já pula).
+- Q: A categoria da nova carta é sorteada com chance igual por categoria ou proporcional às cartas restantes de cada uma? → A: Chance igual por categoria; dentro dela, a próxima carta na ordem já embaralhada.
+- Q: O que acontece com o botão de embaralhar nos baralhos de uma só categoria? → A: Some, e o re-embaralhamento das próximas cartas (008) é removido do app, inclusive a lógica; "Embaralhar de novo" no fim do baralho continua.
+- Q: Como o botão aparece na tela: só ícone, como o de hoje, ou ícone com texto? → A: Só ícone, no mesmo disco translúcido e na mesma posição do botão de 008, com o ícone de clima (sol entre nuvens) e o rótulo de acessibilidade "Mudar o clima: próxima carta de outra categoria".
+- Q: A carta trocada sai da mesa com animação de descarte ou a troca é imediata? → A: Troca imediata (a nova carta entra virada para baixo no lugar), com vibração e aviso; o ícone do botão faz uma breve animação, omitida sob movimento reduzido.
+
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - Mudar o clima da conversa no modo misturado (Priority: P1)
@@ -127,7 +137,9 @@ botão de favoritar e a dica de gestos.
 **Mudar o clima (modo misturado)**
 
 - **FR-001**: No baralho "Tudo Misturado", a tela do jogo MUST oferecer o botão "Mudar o clima" no
-  lugar do botão de embaralhar as próximas cartas (mesma posição, à direita do botão de favoritar).
+  lugar do botão de embaralhar as próximas cartas: mesma posição (à direita do botão de favoritar),
+  mesmo disco translúcido, só ícone (sol entre nuvens), com o rótulo de acessibilidade "Mudar o
+  clima: próxima carta de outra categoria".
 - **FR-002**: Ao tocar, a carta da mesa MUST ser substituída por uma carta **nunca vista** de uma
   categoria **diferente** da categoria da carta da mesa, entre as categorias ativas no filtro.
 - **FR-003**: A categoria da nova carta MUST ser sorteada com chance igual entre as categorias
@@ -135,7 +147,8 @@ botão de favoritar e a dica de gestos.
   próxima dela na ordem já embaralhada do baralho.
 - **FR-004**: A carta substituída MUST contar como vista: entra no histórico (voltar pela direita
   a mostra), não reaparece até o fim do baralho, e o contador avança uma posição.
-- **FR-005**: A nova carta MUST entrar virada para baixo, como qualquer próxima carta.
+- **FR-005**: A troca MUST ser imediata: a nova carta entra virada para baixo no lugar da carta
+  da mesa, sem animação de descarte.
 - **FR-006**: O botão MUST estar disponível só quando, ao mesmo tempo: a carta da mesa está virada
   para cima, é a carta mais recente (o jogador não está revendo cartas antigas) e existe pelo
   menos uma carta não vista de outra categoria. Nos demais casos MUST aparecer desativado.
@@ -144,15 +157,16 @@ botão de favoritar e a dica de gestos.
   também anunciado pelo leitor de tela.
 - **FR-008**: Nada (aviso, rótulo de acessibilidade, verso ou cabeçalho) MUST revelar a categoria
   da nova carta antes de ela ser virada (004).
-- **FR-009**: Sob movimento reduzido, qualquer animação do botão MUST ser omitida; a troca, a
-  vibração e o aviso continuam.
+- **FR-009**: Ao tocar, o ícone do botão MUST fazer uma breve animação; sob movimento reduzido ela
+  MUST ser omitida, e a troca, a vibração e o aviso continuam.
 
 **Baralhos de categoria e fim do baralho**
 
 - **FR-010**: Nos baralhos de uma só categoria, a tela do jogo MUST NOT mostrar botão de
   embaralhar nem de mudar o clima.
-- **FR-011**: O re-embaralhamento das próximas cartas (008) MUST deixar de existir; "Embaralhar de
-  novo", no "Fim do Baralho", MUST continuar como hoje.
+- **FR-011**: O re-embaralhamento das próximas cartas (008) MUST deixar de existir em todos os
+  baralhos, incluindo a regra que o implementa; "Embaralhar de novo", no "Fim do Baralho", MUST
+  continuar como hoje.
 
 **Regras que continuam valendo**
 
@@ -190,8 +204,7 @@ botão de favoritar e a dica de gestos.
   para baixo, trocar seria só pular (o que deslizar já faz).
 - **Chance por categoria**: sortear por categoria (e não por carta) faz o botão realmente mudar de
   assunto mesmo quando uma categoria tem muito mais cartas restantes.
-- **Rótulo**: "Mudar o clima" no botão (rótulo de acessibilidade "Mudar o clima: próxima carta de
-  outra categoria"), aviso "Clima trocado". O ícone muda de "embaralhar" para um que sugira
-  mudança de clima.
+- **Rótulo** (confirmado no clarify): botão só com ícone de sol entre nuvens; rótulo de
+  acessibilidade "Mudar o clima: próxima carta de outra categoria"; aviso "Clima trocado".
 - **Tutorial**: o tutorial de primeiro uso (005/009) não cita o botão de embaralhar e não muda.
 - **Sem persistência nova**: o progresso continua só na memória.
