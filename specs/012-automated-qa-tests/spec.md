@@ -40,6 +40,14 @@ sobre a rede de segurança de quem desenvolve o app. Os nomes de campos citados 
 `hasSeenTutorial`) descrevem o comportamento esperado; os testes verificam o comportamento, não o
 nome interno do campo.
 
+## Clarifications
+
+### Session 2026-11-08
+
+- Q: O que a verificação antes do commit deve rodar além da suíte de testes? → A: Lint nos arquivos preparados para o commit + checagem de tipos completa + suíte de testes completa (todos os gates locais rápidos); a validação de conteúdo já faz parte da suíte.
+- Q: Em quais eventos a verificação no repositório deve rodar? → A: Em todo PR (qualquer branch de destino, já que as features ficam empilhadas) e em todo push para a `main`.
+- Q: Se o gesto de arrastar não puder ser simulado ponta a ponta em algum caso, testar só a regra de decisão (deslocamento/velocidade → esquerda, direita ou volta ao lugar) é aceitável? → A: Não como substituto: a simulação do gesto na carta é obrigatória para esquerda, direita e abaixo do limite; a regra de decisão, extraída como função pura, ganha testes próprios como complemento.
+
 ## User Scenarios & Testing *(mandatory)*
 
 Os "usuários" desta feature são as pessoas (e agentes) que mudam o código do Quebra-Gelo. O
@@ -84,7 +92,7 @@ o status verde.
 
 **Acceptance Scenarios**:
 
-1. **Given** um PR para a `main`, **When** ele é aberto ou recebe novos commits, **Then** os gates
+1. **Given** um PR para qualquer branch, ou um push para a `main`, **When** ele é aberto ou recebe novos commits, **Then** os gates
    de merge rodam automaticamente e o resultado aparece no PR.
 2. **Given** um PR com um teste falhando, **When** a verificação termina, **Then** o PR mostra
    status de falha com o teste responsável visível no log.
@@ -182,12 +190,12 @@ o resultado e a vibração; simular um toque e conferir a revelação e a vibra�
 
 - **FR-001**: Toda tentativa de commit MUST executar automaticamente a suíte de testes completa
   antes de o commit ser criado; se qualquer teste falhar, o commit MUST ser abortado.
-- **FR-002**: Antes do commit, os arquivos preparados para o commit MUST passar pelo lint; erro de
-  lint MUST abortar o commit.
+- **FR-002**: Antes do commit, os arquivos preparados para o commit MUST passar pelo lint e o
+  projeto inteiro MUST passar na checagem de tipos; erro de lint ou de tipos MUST abortar o commit.
 - **FR-003**: A verificação antes do commit MUST ficar ativa automaticamente ao instalar as
   dependências do projeto, sem passo manual.
-- **FR-004**: Todo PR para a `main` (abertura e cada novo commit) MUST rodar automaticamente os
-  gates de merge — checagem de tipos, lint, testes e validação de conteúdo — e exibir o resultado no
+- **FR-004**: Todo PR (para qualquer branch de destino; abertura e cada novo commit) e todo push
+  para a `main` MUST rodar automaticamente os gates de merge — checagem de tipos, lint, testes e validação de conteúdo — e exibir o resultado no
   PR.
 - **FR-005**: Quando a verificação falhar, a saída MUST identificar o teste (ou arquivo e regra de
   lint) responsável.
@@ -219,6 +227,9 @@ o resultado e a vibração; simular um toque e conferir a revelação e a vibra�
 - **FR-013**: MUST existir testes que simulem o gesto de arrastar a carta (não apenas as ações de
   acessibilidade) e confirmem: arrasto para a esquerda além do limite descarta e avança; arrasto para
   a direita além do limite volta para a carta anterior; arrasto abaixo do limite não muda nada.
+  A regra de decisão do gesto (deslocamento e velocidade → esquerda, direita ou volta ao lugar)
+  MUST também ter testes próprios como função pura, em complemento — nunca em substituição — à
+  simulação do gesto.
 - **FR-014**: MUST existir testes que confirmem que a vibração é disparada exatamente uma vez ao
   virar a carta com toque, ao descartar com swipe, ao voltar com swipe e ao re-embaralhar.
 
@@ -260,7 +271,7 @@ o resultado e a vibração; simular um toque e conferir a revelação e a vibra�
 - **SC-003**: A verificação antes do commit termina em até 60 segundos numa máquina de
   desenvolvimento comum, para não incentivar que seja contornada.
 - **SC-004**: A suíte completa passa em 10 execuções seguidas sem nenhuma falha intermitente.
-- **SC-005**: Todo PR para a `main` mostra o resultado dos gates de merge em até 10 minutos após o
+- **SC-005**: Todo PR mostra o resultado dos gates de merge em até 10 minutos após o
   push.
 - **SC-006**: Zero mudanças visíveis para o jogador: a experiência do app é idêntica antes e depois
   da feature.
@@ -272,8 +283,8 @@ o resultado e a vibração; simular um toque e conferir a revelação e a vibra�
   mantida; esta feature acrescenta o bloqueio automático e fecha as lacunas de cobertura, sem trocar
   ferramentas.
 - O bloqueio antes do commit usa Husky + lint-staged, como pedido; o lint roda só nos arquivos
-  preparados para o commit e os testes rodam completos (o pedido exige `npm test`). A checagem de
-  tipos completa fica no gate do PR para manter o commit rápido.
+  preparados para o commit, enquanto a checagem de tipos e os testes rodam completos (o pedido exige
+  `npm test`).
 - "Integração Contínua" inclui, além do hook local, uma verificação automática nos PRs do GitHub
   (o repositório já está no GitHub); isso é ferramenta de desenvolvimento e não afeta o princípio de
   zero backend do app.
