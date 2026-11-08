@@ -21,16 +21,16 @@ US2 PR check (P2). US3 comes right after US1 because the gate only protects what
 
 ## Phase 1: Setup
 
-- [ ] T001 Run `npm run typecheck`, `npm run lint`, `npm test -- --ci` in the worktree and confirm all green (baseline); note the wall-clock time of `npm test -- --ci` and `npm run typecheck` for SC-003
-- [ ] T002 Install the hook tooling as devDependencies with `npx expo install husky lint-staged -- --save-dev` (updates package.json and package-lock.json)
+- [X] T001 Run `npm run typecheck`, `npm run lint`, `npm test -- --ci` in the worktree and confirm all green (baseline); note the wall-clock time of `npm test -- --ci` and `npm run typecheck` for SC-003
+- [X] T002 Install the hook tooling as devDependencies with `npx expo install husky lint-staged -- --save-dev` (updates package.json and package-lock.json)
 
 ---
 
 ## Phase 2: Foundational
 
-- [ ] T003 Add `clearMocks: true` to jest.config.js so mock call counts (haptics) never leak between tests (research R7); run `npm test -- --ci` and confirm still green
-- [ ] T004 [P] Create typed gesture helpers in src/test-utils/gestures.ts over `react-native-gesture-handler/jest-utils`: `swipeCard(translationX: number, velocityX = 0)` (drives the gesture with testID `swipe-card-pan` through BEGAN → ACTIVE → update → END with `translationX`/`velocityX`) and `tapCard()` (gesture `swipe-card-tap`), both wrapped in RNTL `act`; no `any` (use jest-utils generics / `unknown`)
-- [ ] T005 In src/components/SwipeCard.tsx add `testID: 'swipe-card-pan'` to the `usePanGesture` config and `testID: 'swipe-card-tap'` to the `useTapGesture` config (no behaviour change, FR-019)
+- [X] T003 Add `clearMocks: true` to jest.config.js so mock call counts (haptics) never leak between tests (research R7); run `npm test -- --ci` and confirm still green
+- [X] T004 [P] Create typed gesture helpers in src/test-utils/gestures.ts over `react-native-gesture-handler/jest-utils`: `swipeCard(translationX: number, velocityX = 0)` (drives the gesture with testID `swipe-card-pan` through BEGAN → ACTIVE → update → END with `translationX`/`velocityX`) and `tapCard()` (gesture `swipe-card-tap`), both wrapped in RNTL `act`; no `any` (use jest-utils generics / `unknown`)
+- [X] T005 In src/components/SwipeCard.tsx add `testID: 'swipe-card-pan'` to the `usePanGesture` config and `testID: 'swipe-card-tap'` to the `useTapGesture` config (no behaviour change, FR-019)
 
 **Checkpoint**: gestures addressable from tests; suite green.
 
@@ -74,7 +74,7 @@ revert, commit succeeds.
 **Independent Test**: SwipeCard and DeckScreen gesture tests pass; quickstart §4 FR-012…FR-014
 mutations each make ≥ 1 test fail.
 
-- [ ] T014 [US4] In src/components/SwipeCard.tsx extract the release decision into an exported pure worklet `resolveSwipeRelease({ translationX, velocityX, screenWidth, canGoBack }): SwipeDirection | null` with the data-model.md table ("`|translationX| > 0.3 × screenWidth`" decides by sign; else "`|velocityX| > 800`" decides by velocity sign; `right` with `!canGoBack` → `null`; otherwise `null`) and call it from `onDeactivate` (behaviour unchanged)
+- [X] T014 [US4] In src/components/SwipeCard.tsx extract the release decision into an exported pure worklet `resolveSwipeRelease({ translationX, velocityX, screenWidth, canGoBack }): SwipeDirection | null` with the data-model.md table ("`|translationX| > 0.3 × screenWidth`" decides by sign; else "`|velocityX| > 800`" decides by velocity sign; `right` with `!canGoBack` → `null`; otherwise `null`) and call it from `onDeactivate` (behaviour unchanged)
 - [ ] T015 [P] [US4] In src/components/__tests__/SwipeCard.test.tsx add `resolveSwipeRelease (012)` table tests: passed left, passed right with/without `canGoBack`, flick left/right below distance, below both thresholds → `null`, exactly at 30 % → `null`
 - [ ] T016 [P] [US4] In src/components/__tests__/SwipeCard.test.tsx add gesture-driven tests `(012)` using src/test-utils/gestures.ts: `swipeCard(-200)` with screenWidth 400 → `onSwipeConfirmed('left')` and `onDiscard('left')` once; `swipeCard(200)` with `canGoBack` → `'right'`; `swipeCard(200)` without `canGoBack` → neither callback; `swipeCard(-50)` → neither; `tapCard()` → `onFlip('up')`
 - [ ] T017 [US4] In src/screens/__tests__/DeckScreen.test.tsx add `DeckScreen — gestures (012)`: in a category deck, flip with `tapCard()`, `swipeCard(-width)` shows the next question and "Carta 2 de N"; `swipeCard(+width)` brings the previous question back face up; `swipeCard(-10)` keeps the same card
