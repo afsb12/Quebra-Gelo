@@ -89,7 +89,7 @@
 ## R8 — Haptics "exactly once"
 
 - **Decision**: assert at screen level (`DeckScreen`) with gesture simulation: tap → `impactAsync`
-  called once with `Light`; left swipe and right swipe → once with `Medium` each; reshuffle button →
+  called once with `Light`; left swipe and right swipe → once with `Medium` each; "Mudar o clima" button (replaced reshuffle in 011) →
   `notificationAsync` once with `success`; snap-back → no haptic.
 - **Rationale**: haptics are wired in the screen (`useHaptics` → `onFlip`, `onSwipeConfirmed`,
   reshuffle), so only a screen-level test proves the full chain.

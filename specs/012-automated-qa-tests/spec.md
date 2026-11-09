@@ -231,7 +231,8 @@ o resultado e a vibração; simular um toque e conferir a revelação e a vibra�
   MUST também ter testes próprios como função pura, em complemento — nunca em substituição — à
   simulação do gesto.
 - **FR-014**: MUST existir testes que confirmem que a vibração é disparada exatamente uma vez ao
-  virar a carta com toque, ao descartar com swipe, ao voltar com swipe e ao re-embaralhar.
+  virar a carta com toque, ao descartar com swipe, ao voltar com swipe e ao re-embaralhar (desde a
+  011, o botão "Mudar o clima" do modo misto, que substituiu o re-embaralhar com a mesma vibração).
 
 **Confiabilidade da suíte**
 
