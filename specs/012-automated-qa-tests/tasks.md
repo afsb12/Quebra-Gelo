@@ -93,7 +93,7 @@ mutations each make ≥ 1 test fail.
 **Independent Test**: quickstart §5 — PR shows the CI status.
 
 - [X] T021 [US2] Create .github/workflows/ci.yml per contracts/quality-gates.md: `on: pull_request` (any branch) and `push: branches: [main]`; `concurrency: { group: ci-${{ github.ref }}, cancel-in-progress: true }`; job `checks` on `ubuntu-latest` with `actions/checkout@v4`, `actions/setup-node@v4` (`node-version: 24`, `cache: npm`), steps `npm ci`, `npm run typecheck`, `npm run lint`, `npm test -- --ci`; `timeout-minutes: 10`
-- [ ] T022 [US2] After pushing the branch and opening the PR, confirm the CI check runs and reports on the PR (if the push of the workflow is rejected for missing `workflow` token scope, report it — research R3)
+- [X] T022 [US2] After pushing the branch and opening the PR, confirm the CI check runs and reports on the PR (if the push of the workflow is rejected for missing `workflow` token scope, report it — research R3)
 
 ---
 

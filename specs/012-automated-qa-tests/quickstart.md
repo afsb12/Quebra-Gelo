@@ -56,7 +56,7 @@ For each rule in [contracts/coverage-map.md](contracts/coverage-map.md), apply t
 ## 5. CI (US2, SC-005)
 
 Push the branch and open a PR: the "CI" check runs typecheck, lint and tests and reports on the PR
-within 10 minutes.
+within 10 minutes. Verified 2026-11-09: PR #14, run 42614754973 — success.
 
 ## 6. No player-visible change (SC-006)
 
