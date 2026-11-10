@@ -106,9 +106,9 @@ Profundo, Casais, Happy Hour, Dilemas, Viagens e Aventuras, Nostalgia e Infânci
 ## Phase 6: Polish & Cross-Cutting Concerns
 
 - [X] T017 Run the gates `npm run typecheck`, `npm run lint`, `npm test` (quickstart §1) and fix any failure
-- [ ] T018 [P] Run `graphify update .` to refresh graphify-out after the code changes
+- [X] T018 [P] Run `graphify update .` to refresh graphify-out after the code changes
 - [X] T019 Walk through quickstart §2 one last time on the final text of `familia-001…030` in src/data/data.json and record the per-theme count in the commit message
-- [ ] T020 (release, per the project workflow) Bump the app version to 1.6.0 (`versionCode` 7) in app.json, package.json and package-lock.json for the release APK
+- [X] T020 (release, per the project workflow) Bump the app version to 1.6.0 (`versionCode` 7) in app.json, package.json and package-lock.json for the release APK
 
 ---
 
