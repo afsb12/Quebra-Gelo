@@ -135,7 +135,7 @@ anteriormente.
   mínimo de 25 usado em 007) e é mantido. Na frente creme, porém, a cor precisa ser escurecida para
   ficar legível, e o escurecimento automático chega a um verde quase idêntico ao de "Futuro"
   (ΔE ≈ 6). A frente de "Família" deve usar uma tinta própria, legível no creme (contraste
-  ≥ 4,5:1) e distinguível da tinta de cada outra categoria (ΔE ≥ 25), por exemplo um verde-oliva.
+  ≥ 4,5:1) e distinguível da tinta de cada outra categoria (ΔE ≥ 25), como um verde-folha.
 - **Legibilidade sobre o verde**: texto e ícone desenhados sobre o verso verde devem ter contraste
   legível (≥ 4,5:1).
 - **Ícone em emoji**: o ícone das categorias vem do conjunto de ícones do app, não de emojis.
@@ -224,7 +224,7 @@ anteriormente.
 ### Key Entities
 
 - **Categoria "Família"**: ID `familia`, título "Família", descrição (≤ 80 caracteres), cor de verso
-  `#27AE60`, cor de frente própria (verde-oliva legível no creme), ícone de casa com coração;
+  `#27AE60`, cor de frente própria (verde-folha legível no creme), ícone de casa com coração;
   posição fixa entre "Nostalgia e Infância" e "Futuro e Sonhos".
 - **Pergunta**: ID único estável (`familia-NNN`), categoria `familia`, texto (≤ 200 caracteres).
 
