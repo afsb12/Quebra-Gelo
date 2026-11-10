@@ -10,8 +10,8 @@
 npm run typecheck
 npm run lint
 npm test
-npx jest src/data/__tests__/content.test.ts      # rules 1–15 incl. 3c and 15 (contracts/content.md)
-npx jest src/theme                               # palette TABLE incl. familia, contrast ≥ 4.5:1
+npx jest src/data/__tests__/content.test.ts      # rules 1–15 incl. new 15 (contracts/content.md)
+npx jest src/theme                               # palette TABLE incl. familia, contrast ≥ 4.5:1, ΔE ≥ 25
 npx jest src/screens/__tests__/HomeScreen.test.tsx   # 10 tiles, order, "8 de 10 categorias"
 ```
 

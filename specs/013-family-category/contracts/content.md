@@ -36,9 +36,9 @@ Questions of `familia` appear right after `nostalgia-030` and before `futuro-001
 
 ## New test rules
 
-- **3c** — `familia` back and front ink are each at CIE76 ΔE ≥ 25 from the back / ink of every
+- **Distinct colors** (`categoryVisual.test.ts`) — `familia` back and front ink are each at CIE76 ΔE ≥ 25 from the back / ink of every
   other category (research R2).
-- **15** — `familia` has `familia-001…030`; every normalized text is free of the kinship words,
+- **15** (`content.test.ts`) — `familia` has `familia-001…030`; every normalized text is free of the kinship words,
   sensitive topics and ranking/presence phrases listed in research R4.
 
 ## Questions (per item)

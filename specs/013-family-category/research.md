@@ -22,7 +22,7 @@
     gave two families: olive (`#547200`, min ΔE 34.5, but it reads as mustard next to the green
     back) and leaf green (`#007A15`, min ΔE 27.5 vs Futuro; Viagens 53.5, Descontraído 59, others
     ≥ 82). Leaf green keeps the front visibly the same hue as the back.
-- **Rule enforced by test (3c)**: `familia` back and ink each ΔE ≥ 25 from every other category's
+- **Rule enforced by test** (`categoryVisual.test.ts`): `familia` back and ink each ΔE ≥ 25 from every other category's
   back/ink. Scoped to `familia` because two older pairs are already below 25 (Profundo/Dilemas 18
   on the back, 16 on the front; Descontraído/Happy Hour fronts 23.7) and are out of scope.
 - **Alternatives**: auto ink (rejected: duplicates Futuro on the front); a different back such as

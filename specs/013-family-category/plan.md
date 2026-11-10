@@ -58,7 +58,7 @@ filter (formats unchanged)
 | Conteúdo: original, pt-BR, inclusive, no assumptions (gender, orientation, religion, marital status, finances, **family structure**) | ✅ | The rule most at risk in a family deck: questions never name a specific relative and say "alguém da família", "família de sangue ou de coração" (R3); kinship-word guard in the content test (R4); manual review in quickstart |
 | Conteúdo: original vs. `Assets/` references | ✅ | Questions written from scratch, not taken from the reference games |
 | Conteúdo: AA contrast | ✅ | Back: dark text on `#27AE60` = 6.00:1; front ink `#007A15` on cream = 4.88:1 |
-| Conteúdo validated by test | ✅ | Existing suite (counts, IDs, `?`, yes/no openers, duplicates) + palette + new tests 15 and 3c |
+| Conteúdo validated by test | ✅ | Existing suite (counts, IDs, `?`, yes/no openers, duplicates) + palette + new family-safe test 15 + ΔE distinctness test |
 | Qualidade gates | ✅ | `typecheck`, `lint`, `test` in quickstart and pre-commit hook |
 
 **Post-design re-check**: all ✅, no violations.
@@ -88,10 +88,10 @@ src/
 │   ├── types.ts                     # CATEGORY_IDS: insert 'familia' after 'nostalgia' (index 8)
 │   ├── data.json                    # category at index 8 + familia-001…030 after nostalgia-030
 │   └── __tests__/
-│       └── content.test.ts          # PALETTE row; 3c distinct colors (R2); 15 family-safe guard (R4); header comment
+│       └── content.test.ts          # PALETTE row; 15 family-safe guard (R4); header comment
 ├── theme/
 │   ├── categoryVisual.ts            # CATEGORY_INK.familia = '#007A15'
-│   └── __tests__/categoryVisual.test.ts   # TABLE row
+│   └── __tests__/categoryVisual.test.ts   # TABLE row; "familia is distinct on both faces" (ΔE ≥ 25, R2)
 ├── components/
 │   ├── MixedHeroCard.tsx            # doc comment example "7 de 9" → "8 de 10"
 │   └── __tests__/MixedHeroCard.test.tsx   # summary fixture "7 de 9" → "8 de 10" (cosmetic)
