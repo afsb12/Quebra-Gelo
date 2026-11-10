@@ -25,7 +25,16 @@ npx jest -t "não repete perguntas" # one test by name
 npx expo install <pkg>             # ALWAYS use instead of npm install (SDK-compatible versions)
 ```
 
-Merge gate: `typecheck`, `lint` and `test` all green.
+Merge gate: `typecheck`, `lint` and `test` all green. These are enforced (012):
+
+- **Pre-commit hook** (`.husky/pre-commit`, activated by `npm install` via `prepare`): lint-staged
+  (ESLint on staged files, `--max-warnings=0`) → `npm run typecheck` → `npm test -- --ci`. A failure
+  aborts the commit; fix the cause instead of using `--no-verify`.
+- **CI** (`.github/workflows/ci.yml`): every PR (any base) and push to `main` runs typecheck, lint, tests.
+- Swipe/tap tests drive the real gestures via `src/test-utils/gestures.ts` (`swipeCard`, `tapCard`);
+  the release thresholds live in the pure `resolveSwipeRelease`. The Reanimated mock recreates
+  shared values each render, so flip a card only once per test. Core rule → test map:
+  `specs/012-automated-qa-tests/contracts/coverage-map.md`.
 
 ## Stack notes (versions matter)
 
