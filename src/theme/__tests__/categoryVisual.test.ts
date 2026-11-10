@@ -14,7 +14,27 @@ const TABLE: Record<CategoryId, { color: string; onColor: 'dark' | 'white'; ink:
   dilemas: { color: '#7A3EB1', onColor: 'white', ink: '#6E35A3' },
   viagens: { color: '#14A39E', onColor: 'dark', ink: '#0B6B67' },
   nostalgia: { color: '#F28CB4', onColor: 'dark', ink: '#A6316B' },
+  familia: { color: '#27AE60', onColor: 'dark', ink: '#007A15' },
   futuro: { color: '#167A4C', onColor: 'white', ink: '#167A4C' },
+};
+
+// CIE76 ΔE between two `#RRGGBB` colors (sRGB → linear → XYZ D65 → Lab).
+const toLab = (hex: string): [number, number, number] => {
+  const [r, g, b] = [1, 3, 5].map((i) => {
+    const c = parseInt(hex.slice(i, i + 2), 16) / 255;
+    return c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
+  });
+  const f = (t: number) => (t > 0.008856 ? Math.cbrt(t) : 7.787 * t + 16 / 116);
+  const x = f((r * 0.4124 + g * 0.3576 + b * 0.1805) / 0.95047);
+  const y = f(r * 0.2126 + g * 0.7152 + b * 0.0722);
+  const z = f((r * 0.0193 + g * 0.1192 + b * 0.9505) / 1.08883);
+  return [116 * y - 16, 500 * (x - y), 200 * (y - z)];
+};
+
+const deltaE = (a: string, b: string): number => {
+  const [l1, a1, b1] = toLab(a);
+  const [l2, a2, b2] = toLab(b);
+  return Math.hypot(l1 - l2, a1 - a2, b1 - b2);
 };
 
 const category = (id: CategoryId): Category => ({
@@ -45,5 +65,14 @@ describe('category visuals (palette)', () => {
     const visuals = CATEGORY_IDS.map((id) => getCategoryVisual(category(id)));
     for (const visual of visuals) expect('pattern' in visual).toBe(false);
     expect(new Set(visuals.map((v) => v.color)).size).toBe(CATEGORY_IDS.length);
+  });
+
+  // 013 research R2: scoped to familia; older pairs below 25 (Profundo/Dilemas) are out of scope.
+  it('familia is distinct from every other category on both faces (ΔE ≥ 25, 013)', () => {
+    for (const id of CATEGORY_IDS.filter((other) => other !== 'familia')) {
+      const back = Math.round(deltaE(TABLE.familia.color, TABLE[id].color) * 10) / 10;
+      const ink = Math.round(deltaE(CATEGORY_INK.familia, CATEGORY_INK[id]) * 10) / 10;
+      expect({ id, back: back >= 25, ink: ink >= 25 }).toEqual({ id, back: true, ink: true });
+    }
   });
 });

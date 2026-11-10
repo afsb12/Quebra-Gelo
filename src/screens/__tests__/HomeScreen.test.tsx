@@ -39,6 +39,28 @@ describe('HomeScreen — first-launch tutorial (005)', () => {
     expect(router.push).toHaveBeenCalledWith({ pathname: '/deck/[deckId]', params: { deckId: 'casual' } });
   });
 
+  it('a launch after closing it reads the stored flag and does not show the tutorial (012)', async () => {
+    const first = await render(<HomeScreen />);
+    await act(async () => {
+      fireEvent.press(screen.getByTestId('tutorial-skip'));
+    });
+    await first.unmount();
+    const stored = await AsyncStorage.getItem(ONBOARDING_STORAGE_KEY);
+    expect(stored).not.toBeNull();
+
+    // Simulated relaunch: in-memory state is gone, only what was saved on the device remains.
+    // (Resetting the store persists `false`, so the saved value is put back before reading it.)
+    useOnboardingStore.setState({ hasSeenTutorial: false, readFailed: false });
+    await AsyncStorage.setItem(ONBOARDING_STORAGE_KEY, stored ?? '');
+    await act(async () => {
+      await useOnboardingStore.persist.rehydrate();
+    });
+    expect(useOnboardingStore.getState().hasSeenTutorial).toBe(true);
+
+    await render(<HomeScreen />);
+    expect(screen.queryByTestId('tutorial-backdrop')).toBeNull();
+  });
+
   it('is not shown once seen', async () => {
     useOnboardingStore.setState({ hasSeenTutorial: true });
     await render(<HomeScreen />);
@@ -55,8 +77,9 @@ describe('HomeScreen', () => {
   it('renders every category as mini cards, in data.json order', async () => {
     await render(<HomeScreen />);
     const ids = getCategories().map((c) => c.id);
-    expect(ids).toHaveLength(9);
+    expect(ids).toHaveLength(10);
     expect(ids.slice(0, 2)).toEqual(['casual', 'primeiros-encontros']);
+    expect(ids.slice(7)).toEqual(['nostalgia', 'familia', 'futuro']);
     for (const category of getCategories()) {
       expect(screen.getByTestId(`mini-card-${category.id}`)).toBeTruthy();
       expect(screen.getByText(category.description)).toBeTruthy();
@@ -105,7 +128,7 @@ describe('HomeScreen — mix filter (006)', () => {
     useMixFilterStore.setState({ excluded: [] });
   });
 
-  it('switching off 2 categories and saving filters the mix and shows "7 de 9 categorias"', async () => {
+  it('switching off 2 categories and saving filters the mix and shows "8 de 10 categorias"', async () => {
     await render(<HomeScreen />);
     expect(screen.queryByTestId('mix-filter-summary')).toBeNull();
     await open();
@@ -117,7 +140,7 @@ describe('HomeScreen — mix filter (006)', () => {
     });
     expect(screen.queryByTestId('mix-filter-sheet')).toBeNull();
     expect(useMixFilterStore.getState().excluded).toEqual(['happy-hour', 'dilemas']);
-    expect(screen.getByTestId('mix-filter-summary')).toHaveTextContent('7 de 9 categorias');
+    expect(screen.getByTestId('mix-filter-summary')).toHaveTextContent('8 de 10 categorias');
 
     await open();
     expect(screen.getByTestId('mix-filter-switch-dilemas').props.value).toBe(false);

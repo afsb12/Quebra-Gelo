@@ -14,6 +14,8 @@ export const CATEGORY_INK: Record<CategoryId, string> = {
   dilemas: '#6E35A3',
   viagens: '#0B6B67',
   nostalgia: '#A6316B',
+  // Hand-picked (013 research R2): inkOnCream('#27AE60') = #1C7C44 is ΔE 5.7 from Futuro's ink.
+  familia: '#007A15',
   futuro: '#167A4C',
 };
 

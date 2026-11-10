@@ -64,6 +64,27 @@ export const resistX = (translationX: number): number => {
   return Math.min(Math.max(translationX, 0) * RESIST_FACTOR, RESIST_MAX);
 };
 
+export interface SwipeRelease {
+  translationX: number;
+  velocityX: number;
+  screenWidth: number;
+  canGoBack: boolean;
+}
+
+/**
+ * Where a released drag goes: past 30 % of the screen (or flicked faster than 800 pt/s) it leaves
+ * left (next) or right (previous); `null` springs it back. A right release on the first card has
+ * nothing to go back to, so it always springs back (009 FR-006, 012).
+ */
+export const resolveSwipeRelease = ({ translationX, velocityX, screenWidth, canGoBack }: SwipeRelease): SwipeDirection | null => {
+  'worklet';
+  const passed = Math.abs(translationX) > screenWidth * DISCARD_RATIO;
+  const flicked = Math.abs(velocityX) > DISCARD_VELOCITY;
+  if (!passed && !flicked) return null;
+  const direction: SwipeDirection = (passed ? translationX : velocityX) < 0 ? 'left' : 'right';
+  return direction === 'right' && !canGoBack ? null : direction;
+};
+
 export function SwipeCard({
   mode = 'category',
   question,
@@ -160,6 +181,7 @@ export function SwipeCard({
   );
 
   const pan = usePanGesture({
+    testID: 'swipe-card-pan',
     activeOffsetX: [-10, 10],
     onUpdate: (event) => {
       'worklet';
@@ -170,12 +192,13 @@ export function SwipeCard({
     onDeactivate: (event) => {
       'worklet';
       if (isAnimating.get()) return;
-      const passed = Math.abs(event.translationX) > screenWidth * DISCARD_RATIO;
-      const flicked = Math.abs(event.velocityX) > DISCARD_VELOCITY;
-      const direction: SwipeDirection = (passed ? event.translationX : event.velocityX) < 0 ? 'left' : 'right';
-      // On the first card there is nothing to go back to: always spring back (009 FR-006).
-      const blocked = direction === 'right' && !canGoBackSV.get();
-      if ((passed || flicked) && !blocked) {
+      const direction = resolveSwipeRelease({
+        translationX: event.translationX,
+        velocityX: event.velocityX,
+        screenWidth,
+        canGoBack: canGoBackSV.get(),
+      });
+      if (direction) {
         discard(direction);
       } else {
         translateX.set(withSpring(0, { damping: 18, stiffness: 220 }));
@@ -184,6 +207,7 @@ export function SwipeCard({
   });
 
   const tap = useTapGesture({
+    testID: 'swipe-card-tap',
     onActivate: () => {
       'worklet';
       flip();

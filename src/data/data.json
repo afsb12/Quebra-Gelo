@@ -57,6 +57,13 @@
       "description": "Memórias, brincadeiras e quem você já foi."
     },
     {
+      "id": "familia",
+      "title": "Família",
+      "icon": "home-heart",
+      "color": "#27AE60",
+      "description": "Histórias, memórias e risadas com quem é do seu sangue (ou do seu coração)."
+    },
+    {
       "id": "futuro",
       "title": "Futuro e Sonhos",
       "icon": "rocket-launch-outline",
@@ -1264,6 +1271,156 @@
       "id": "nostalgia-030",
       "categoryId": "nostalgia",
       "text": "Que hábito de antigamente você trouxe para a sua vida adulta?"
+    },
+    {
+      "id": "familia-001",
+      "categoryId": "familia",
+      "text": "Qual história da sua família todo mundo já ouviu mil vezes e ainda ri quando contam de novo?"
+    },
+    {
+      "id": "familia-002",
+      "categoryId": "familia",
+      "text": "Que confusão engraçada aconteceu numa viagem ou num passeio em família?"
+    },
+    {
+      "id": "familia-003",
+      "categoryId": "familia",
+      "text": "Qual foi a maior trapalhada que já aconteceu numa festa ou reunião da sua família?"
+    },
+    {
+      "id": "familia-004",
+      "categoryId": "familia",
+      "text": "Que história da sua família parece tão absurda que ninguém de fora acredita?"
+    },
+    {
+      "id": "familia-005",
+      "categoryId": "familia",
+      "text": "Qual mal-entendido em família acabou virando piada interna?"
+    },
+    {
+      "id": "familia-006",
+      "categoryId": "familia",
+      "text": "Que tradição da sua família você faz questão de manter?"
+    },
+    {
+      "id": "familia-007",
+      "categoryId": "familia",
+      "text": "Qual é o jeito mais típico da sua família comemorar um aniversário?"
+    },
+    {
+      "id": "familia-008",
+      "categoryId": "familia",
+      "text": "Que ritual da sua família ninguém sabe direito como começou?"
+    },
+    {
+      "id": "familia-009",
+      "categoryId": "familia",
+      "text": "Qual data do ano tem mais a cara da sua família, e por quê?"
+    },
+    {
+      "id": "familia-010",
+      "categoryId": "familia",
+      "text": "Se você pudesse criar uma nova tradição para a sua família, qual seria?"
+    },
+    {
+      "id": "familia-011",
+      "categoryId": "familia",
+      "text": "Que prato tem, para você, o gosto da sua família?"
+    },
+    {
+      "id": "familia-012",
+      "categoryId": "familia",
+      "text": "Qual receita de família você gostaria de aprender, ou já sabe fazer de olhos fechados?"
+    },
+    {
+      "id": "familia-013",
+      "categoryId": "familia",
+      "text": "Quem da sua família todo mundo procura quando o assunto é comida, e qual é a especialidade dessa pessoa?"
+    },
+    {
+      "id": "familia-014",
+      "categoryId": "familia",
+      "text": "Que comida sempre aparece quando a sua família se reúne?"
+    },
+    {
+      "id": "familia-015",
+      "categoryId": "familia",
+      "text": "Qual foi o maior desastre na cozinha que a sua família lembra até hoje?"
+    },
+    {
+      "id": "familia-016",
+      "categoryId": "familia",
+      "text": "Que expressão ou ditado só a sua família entende?"
+    },
+    {
+      "id": "familia-017",
+      "categoryId": "familia",
+      "text": "Que apelido pegou na sua família, e como ele surgiu?"
+    },
+    {
+      "id": "familia-018",
+      "categoryId": "familia",
+      "text": "Que mania da sua família você percebeu que também tem?"
+    },
+    {
+      "id": "familia-019",
+      "categoryId": "familia",
+      "text": "Qual é a frase que alguém da sua família vive repetindo?"
+    },
+    {
+      "id": "familia-020",
+      "categoryId": "familia",
+      "text": "Se a sua família fosse um programa de TV, de que tipo seria e qual seria o nome?"
+    },
+    {
+      "id": "familia-021",
+      "categoryId": "familia",
+      "text": "O que você aprendeu com a pessoa mais velha da sua família que nenhum livro ensina?"
+    },
+    {
+      "id": "familia-022",
+      "categoryId": "familia",
+      "text": "O que a pessoa mais nova da sua família já te ensinou?"
+    },
+    {
+      "id": "familia-023",
+      "categoryId": "familia",
+      "text": "Que objeto antigo da sua família guarda uma boa história?"
+    },
+    {
+      "id": "familia-024",
+      "categoryId": "familia",
+      "text": "Que costume da sua família mais mudou com o passar dos anos?"
+    },
+    {
+      "id": "familia-025",
+      "categoryId": "familia",
+      "text": "O que você gostaria de perguntar a alguém mais velho da sua família sobre a vida de antigamente?"
+    },
+    {
+      "id": "familia-026",
+      "categoryId": "familia",
+      "text": "Que qualidade de alguém da sua família você admira e gostaria de ter?"
+    },
+    {
+      "id": "familia-027",
+      "categoryId": "familia",
+      "text": "O que alguém da sua família fez por você que você nunca esqueceu?"
+    },
+    {
+      "id": "familia-028",
+      "categoryId": "familia",
+      "text": "Que jeito, gosto ou talento você acha que herdou da sua família?"
+    },
+    {
+      "id": "familia-029",
+      "categoryId": "familia",
+      "text": "O que da sua família você gostaria de passar adiante?"
+    },
+    {
+      "id": "familia-030",
+      "categoryId": "familia",
+      "text": "Que momento simples com a sua família você guardaria para sempre?"
     },
     {
       "id": "futuro-001",
