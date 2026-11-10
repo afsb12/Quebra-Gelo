@@ -68,6 +68,8 @@
     `sexual`, `corpo`, `peso`, `aparencia`, `segredo`;
   - **ranking / presence**: `preferid`, `mais chat`, `pior`, `aqui da mesa`, `nesta mesa`,
     `olhe para`.
+  `segredo` also blocks harmless phrases ("o segredo da receita"); kept on purpose, because
+  "segredos de família" is the exposing theme FR-008 forbids, and recipes can say "truque".
   Tests 8–13 (length, count, `?`, yes/no openers, duplicates) already apply to every category.
 - **Rationale**: cheap regression guard required by the constitution; the manual review in
   quickstart §2 is what actually guarantees tone and age-appropriateness (SC-002, SC-004).

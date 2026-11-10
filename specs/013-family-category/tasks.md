@@ -55,6 +55,11 @@ fails for `familia` until T010 adds the questions. Expected; the gate is the US1
 skippable, back/forward navigation, completion notice and restart work, a favorite survives a
 restart; content passes the automated guards and the manual review (quickstart §2).
 
+> FR-005 (one card at a time, no repeats, skip, back/forward, favorites, completion and restart)
+> needs no new code: the deck, progress and favorites logic is generic over `CategoryId` and is
+> already covered by `src/store/__tests__/progress.test.ts`, `src/hooks/__tests__/useDeck.test.ts`,
+> `src/store/__tests__/favorites.test.ts` and `src/screens/__tests__/DeckScreen.test.tsx`.
+
 ### Tests for User Story 1
 
 - [ ] T008 [US1] Add test "15. familia questions are family-safe and structure-neutral (013)" in src/data/__tests__/content.test.ts, scoped to `categoryId === 'familia'`: assert IDs equal `deckIds('familia')`; then, on `` ` ${normalize(text)} ` ``, fail when it matches (a) a kinship word as a whole word: `pai mae maes irmao irmaos irma irmas avo avos vovo tio tios tia tias primo primos prima primas filho filhos filha filhas neto netos neta netas marido esposa esposo sogro sogra cunhado cunhada genro nora padrasto madrasta` (not `pais`, which is also "país"); (b) a word starting with `morte morre morreu falec luto velorio enterro doenc doente hospital briga brigou divorc separac heranc dinheiro salari religi igreja deus politic partido namor sexo sexual corpo peso aparencia segredo`; (c) a phrase `preferid`, `mais chat`, ` pior `, `aqui da mesa`, `nesta mesa`, `olhe para` (research R4). Declare the lists as `FAMILY_UNSAFE: RegExp[]` next to `WORKPLACE_UNSAFE`, report `{ id, term }` like test 14, and update the header comment to mention "a family-safe Família (15)". Confirm it fails (no questions yet)
@@ -103,7 +108,7 @@ Profundo, Casais, Happy Hour, Dilemas, Viagens e Aventuras, Nostalgia e Infânci
 - [ ] T017 Run the gates `npm run typecheck`, `npm run lint`, `npm test` (quickstart §1) and fix any failure
 - [ ] T018 [P] Run `graphify update .` to refresh graphify-out after the code changes
 - [ ] T019 Walk through quickstart §2 one last time on the final text of `familia-001…030` in src/data/data.json and record the per-theme count in the commit message
-- [ ] T020 Bump the app version to 1.6.0 (`versionCode` 7) in app.json, package.json and package-lock.json for the release APK
+- [ ] T020 (release, per the project workflow) Bump the app version to 1.6.0 (`versionCode` 7) in app.json, package.json and package-lock.json for the release APK
 
 ---
 

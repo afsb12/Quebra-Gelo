@@ -31,7 +31,8 @@ Read the 30 `familia-*` texts in `src/data/data.json` and confirm for each:
 ## 3. In the app (`npm start`, Expo Go)
 
 1. Home shows, in order: … Viagens e Aventuras, Nostalgia e Infância, **Família**, Futuro e Sonhos;
-   the grid's last row is full.
+   the grid's last row is full; repeat on a small (≈ 5") and a large (≈ 6.7") screen or emulator:
+   tiles aligned, none stretched, cut or overlapping (US2 scenario 2).
 2. Família tile: green back, dark text, house-with-heart icon, description fully visible.
 3. Open it: card front has a leaf-green frame/icon clearly different from Futuro's dark green;
    flip/discard/skip/back work with haptics; 30 cards without repeats, then the completion notice.
