@@ -5,8 +5,11 @@ import { createJSONStorage, persist } from 'zustand/middleware';
 
 export const ONBOARDING_STORAGE_KEY = 'quebra-gelo/onboarding';
 
+/** Bumped when the tutorial content changes, so people who closed an older one see it once more (009). */
+export const TUTORIAL_VERSION = 2;
+
 interface OnboardingState {
-  /** Persisted: the first-launch tutorial was closed at least once (005). */
+  /** Persisted: the current tutorial version was closed at least once (005, 009). */
   hasSeenTutorial: boolean;
   /** Not persisted: storage could not be read this run, so the tutorial stays hidden. */
   readFailed: boolean;
@@ -15,6 +18,7 @@ interface OnboardingState {
 
 interface PersistedOnboarding {
   hasSeenTutorial: boolean;
+  tutorialVersion: number;
 }
 
 /** AsyncStorage whose write failures are ignored: the tutorial closes anyway and may show again next launch. */
@@ -24,8 +28,12 @@ const tolerantStorage = {
   removeItem: (key: string) => AsyncStorage.removeItem(key).catch(() => undefined),
 };
 
-const readSeen = (value: unknown): boolean =>
-  typeof value === 'object' && value !== null && (value as Record<string, unknown>).hasSeenTutorial === true;
+/** Seen only if the stored flag is for the current tutorial; a 005-era flag has no version (009). */
+const readSeen = (value: unknown): boolean => {
+  if (typeof value !== 'object' || value === null) return false;
+  const stored = value as Record<string, unknown>;
+  return stored.hasSeenTutorial === true && stored.tutorialVersion === TUTORIAL_VERSION;
+};
 
 export const useOnboardingStore = create<OnboardingState>()(
   persist(
@@ -38,7 +46,7 @@ export const useOnboardingStore = create<OnboardingState>()(
       name: ONBOARDING_STORAGE_KEY,
       version: 1,
       storage: createJSONStorage(() => tolerantStorage),
-      partialize: (state): PersistedOnboarding => ({ hasSeenTutorial: state.hasSeenTutorial }),
+      partialize: (state): PersistedOnboarding => ({ hasSeenTutorial: state.hasSeenTutorial, tutorialVersion: TUTORIAL_VERSION }),
       merge: (persisted, current) => ({ ...current, hasSeenTutorial: readSeen(persisted) }),
       // Rather not show the tutorial than block or flash it when the flag can't be read.
       onRehydrateStorage: () => (_state, error) => {

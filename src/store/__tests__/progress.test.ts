@@ -52,6 +52,42 @@ describe('useProgressStore (in memory)', () => {
     expect(deck?.order).toHaveLength(getQuestionsByCategory('futuro').length);
   });
 
+  it('goBack is a no-op on a missing deck and on the first card (009)', () => {
+    useProgressStore.getState().goBack('casual');
+    expect(useProgressStore.getState().decks.casual).toBeUndefined();
+    useProgressStore.getState().ensureDeck('casual');
+    const decks = useProgressStore.getState().decks;
+    useProgressStore.getState().goBack('casual');
+    expect(useProgressStore.getState().decks).toBe(decks);
+  });
+
+  it('goBack moves back one card and keeps furthest (009)', () => {
+    useProgressStore.getState().ensureDeck('futuro');
+    useProgressStore.getState().discard('futuro');
+    useProgressStore.getState().discard('futuro');
+    useProgressStore.getState().goBack('futuro');
+    expect(useProgressStore.getState().decks.futuro).toMatchObject({ cursor: 1, furthest: 2 });
+  });
+
+  it('changeMood deals a card of another category and keeps the history (011)', () => {
+    useProgressStore.getState().ensureDeck('mixed');
+    useProgressStore.getState().discard('mixed');
+    const before = useProgressStore.getState().decks.mixed;
+    const category = (id: string | undefined) => id?.replace(/-d+$/, '');
+    useProgressStore.getState().changeMood('mixed');
+    const after = useProgressStore.getState().decks.mixed;
+    expect(after).toMatchObject({ cursor: 2, furthest: 2 });
+    expect(after?.order.slice(0, 2)).toEqual(before?.order.slice(0, 2));
+    expect(category(after?.order[2])).not.toBe(category(before?.order[1]));
+    expect([...(after?.order ?? [])].sort()).toEqual([...(before?.order ?? [])].sort());
+  });
+
+  it('changeMood on a missing deck is a no-op (011)', () => {
+    const state = useProgressStore.getState();
+    state.changeMood('mixed');
+    expect(useProgressStore.getState()).toBe(state);
+  });
+
   it('is not persisted (no persist API)', () => {
     expect('persist' in useProgressStore).toBe(false);
   });

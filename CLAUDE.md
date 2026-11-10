@@ -105,3 +105,22 @@ Features are developed through the Spec Kit skills in `.claude/skills/`:
 
 Merge gates for `main`: `tsc --noEmit`, ESLint clean, tests passing, content validation passing.
 Commits follow Conventional Commits (`feat:`, `fix:`, `content:`, `docs:`).
+
+## graphify
+
+This project has a knowledge graph at graphify-out/ with god nodes, community structure, and cross-file relationships.
+
+**MANDATORY — graphify first, always.** Every search, file lookup, code/doc read, architecture
+question, impact analysis and exploration in this repo (including inside subagents and Spec Kit
+skills) MUST start with graphify (`graphify query` / `path` / `explain`). Grep, Glob, Read or shell
+search are allowed only afterwards, to open the exact files/lines the graph pointed to, or when the
+graph genuinely has no answer (say so explicitly). Strict PreToolUse hooks in
+`.claude/settings.json` enforce this. If `graphify-out/graph.json` is missing or stale, rebuild it
+(`/graphify .` or `graphify update .`) before continuing.
+
+Rules:
+- When graphify-out/graph.json exists, run `graphify query "<question>"` before your first grep, search or source-file read for a codebase question, and put this rule in every subagent prompt that explores code. Read raw files only for lines the graph or an earlier read already located. Use `graphify path "<A>" "<B>"` for relationships and `graphify explain "<concept>"` for focused concepts. These return a scoped subgraph, usually much smaller than GRAPH_REPORT.md or raw grep output.
+- If graphify-out/wiki/index.md exists, use it for broad navigation instead of raw source browsing.
+- Read graphify-out/GRAPH_REPORT.md only for broad architecture review or when query/path/explain do not surface enough context.
+- After modifying code, run `graphify update .` to keep the graph current (AST-only, no API cost).
+- A committed graphify-out/graph.json is rewritten whole on every build, so a large diff to it in a pull request is expected. Do not flag it as churn or suggest skipping the graph rebuild or its hooks.

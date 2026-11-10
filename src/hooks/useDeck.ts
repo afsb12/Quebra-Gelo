@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo } from 'react';
 
 import { getCategory, getQuestion } from '../data/content';
-import { createDeck, currentQuestionId } from '../data/deck';
+import { canChangeMood, canGoBack, createDeck, currentQuestionId } from '../data/deck';
 import { MIXED_DECK_ID, type Category, type DeckId, type DeckProgress, type Question } from '../data/types';
 import { strings } from '../i18n/strings';
 import { useMixCategories } from '../store/mixFilter';
@@ -20,17 +20,31 @@ export interface UseDeckResult {
   position: { index: number; total: number };
   /** False only on the very first render, before the deck is created. */
   ready: boolean;
+  /** Next card (swipe left). */
   discard: () => void;
+  /** True while a card is on the table and it is not the first (009). */
+  canGoBack: boolean;
+  /** Previous card (swipe right); no-op on the first card (009). */
+  goBack: () => void;
+  /** Full restart from card 1 (used by the "Fim do Baralho" screen). */
   reshuffle: () => void;
+  /** Mixed deck only: the newest card is on the table and another category has cards left (011). */
+  canChangeMood: boolean;
+  /** Mixed deck only: next card from another category ("Mudar o clima", 011); no-op elsewhere. */
+  changeMood: () => void;
 }
 
 const EMPTY_DECK: DeckProgress = createDeck([]);
+
+const categoryOfQuestion = (id: string): string | undefined => getQuestion(id)?.categoryId;
 
 export const useDeck = (deckId: DeckId): UseDeckResult => {
   const deck = useProgressStore((state) => state.decks[deckId]);
   const ensureDeck = useProgressStore((state) => state.ensureDeck);
   const discardInStore = useProgressStore((state) => state.discard);
+  const goBackInStore = useProgressStore((state) => state.goBack);
   const reshuffleInStore = useProgressStore((state) => state.reshuffle);
+  const changeMoodInStore = useProgressStore((state) => state.changeMood);
   const mixed = deckId === MIXED_DECK_ID;
   const mixFilter = useMixCategories();
   const mixCategories = mixed ? mixFilter : undefined;
@@ -51,7 +65,11 @@ export const useDeck = (deckId: DeckId): UseDeckResult => {
   const currentCategory = current ? getCategory(current.categoryId) : undefined;
 
   const discard = useCallback(() => discardInStore(deckId), [deckId, discardInStore]);
+  const goBack = useCallback(() => goBackInStore(deckId), [deckId, goBackInStore]);
   const reshuffle = useCallback(() => reshuffleInStore(deckId, mixCategories), [deckId, mixCategories, reshuffleInStore]);
+  const changeMood = useCallback(() => {
+    if (mixed) changeMoodInStore(deckId);
+  }, [changeMoodInStore, deckId, mixed]);
 
   const position = useMemo(
     () => ({ index: Math.min(active.cursor + 1, active.order.length), total: active.order.length }),
@@ -67,6 +85,10 @@ export const useDeck = (deckId: DeckId): UseDeckResult => {
     position,
     ready: deck !== undefined,
     discard,
+    canGoBack: current !== undefined && canGoBack(active),
+    goBack,
     reshuffle,
+    canChangeMood: mixed && current !== undefined && canChangeMood(active, categoryOfQuestion),
+    changeMood,
   };
 };

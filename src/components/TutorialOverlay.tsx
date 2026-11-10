@@ -18,8 +18,8 @@ const MAX_CARD_WIDTH = 220;
 const ignore = () => undefined;
 
 /**
- * First-launch tutorial (005): a single overlay over Home with a face-down example card and three
- * short hints. Taps on the card are absorbed; any other tap closes it.
+ * First-launch tutorial (005, updated by 009): a single overlay over Home with a face-down example
+ * card and four short hints (left = next, right = previous, tap = reveal, pick a deck). Taps on the card are absorbed; any other tap closes it.
  */
 export function TutorialOverlay({ visible, onClose }: TutorialOverlayProps) {
   const reducedMotion = useReducedMotion();
@@ -41,15 +41,21 @@ export function TutorialOverlay({ visible, onClose }: TutorialOverlayProps) {
       <Pressable testID="tutorial-backdrop" accessible={false} onPress={onClose} className="flex-1" style={{ backgroundColor: BACKDROP }}>
         <SafeAreaView testID="tutorial-content" accessibilityViewIsModal accessibilityLabel={strings.tutorial.title} className="flex-1 px-6">
           <View className="flex-1 items-center justify-center gap-5">
-            <View testID="tutorial-hint-swipe" accessible accessibilityLabel={strings.tutorial.hintSwipe}>
-              <Text className="text-center font-body text-base text-primary">{strings.tutorial.hintSwipe}</Text>
+            {/* Each direction's text sits on the side of its arrow (009). */}
+            <View className="w-full flex-row gap-4">
+              <View testID="tutorial-hint-next" accessible accessibilityLabel={strings.tutorial.hintNext} className="flex-1">
+                <Text className="text-left font-body text-base text-primary">{strings.tutorial.hintNext}</Text>
+              </View>
+              <View testID="tutorial-hint-back" accessible accessibilityLabel={strings.tutorial.hintBack} className="flex-1">
+                <Text className="text-right font-body text-base text-primary">{strings.tutorial.hintBack}</Text>
+              </View>
             </View>
 
             <View className="flex-row items-center gap-3">
               <TutorialHintIcon name="chevron-left" size={36} color={ink} motion="nudge-x" reverse />
               <Pressable testID="tutorial-card" accessible={false} onPress={ignore}>
                 <BrandCardBack width={cardWidth} variant="full" />
-                <View pointerEvents="none" className="absolute inset-0 items-center justify-end pb-6">
+                <View pointerEvents="none" className="absolute inset-0 items-center justify-center">
                   <TutorialHintIcon name="gesture-tap" size={44} color={ink} motion="pulse" />
                 </View>
               </Pressable>

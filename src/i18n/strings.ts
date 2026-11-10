@@ -11,7 +11,8 @@ export const strings = {
     title: 'Como jogar',
     skip: 'Pular',
     skipLabel: 'Pular tutorial',
-    hintSwipe: 'Deslize para os lados para a próxima carta',
+    hintNext: 'Deslize para a esquerda para passar a carta',
+    hintBack: 'Deslize para a direita para voltar à carta anterior',
     hintFlip: 'Toque na carta para revelar a pergunta',
     hintDeck: 'Toque em um baralho para começar',
   },
@@ -30,7 +31,9 @@ export const strings = {
   deck: {
     backHint: 'Volta para a escolha de baralho',
     position: (index: number, total: number) => `Carta ${index} de ${total}`,
-    tapHint: 'Toque para virar · deslize para pular',
+    tapHint: 'Toque para virar · ← próxima · anterior →',
+    changeMoodLabel: 'Mudar o clima: próxima carta de outra categoria',
+    moodChanged: 'Clima trocado',
   },
   card: {
     faceDownLabel: (category: string) => `Carta de ${category}, virada para baixo`,
@@ -39,7 +42,8 @@ export const strings = {
     actions: {
       flip: 'virar',
       favorite: 'favoritar',
-      skip: 'pular',
+      next: 'próxima',
+      previous: 'voltar',
     },
     favoritedIndicator: 'Pergunta favoritada',
   },

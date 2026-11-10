@@ -1,4 +1,4 @@
-import { advance, createDeck, currentQuestionId, isCompleted, shuffle } from '../deck';
+import { advance, canGoBack, createDeck, currentQuestionId, goBack, isCompleted, shuffle } from '../deck';
 
 /** Deterministic pseudo-random generator for reproducible shuffles. */
 const seeded = (seed: number) => () => {
@@ -57,4 +57,53 @@ describe('deck lifecycle', () => {
     expect(seen).toHaveLength(IDS.length);
     expect(new Set(seen).size).toBe(IDS.length);
   });
+});
+
+describe('navigation (009)', () => {
+  const walk = (deck: ReturnType<typeof createDeck>, steps: number) => {
+    let d = deck;
+    for (let i = 0; i < steps; i += 1) d = advance(d);
+    return d;
+  };
+
+  it('canGoBack is false on the first card and once completed', () => {
+    const deck = createDeck(IDS, seeded(1));
+    expect(canGoBack(deck)).toBe(false);
+    expect(canGoBack(advance(deck))).toBe(true);
+    expect(canGoBack(walk(deck, IDS.length))).toBe(false);
+  });
+
+  it('goBack on the first card returns the same object', () => {
+    const deck = createDeck(IDS, seeded(1));
+    expect(goBack(deck)).toBe(deck);
+  });
+
+  it('goBack moves the cursor and keeps furthest; advancing replays the history in order', () => {
+    const deck = walk(createDeck(IDS, seeded(2)), 3);
+    expect(deck).toMatchObject({ cursor: 3, furthest: 3 });
+    const back = goBack(goBack(deck));
+    expect(back).toMatchObject({ cursor: 1, furthest: 3 });
+    const replay1 = advance(back);
+    const replay2 = advance(replay1);
+    expect(currentQuestionId(replay1)).toBe(deck.order[2]);
+    expect(currentQuestionId(replay2)).toBe(deck.order[3]);
+    expect(replay2.furthest).toBe(3);
+    expect(advance(replay2).furthest).toBe(4);
+  });
+
+  it('any mix of next/back deals every never-shown card once, in deck order', () => {
+    const random = seeded(77);
+    let deck = createDeck(IDS, seeded(5));
+    const firstSeen: string[] = [];
+    let guard = 0;
+    while (!isCompleted(deck) && guard < 1000) {
+      const id = currentQuestionId(deck);
+      if (id && !firstSeen.includes(id)) firstSeen.push(id);
+      deck = random() < 0.35 ? goBack(deck) : advance(deck);
+      guard += 1;
+    }
+    expect(isCompleted(deck)).toBe(true);
+    expect(firstSeen).toEqual(deck.order);
+  });
+
 });
