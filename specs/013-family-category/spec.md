@@ -31,6 +31,17 @@ nova categoria trata da família **como grupo**: histórias compartilhadas, trad
 lendárias e o que uma geração tem para contar à outra. Ela é pensada para ser jogada **com** a
 família à mesa, por pessoas de idades bem diferentes.
 
+## Clarifications
+
+### Session 2026-11-10
+
+- Q: As cartas falam com quem tirou a carta ("você") ou com a mesa toda ("vocês")? → A: Com
+  quem tirou a carta ("você"), como nas demais categorias; as perguntas são abertas o bastante para
+  que outras pessoas da mesa acrescentem a própria versão.
+- Q: As perguntas pressupõem a família reunida à mesa, ou também servem para falar da família com
+  amigos ou num encontro? → A: Servem para os dois casos; nenhuma carta depende de os parentes
+  estarem presentes (ex.: nada de "alguém aqui da mesa").
+
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - Jogar o baralho "Família" num almoço de domingo (Priority: P1)
@@ -137,6 +148,9 @@ anteriormente.
 - **Sobreposição com "Nostalgia e Infância"**: perguntas sobre a própria infância de quem responde
   já existem em "Nostalgia"; as de "Família" giram em torno do grupo e das histórias
   compartilhadas, sem repetir as de lá.
+- **Família longe da mesa**: no modo misto ou num encontro entre amigos, uma carta de "Família"
+  aparece sem os parentes por perto; ela continua respondível porque fala da família de quem
+  responde, não de quem está presente.
 - **Progresso de outras categorias**: incluir a categoria não altera o progresso nem os favoritos
   existentes de nenhuma outra.
 - **Modo misto em andamento ao atualizar**: como o progresso dos baralhos vive só na memória, o app
@@ -174,6 +188,10 @@ anteriormente.
   tradições, rituais e datas especiais; comida e receitas de família; jeitos, manias, apelidos e
   expressões da família; ponte entre gerações (o que mudou, o que se aprendeu com alguém mais velho
   ou mais novo); reconhecimento e carinho (o que se admira, agradece ou herdou de alguém).
+- **FR-007a**: Cada pergunta MUST se dirigir a quem tirou a carta, na segunda pessoa do singular
+  ("você"), e MUST fazer sentido tanto com a família reunida quanto numa conversa sobre a família
+  com amigos ou num encontro; nenhuma pergunta MUST depender de os parentes estarem presentes
+  ("alguém aqui da mesa", "olhe para…").
 - **FR-008**: As perguntas MUST ser adequadas para todas as idades e seguras numa mesa com
   parentes: MUST NOT tratar de morte, luto, doenças, brigas ou rompimentos familiares, divórcio,
   heranças, dinheiro, religião, política, vida amorosa ou sexual, aparência ou corpo, e MUST NOT
