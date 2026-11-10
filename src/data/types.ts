@@ -7,6 +7,7 @@ export const CATEGORY_IDS = [
   'dilemas',
   'viagens',
   'nostalgia',
+  'familia',
   'futuro',
 ] as const;
 

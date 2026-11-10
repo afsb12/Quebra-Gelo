@@ -13,7 +13,7 @@ export interface MixedHeroCardProps {
   onPress: () => void;
   /** Opens the category filter (006); never starts the game. */
   onOpenFilter: () => void;
-  /** e.g. "7 de 9 categorias" when the mix is filtered; omitted with every category on. */
+  /** e.g. "8 de 10 categorias" when the mix is filtered; omitted with every category on. */
   summary?: string;
 }
 

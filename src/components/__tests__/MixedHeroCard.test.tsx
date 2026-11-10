@@ -27,7 +27,7 @@ describe('MixedHeroCard (004/006)', () => {
   });
 
   it('shows the summary when the mix is filtered', async () => {
-    await render(<MixedHeroCard width={340} onPress={jest.fn()} onOpenFilter={jest.fn()} summary="7 de 9 categorias" />);
-    expect(screen.getByTestId('mix-filter-summary')).toHaveTextContent('7 de 9 categorias');
+    await render(<MixedHeroCard width={340} onPress={jest.fn()} onOpenFilter={jest.fn()} summary="8 de 10 categorias" />);
+    expect(screen.getByTestId('mix-filter-summary')).toHaveTextContent('8 de 10 categorias');
   });
 });

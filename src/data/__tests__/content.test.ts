@@ -7,7 +7,8 @@ import { CATEGORY_IDS } from '../types';
  * Validates src/data/data.json against specs/001-icebreaker-cards-mvp/contracts/content-schema.md
  * (rules 1–10) plus the 002 palette rule, the 007 date-safe rule (11) and the 010 rules: exactly 30
  * questions per category (9), every text a question (12), no yes/no openers (13) and a
- * workplace-safe Happy Hour (14). Works on the raw JSON on purpose (typed as unknown).
+ * workplace-safe Happy Hour (14), plus the 013 family-safe Família (15). Works on the raw JSON on
+ * purpose (typed as unknown).
  */
 
 type Json = Record<string, unknown>;
@@ -29,6 +30,7 @@ const PALETTE: Record<string, string> = {
   dilemas: '#7A3EB1',
   viagens: '#14A39E',
   nostalgia: '#F28CB4',
+  familia: '#27AE60',
   futuro: '#167A4C',
 };
 
@@ -87,6 +89,14 @@ const closedOpener = (text: string): string | undefined => {
 const WORKPLACE_UNSAFE: RegExp[] = [
   / (alcool|bebida|bebad|ressaca|drink|cerveja|salari|dinheiro|chefe|demiss|promoc|desempenho|namor|sexo|sexual|religi|igreja|politic|partido)/,
   / ex /,
+];
+
+// 013 research R4: Família must assume no family structure (no specific relative; `pais` left out,
+// it is also "país"), avoid sensitive topics and never rank, expose or require the relatives present.
+const FAMILY_UNSAFE: RegExp[] = [
+  / (pai|mae|maes|irmao|irmaos|irma|irmas|avo|avos|vovo|tio|tios|tia|tias|primo|primos|prima|primas|filho|filhos|filha|filhas|neto|netos|neta|netas|marido|esposa|esposo|sogro|sogra|cunhado|cunhada|genro|nora|padrasto|madrasta) /,
+  / (morte|morre|morreu|falec|luto|velorio|enterro|doenc|doente|hospital|briga|brigou|divorc|separac|heranc|dinheiro|salari|religi|igreja|deus|politic|partido|namor|sexo|sexual|corpo|peso|aparencia|segredo)/,
+  /(preferid| mais chat| pior | aqui da mesa | nesta mesa | olhe para )/,
 ];
 
 const deckIds = (categoryId: string) =>
@@ -224,6 +234,16 @@ describe('data.json content', () => {
       const words = ` ${normalize(String(q.text))} `;
       const term = WORKPLACE_UNSAFE.find((pattern) => pattern.test(words));
       expect({ id: q.id, term: term?.source }).toEqual({ id: q.id, term: undefined });
+    }
+  });
+
+  it('15. familia questions are family-safe and structure-neutral (013)', () => {
+    const deck = questions.filter((q) => q.categoryId === 'familia');
+    expect(deck.map((q) => q.id)).toEqual(deckIds('familia'));
+    for (const q of deck) {
+      const words = ` ${normalize(String(q.text))} `;
+      const term = FAMILY_UNSAFE.map((pattern) => words.match(pattern)?.[0]).find(Boolean);
+      expect({ id: q.id, term }).toEqual({ id: q.id, term: undefined });
     }
   });
 });
