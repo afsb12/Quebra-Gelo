@@ -24,6 +24,14 @@ precisam continuar verdes).
 **Referência visual**: quadro "Ícone do Happy Hour — antes e depois" do canvas de revisão de design
 (https://claude.ai/artifact/7Cup4PFup16b56zKDjgJaV).
 
+## Clarifications
+
+### Session 2026-11-10
+
+- Q: Qual espessura de traço o ícone próprio usa para combinar com os ícones da biblioteca? → A:
+  traço de 2 unidades numa grade de 24, com pontas e cantos arredondados (a mesma espessura dos
+  ícones de contorno da biblioteca).
+
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - Reconhecer o Happy Hour de relance (Priority: P1)
@@ -91,8 +99,9 @@ da mistura e terminar o baralho: em todas as telas o ícone é o brinde de canec
 - **FR-001**: A categoria Happy Hour MUST ser representada por um ícone de duas canecas de chope
   largas, com alça e espuma, inclinadas uma para a outra num brinde, com pequenos traços de
   "tim-tim" acima, conforme o quadro de referência.
-- **FR-002**: O ícone MUST ser desenhado em traço, com espessura e cantos arredondados equivalentes
-  aos dos demais ícones de categoria, para não destoar deles.
+- **FR-002**: O ícone MUST ser desenhado em traço de 2 unidades numa grade de 24 (proporcional ao
+  tamanho em que aparece), com pontas e cantos arredondados, sem preenchimento, a mesma espessura
+  dos ícones de contorno das demais categorias.
 - **FR-003**: O ícone MUST aparecer em todos os lugares onde o ícone de uma categoria aparece hoje:
   verso cheio e verso mini da carta, canto da frente da carta, selo de origem do Tudo Misturado,
   filtro da mistura, item de favoritos e tela de fim do baralho.
