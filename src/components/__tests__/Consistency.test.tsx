@@ -24,6 +24,6 @@ describe('category identity is consistent across the app', () => {
 
   it('DeckComplete uses the category color', async () => {
     await render(<DeckComplete deckTitle={category.title} visual={visual} onReshuffle={jest.fn()} onChooseAnother={jest.fn()} />);
-    expect(StyleSheet.flatten(screen.getByTestId('deck-complete').props.style).backgroundColor).toBe(visual.color);
+    expect(StyleSheet.flatten(screen.getByTestId('deck-complete-face', { includeHiddenElements: true }).props.style).backgroundColor).toBe(visual.color);
   });
 });
