@@ -1,24 +1,24 @@
 # Graph Report - Quebra-Gelo  (2026-11-11)
 
 ## Corpus Check
-- 269 files · ~173,053 words
+- 276 files · ~175,461 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 8 file(s) not represented in the graph (top: (none) 6, .graphify-bak 1, .css 1)
 
 ## Summary
-- 2018 nodes · 3283 edges · 181 communities (167 shown, 14 thin omitted)
-- Extraction: 87% EXTRACTED · 13% INFERRED · 0% AMBIGUOUS · INFERRED: 439 edges (avg confidence: 0.94)
+- 2066 nodes · 3347 edges · 188 communities (171 shown, 17 thin omitted)
+- Extraction: 87% EXTRACTED · 13% INFERRED · 0% AMBIGUOUS · INFERRED: 442 edges (avg confidence: 0.94)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `685dbd6d`
+- Built from commit: `7392278f`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
 - generate-icons.ts
 - DeckScreen.tsx
-- 002-card-visual-design/data-model.md
+- Data Model: Identidade Visual das Cartas
 - Tasks: Novo Ícone do App e Verso das Cartas Sem Padrões
 - content.test.ts
 - steps
@@ -27,7 +27,7 @@
 - Tasks: [FEATURE NAME]
 - speckit-analyze/SKILL.md
 - expo
-- index.ts
+- tokens
 - createDeck
 - ci.yml
 - CategoryId
@@ -35,11 +35,11 @@
 - dependencies
 - HomeScreen.tsx
 - canGoBack
-- progress.ts
-- Consistency.test.tsx
+- Feature Specification: Fim do Baralho com Sugestões
+- DeckComplete
 - Feature Specification: Início em Grade de 3 Colunas
 - TutorialOverlay
-- FavoritesScreen.tsx
+- FavoritesScreen
 - types.ts
 - Revisão de conteúdo: 010
 - Execution Steps
@@ -52,7 +52,7 @@
 - Tasks: Nova Categoria "Primeiros Encontros"
 - Feature Specification: Expansão e Curadoria Psicológica do Baralho
 - Feature Specification: Testes Automatizados e Prevenção de Regressão (QA)
-- react
+- CLAUDE.md
 - package.json
 - Feature Specification: Quebra-Gelo MVP — Baralho de Perguntas
 - Tasks: Quebra-Gelo MVP — Baralho de Perguntas
@@ -74,14 +74,14 @@
 - speckit-plan/SKILL.md
 - speckit-specify/SKILL.md
 - speckit-tasks/SKILL.md
-- @expo-google-fonts/outfit
+- Research: Nova Categoria "Família"
 - compilerOptions
 - Quebra-Gelo Constitution
 - Core Principles
-- CardBack.tsx
+- react-native
 - Tasks: Navegação Direcional por Gestos e Tutorial Atualizado
 - app-icons.test.ts
-- MixFilterSheet.tsx
+- DeckComplete.tsx
 - Tasks: Modo "Tudo Misturado" com Verso Oculto e Etiqueta de Categoria
 - 014-happy-hour-toast-icon/spec.md
 - Research: Navegação direcional e tutorial atualizado (009)
@@ -96,7 +96,7 @@
 - Implementation Plan: Novo Ícone do App e Verso das Cartas Sem Padrões
 - Implementation Plan: Nova Categoria "Primeiros Encontros"
 - Tasks: "Mudar o Clima" no Modo Misturado
-- createDeck
+- Research: "Mudar o Clima" no Modo Misturado
 - Data Model: Testes Automatizados e Prevenção de Regressão (012)
 - Implementation Plan: [FEATURE]
 - speckit-checklist/SKILL.md
@@ -109,11 +109,11 @@
 - store/mixFilter.ts
 - speckit-clarify/SKILL.md
 - speckit-implement/SKILL.md
-- HomeScreen.tsx
+- 018-deck-complete-suggestions/spec.md
 - Implementation Plan: Quebra-Gelo MVP — Baralho de Perguntas
-- FavoritesScreen.test.tsx
+- Tasks: Fim do Baralho com Sugestões
 - Constitution Check
-- CardBack.test.tsx
+- @testing-library/react-native
 - Data Model: "Mudar o Clima" no Modo Misturado
 - speckit-constitution/SKILL.md
 - speckit-taskstoissues/SKILL.md
@@ -131,7 +131,7 @@
 - Data Model: Navegação direcional (009)
 - Specification Quality Checklist: Expansão e Curadoria Psicológica do Baralho
 - Specification Quality Checklist: "Mudar o Clima" no Modo Misturado
-- Contract: "Mudar o clima"
+- eslint.config.js
 - Specification Quality Checklist: Testes Automatizados e Prevenção de Regressão (QA)
 - Specification Quality Checklist: Nova Categoria "Família"
 - [CHECKLIST TYPE] Checklist: [FEATURE NAME]
@@ -142,7 +142,7 @@
 - User Scenarios & Testing *(mandatory)*
 - Quickstart: validating the in-game reshuffle (008)
 - Contract: bundled questions after 010
-- DeckScreen
+- Implementation for User Story 1
 - getCategories
 - Quickstart: validating 004
 - Data Model: Onboarding tutorial (005)
@@ -151,7 +151,7 @@
 - Quickstart: validating directional navigation (009)
 - Quickstart: validating 011
 - Quebra-Gelo
-- useDeck.ts
+- progress.ts
 - nativewind-env.d.ts
 - Feature Specification: Tela de Jogo com Barra de Ações
 - Tasks: Ícone de Brinde de Chope para o Happy Hour
@@ -173,33 +173,40 @@
 - 015-home-grid-redesign/quickstart.md
 - Research: Onboarding tutorial (005)
 - Data Model: Expansão e Curadoria Psicológica do Baralho
-- Data Model: Identidade Visual das Cartas
-- Contract: "Família" content in `src/data/data.json`
+- 017-favorites-filter-play/spec.md
+- Implementation Plan: Fim do Baralho com Sugestões
 - Specification Quality Checklist: Tela de Jogo com Barra de Ações
 - Specification Quality Checklist: Identidade Visual das Cartas por Categoria
 - User Scenarios & Testing *(mandatory)*
 - Specification Quality Checklist: Favoritos com Filtro e Baralho de Favoritas
 - Research: Favoritos com Filtro e Baralho de Favoritas
-- Device state
-- Quickstart & Validation: Quebra-Gelo MVP
+- Specification Quality Checklist: Nova Categoria "Primeiros Encontros"
+- useHaptics
 - Research: Modo "Tudo Misturado" (004)
 - Project Structure
 - 1. Routes (Expo Router, typed routes)
-- Contract: Content file `src/data/data.json`
+- Data Model: Nova Categoria "Família"
 - deck-components.md
 - 016-deck-action-bar/quickstart.md
-- Phase 3: User Story 1 - Reconhecer a categoria pela cor e pelo verso da carta (Priority: P1) 🎯 MVP
+- User Scenarios & Testing *(mandatory)*
 - Project Structure
-- expo-asset@~58.0.19
+- Research: Fim do Baralho com Sugestões
 - expo-haptics
 - 017-favorites-filter-play/quickstart.md
+- Data Model: Nova Categoria "Primeiros Encontros"
+- Project Structure
+- expo-constants@~58.0.14
+- expo-linking@~58.0.15
+- tailwindcss@^3.4.19
+- deck-complete.md
+- 018-deck-complete-suggestions/quickstart.md
 
 ## God Nodes (most connected - your core abstractions)
 1. `SwipeCard()` - 43 edges
-2. `DeckScreen()` - 36 edges
-3. `CategoryId` - 34 edges
+2. `DeckScreen()` - 38 edges
+3. `CategoryId` - 38 edges
 4. `react-native` - 33 edges
-5. `react` - 28 edges
+5. `react` - 29 edges
 6. `Category` - 26 edges
 7. `HomeScreen()` - 26 edges
 8. `useDeck()` - 25 edges
@@ -207,33 +214,33 @@
 10. `MiniCard()` - 22 edges
 
 ## Surprising Connections (you probably didn't know these)
+- `R7. Removing 008` --references--> `DeckComplete()`  [INFERRED]
+  specs/011-mixed-change-mood/research.md → src/components/DeckComplete.tsx
 - `R2 — Route` --references--> `isDeckId()`  [INFERRED]
   specs/004-mixed-mode-hidden-backs/research.md → src/data/content.ts
 - `Deck question list (pure, `src/data/content.ts`)` --references--> `getAllQuestions()`  [INFERRED]
   specs/004-mixed-mode-hidden-backs/data-model.md → src/data/content.ts
-- `CategoryVisual (derived, `src/theme/categoryVisual.ts`)` --references--> `CategoryId`  [INFERRED]
-  specs/002-card-visual-design/data-model.md → src/data/types.ts
-- `CategoryVisual (`src/theme/categoryVisual.ts`): **Amends 002**` --references--> `CategoryId`  [INFERRED]
-  specs/003-app-icon-plain-backs/data-model.md → src/data/types.ts
-- `Tests for User Story 1` --references--> `CategoryId`  [INFERRED]
-  specs/003-app-icon-plain-backs/tasks.md → src/data/types.ts
+- `Hook — `src/hooks/useDeck.ts` (`UseDeckResult` additions)` --references--> `UseDeckResult`  [INFERRED]
+  specs/008-reshuffle-remaining-cards/contracts/deck-reshuffle.md → src/hooks/useDeck.ts
+- `R4. Store and hook API` --references--> `useDeck()`  [INFERRED]
+  specs/008-reshuffle-remaining-cards/research.md → src/hooks/useDeck.ts
 
 ## Import Cycles
 - None detected.
 
-## Communities (181 total, 14 thin omitted)
+## Communities (188 total, 17 thin omitted)
 
 ### Community 0 - "generate-icons.ts"
 Cohesion: 0.08
 Nodes (31): chunk(), encodePng(), MAIN_FIT, OUT, pixelCoverage(), render(), Rgb, rgb() (+23 more)
 
 ### Community 1 - "DeckScreen.tsx"
-Cohesion: 0.11
-Nodes (19): Phase 3: User Story 1 - Avançar e voltar com botões (P1) 🎯 MVP, DeckActionBar(), DeckActionBarProps, SideButton(), SideButtonProps, DeckCompleteProps, DeckProgress(), DeckProgressProps (+11 more)
+Cohesion: 0.09
+Nodes (16): react-native-safe-area-context, DeckActionBarProps, SideButtonProps, DeckProgress(), DeckProgressProps, DeckStack, DeckStackProps, LAYERS (+8 more)
 
-### Community 2 - "002-card-visual-design/data-model.md"
-Cohesion: 0.20
-Nodes (4): Data Model: Quebra-Gelo MVP, Automated checks, Manual scenarios (physical phone), Quickstart & Validation: Identidade Visual das Cartas
+### Community 2 - "Data Model: Identidade Visual das Cartas"
+Cohesion: 0.07
+Nodes (24): Change policy, Contract: Content file `src/data/data.json`, Shape, Validation rules (each is one assertion in the content test), Automated validation, Manual scenarios (physical phone, airplane mode ON before first launch), Prerequisites, Quickstart & Validation: Quebra-Gelo MVP (+16 more)
 
 ### Community 3 - "Tasks: Novo Ícone do App e Verso das Cartas Sem Padrões"
 Cohesion: 0.12
@@ -248,8 +255,8 @@ Cohesion: 0.06
 Nodes (30): args, inputs, integration, spec, default, prompt, type, any (+22 more)
 
 ### Community 6 - "Tasks: Testes Automatizados e Prevenção de Regressão (QA)"
-Cohesion: 0.08
-Nodes (23): Architecture (three layers, dependencies flow top-down only), Commands, Game and content rules, graphify, Non-negotiables from the constitution, Project, Spec-driven workflow (Spec Kit), Stack notes (versions matter) (+15 more)
+Cohesion: 0.14
+Nodes (14): Commands, Dependencies & Execution Order, Format: `[ID] [P?] [Story] Description`, Implementation Strategy, Parallel Example, Phase 1: Setup, Phase 2: Foundational, Phase 3: User Story 1 - Bloquear commits que quebram o jogo (Priority: P1) 🎯 MVP (+6 more)
 
 ### Community 7 - "common.ps1"
 Cohesion: 0.16
@@ -267,9 +274,9 @@ Nodes (25): 1. Initialize Analysis Context, 2. Load Artifacts (Progressive Discl
 Cohesion: 0.08
 Nodes (24): backgroundColor, foregroundImage, monochromeImage, adaptiveIcon, package, predictiveBackGestureEnabled, versionCode, typedRoutes (+16 more)
 
-### Community 11 - "index.ts"
-Cohesion: 0.12
-Nodes (21): @expo/vector-icons, react-native, react-native-reanimated, BrandCardBack, BrandCardBackProps, styles, BrandSymbol, BrandSymbolProps (+13 more)
+### Community 11 - "tokens"
+Cohesion: 0.15
+Nodes (11): @expo/vector-icons, react-native-reanimated, ChangeMoodButtonProps, styles, EmptyStateProps, FavoriteButtonProps, HintMotion, IconName (+3 more)
 
 ### Community 12 - "createDeck"
 Cohesion: 0.15
@@ -280,48 +287,48 @@ Cohesion: 0.09
 Nodes (22): name, runs-on, steps, timeout-minutes, concurrency, cancel-in-progress, group, jobs (+14 more)
 
 ### Community 14 - "CategoryId"
-Cohesion: 0.14
-Nodes (15): Category, Content (read-only, bundled), Question, Data Model: Modo "Tudo Misturado" (004), Deck question list (pure, `src/data/content.ts`), DeckId (new), DeckProgress (existing) — now keyed by DeckId, useDeck(deckId) result (+7 more)
+Cohesion: 0.13
+Nodes (17): Card view state (ephemeral, not persisted), Category, Content (read-only, bundled), Data Model: Quebra-Gelo MVP, DeckProgress (in memory only; one per category played in the current app session), Device state, Favorite (persisted), Question (+9 more)
 
 ### Community 15 - "content.ts"
-Cohesion: 0.12
-Nodes (22): CategoryId (extended), Category entry, CategoryId (extended), Data Model: Nova Categoria "Família", Persisted state (unchanged), Question entries, Contract: Favorites (017), Phase 3: User Story 1 - Jogar com as favoritas (P1) 🎯 MVP (+14 more)
+Cohesion: 0.15
+Nodes (21): Phase 2: Foundational (DeckId across data, store, hook and route), CategoryId (extended), CategoryId (extended), Contract: Favorites (017), DeckRoute(), CATEGORY_ID_SET, content, getAllQuestions() (+13 more)
 
 ### Community 16 - "dependencies"
 Cohesion: 0.10
-Nodes (21): dependencies, expo-constants@~58.0.14, expo-font@~58.0.11, expo-router@~58.0.29, expo-status-bar@~58.0.4, @expo/vector-icons@^15.0.2, react@19.3.0, react-dom@19.3.0 (+13 more)
+Nodes (20): dependencies, expo-asset@~58.0.19, @expo-google-fonts/outfit@^0.4.3, expo-router@~58.0.29, expo-status-bar@~58.0.4, @expo/vector-icons@^15.0.2, react@19.3.0, react-native@0.88.1 (+12 more)
 
 ### Community 17 - "HomeScreen.tsx"
-Cohesion: 0.19
-Nodes (13): @react-native-async-storage/async-storage, @testing-library/react-native, Phase 2: Foundational, Implementation for User Story 2, ONBOARDING_STORAGE_KEY, OnboardingState, PersistedOnboarding, readSeen() (+5 more)
+Cohesion: 0.16
+Nodes (16): expo-router, Implementation for User Story 2, RootLayout(), HomeScreen(), openDeck(), useFavoritesHydrated(), useMixCategories(), ONBOARDING_STORAGE_KEY (+8 more)
 
 ### Community 18 - "canGoBack"
 Cohesion: 0.18
 Nodes (9): Contract: Core Rule → Test Coverage Map (012, FR-018), 1. Suite is green and deterministic (SC-004), 2. Pre-commit blocks a broken rule (US1, SC-001), 3. Hook time budget (SC-003), 5. CI (US2, SC-005), 6. No player-visible change (SC-006), Mutation results (2026-11-08), Prerequisites (+1 more)
 
-### Community 19 - "progress.ts"
-Cohesion: 0.43
-Nodes (6): zustand, goBack(), categoryOfQuestion(), favoriteIds(), newDeck(), useProgressStore
+### Community 19 - "Feature Specification: Fim do Baralho com Sugestões"
+Cohesion: 0.17
+Nodes (12): Assumptions, Clarifications, Edge Cases, Feature Specification: Fim do Baralho com Sugestões, Functional Requirements, Measurable Outcomes, Requirements *(mandatory)*, Session 2026-11-11 (+4 more)
 
-### Community 20 - "Consistency.test.tsx"
-Cohesion: 0.40
-Nodes (3): category, [question], visual
+### Community 20 - "DeckComplete"
+Cohesion: 0.31
+Nodes (9): Components (`src/components/`), Implementation for User Story 3, Phase 5: User Story 3 - Cor da categoria consistente em todo o app (Priority: P2), Tests for User Story 3 ⚠️, Contract: `CategoryIcon` (UI component), Summary, DeckComplete(), FanCard() (+1 more)
 
 ### Community 21 - "Feature Specification: Início em Grade de 3 Colunas"
 Cohesion: 0.14
 Nodes (14): Assumptions, Clarifications, Edge Cases, Feature Specification: Início em Grade de 3 Colunas, Functional Requirements, Key Entities, Measurable Outcomes, Requirements *(mandatory)* (+6 more)
 
 ### Community 22 - "TutorialOverlay"
-Cohesion: 0.25
-Nodes (10): Complexity Tracking, Constitution Check, Documentation (this feature), Implementation Plan: Mini-Tutorial de Primeira Viagem (Onboarding), Project Structure, Source Code, Summary, Technical Context (+2 more)
+Cohesion: 0.39
+Nodes (7): Complexity Tracking, Constitution Check, Implementation Plan: Mini-Tutorial de Primeira Viagem (Onboarding), Summary, Technical Context, TutorialHintIcon(), TutorialOverlay()
 
-### Community 23 - "FavoritesScreen.tsx"
-Cohesion: 0.13
-Nodes (15): Implementation for User Story 3, Phase 5: User Story 3 - Favoritar perguntas (Priority: P3), Tests for User Story 3 ⚠️, Complexity Tracking, Constitution Check, Implementation Plan: Favoritos com Filtro e Baralho de Favoritas, Project Structure, Summary (+7 more)
+### Community 23 - "FavoritesScreen"
+Cohesion: 0.48
+Nodes (6): Implementation for User Story 3, Phase 5: User Story 3 - Favoritar perguntas (Priority: P3), Tests for User Story 3 ⚠️, EmptyState(), useFavoriteQuestions(), FavoritesScreen()
 
 ### Community 24 - "types.ts"
-Cohesion: 0.29
-Nodes (9): CardFrontProps, FavoriteListItemProps, MiniCardProps, styles, SwipeCardMode, SwipeCardProps, SwipeRelease, Category (+1 more)
+Cohesion: 0.17
+Nodes (19): R6 — End of deck and visuals without a category, CardBack, CardBackProps, styles, titleLines(), CardFrontProps, CategoryBadgeProps, FavoriteListItemProps (+11 more)
 
 ### Community 25 - "Revisão de conteúdo: 010"
 Cohesion: 0.12
@@ -332,28 +339,28 @@ Cohesion: 0.12
 Nodes (15): 1. Initialize Convergence Context, 2. Load Artifacts (Progressive Disclosure), 3. Build the Intent Inventory, 4. Assess the Codebase and Classify Findings, 5. Assign Severity, 6. Present the In-Session Findings Summary, 7. Append Convergence Tasks (or report converged), 8. Provide Next Actions (Handoff) (+7 more)
 
 ### Community 27 - "devDependencies"
-Cohesion: 0.09
-Nodes (22): { defineConfig }, expoConfig, devDependencies, eslint@^9.39.5, eslint-config-expo@~58.0.4, husky@^9.1.7, jest@~30.5.2, jest-expo@~58.0.13 (+14 more)
+Cohesion: 0.12
+Nodes (16): devDependencies, husky@^9.1.7, jest@~30.5.2, jest-expo@~58.0.13, lint-staged@^17.6.0, @testing-library/react-native@^14.1.0, @types/jest@30.0.0, @types/react@~19.3.0 (+8 more)
 
 ### Community 28 - "Constitution Check"
-Cohesion: 0.29
-Nodes (6): Constitution Check, Documentation (this feature), Implementation Plan: Navegação Direcional por Gestos e Tutorial Atualizado, Project Structure, Source Code (repository root), Technical Context
+Cohesion: 0.33
+Nodes (5): Documentation (this feature), Implementation Plan: Navegação Direcional por Gestos e Tutorial Atualizado, Project Structure, Source Code (repository root), Technical Context
 
 ### Community 29 - "Contract: reshuffle of the remaining cards (008)"
 Cohesion: 0.12
 Nodes (14): Contract: reshuffle of the remaining cards (008), Data layer — `src/data/deck.ts`, Haptics — `src/hooks/useHaptics.ts` (`UseHapticsResult` addition), Hook — `src/hooks/useDeck.ts` (`UseDeckResult` additions), Screen behavior — `DeckScreen`, Store — `src/store/progress.ts`, Strings — `src/i18n/strings.ts` (`deck` additions), UI components (`src/components`, props only) (+6 more)
 
 ### Community 30 - "Tasks: Mini-Tutorial de Primeira Viagem (Onboarding)"
-Cohesion: 0.22
-Nodes (8): Dependencies & Execution Order, Format: `[ID] [P?] [Story] Description`, Implementation Strategy, Parallel Examples, Phase 3: User Story 1 — Entender os controles na primeira abertura (P1) 🎯 MVP, Phase 4: User Story 2 — Fechar o tutorial e não vê-lo de novo (P1), Phase 5: Polish, Tasks: Mini-Tutorial de Primeira Viagem (Onboarding)
+Cohesion: 0.20
+Nodes (9): Dependencies & Execution Order, Format: `[ID] [P?] [Story] Description`, Implementation Strategy, Parallel Examples, Phase 2: Foundational, Phase 3: User Story 1 — Entender os controles na primeira abertura (P1) 🎯 MVP, Phase 4: User Story 2 — Fechar o tutorial e não vê-lo de novo (P1), Phase 5: Polish (+1 more)
 
 ### Community 32 - "Feature Specification: Favoritos com Filtro e Baralho de Favoritas"
-Cohesion: 0.14
-Nodes (14): Assumptions, Clarifications, Edge Cases, Feature Specification: Favoritos com Filtro e Baralho de Favoritas, Functional Requirements, Key Entities, Measurable Outcomes, Requirements *(mandatory)* (+6 more)
+Cohesion: 0.22
+Nodes (9): Assumptions, Clarifications, Feature Specification: Favoritos com Filtro e Baralho de Favoritas, Functional Requirements, Key Entities, Measurable Outcomes, Requirements *(mandatory)*, Session 2026-11-11 (+1 more)
 
 ### Community 33 - "Tasks: Identidade Visual das Cartas por Categoria"
-Cohesion: 0.16
-Nodes (13): R8. Testing and quality gates, Format: `[ID] [P?] [Story] Description`, Implementation for User Story 3, Notes, Parallel Example: Phase 2, Parallel Example: User Story 3, Phase 1: Setup (Shared Infrastructure), Phase 5: User Story 3 - Cor da categoria consistente em todo o app (Priority: P2) (+5 more)
+Cohesion: 0.17
+Nodes (10): Format: `[ID] [P?] [Story] Description`, Implementation for User Story 1, Notes, Parallel Example: Phase 2, Parallel Example: User Story 3, Phase 1: Setup (Shared Infrastructure), Phase 3: User Story 1 - Reconhecer a categoria pela cor e pelo verso da carta (Priority: P1) 🎯 MVP, Phase 6: Polish & Cross-Cutting Concerns (+2 more)
 
 ### Community 34 - "Tasks: Nova Categoria "Primeiros Encontros""
 Cohesion: 0.13
@@ -367,20 +374,20 @@ Nodes (15): Assumptions, Clarifications, Edge Cases, Feature Specification: Expa
 Cohesion: 0.13
 Nodes (15): Assumptions, Clarifications, Edge Cases, Feature Specification: Testes Automatizados e Prevenção de Regressão (QA), Functional Requirements, Key Entities, Measurable Outcomes, Requirements *(mandatory)* (+7 more)
 
-### Community 37 - "react"
-Cohesion: 0.21
-Nodes (6): react, react-native-gesture-handler, react-native-safe-area-context, category, setup(), wrapper()
+### Community 37 - "CLAUDE.md"
+Cohesion: 0.22
+Nodes (7): Architecture (three layers, dependencies flow top-down only), Game and content rules, graphify, Non-negotiables from the constitution, Project, Spec-driven workflow (Spec Kit), Stack notes (versions matter)
 
 ### Community 38 - "package.json"
 Cohesion: 0.13
-Nodes (14): expo-linking@~58.0.15, expo-splash-screen@~58.0.12, react-native-screens@~4.30.1, tailwindcss@^3.4.19, lint-staged, *.{js,jsx,ts,tsx}, main, name (+6 more)
+Nodes (14): expo-font@~58.0.11, expo-splash-screen@~58.0.12, react-dom@19.3.0, zustand@^5.0.16, lint-staged, *.{js,jsx,ts,tsx}, main, name (+6 more)
 
 ### Community 39 - "Feature Specification: Quebra-Gelo MVP — Baralho de Perguntas"
 Cohesion: 0.14
 Nodes (14): Assumptions, Clarifications, Edge Cases, Feature Specification: Quebra-Gelo MVP — Baralho de Perguntas, Functional Requirements, Key Entities, Measurable Outcomes, Requirements *(mandatory)* (+6 more)
 
 ### Community 40 - "Tasks: Quebra-Gelo MVP — Baralho de Perguntas"
-Cohesion: 0.12
+Cohesion: 0.14
 Nodes (14): Dependencies & Execution Order, Format: `[ID] [P?] [Story] Description`, Implementation Strategy, Incremental Delivery, MVP First (User Story 1), Notes, Parallel Example: Phase 2, Parallel Example: User Story 1 (+6 more)
 
 ### Community 41 - "Feature Specification: Novo Ícone do App e Verso das Cartas Sem Padrões"
@@ -408,12 +415,12 @@ Cohesion: 0.15
 Nodes (12): Assumptions, Edge Cases, Feature Specification: [FEATURE NAME], Functional Requirements, Key Entities *(include if feature involves data)*, Measurable Outcomes, Requirements *(mandatory)*, Success Criteria *(mandatory)* (+4 more)
 
 ### Community 47 - "Research: Quebra-Gelo MVP — Baralho de Perguntas"
-Cohesion: 0.20
-Nodes (10): R10. Content authoring, R1. Project bootstrap and SDK versions, R2. Navigation: Expo Router vs React Navigation, R4. State and persistence, R5. Card physics: flip + swipe, R6. Haptics timing, R7. Styling and dark theme, R9. Accessibility of the card (+2 more)
+Cohesion: 0.15
+Nodes (14): R10. Content authoring, R1. Project bootstrap and SDK versions, R2. Navigation: Expo Router vs React Navigation, R3. Content storage: `mockData.ts` vs `data.json`, R4. State and persistence, R5. Card physics: flip + swipe, R6. Haptics timing, R7. Styling and dark theme (+6 more)
 
 ### Community 48 - "Research: Quebra-Gelo MVP — Baralho de Perguntas"
 Cohesion: 0.05
-Nodes (36): Constitution Check, Documentation (this feature), Implementation Plan: Re-embaralhar as Cartas Restantes Durante o Jogo, Project Structure, Source Code (repository root), Summary, Technical Context, R1. Where the "remaining queue" lives (+28 more)
+Nodes (37): Constitution Check, Documentation (this feature), Implementation Plan: Re-embaralhar as Cartas Restantes Durante o Jogo, Project Structure, Source Code (repository root), Summary, Technical Context, R1. Where the "remaining queue" lives (+29 more)
 
 ### Community 49 - "Feature Specification: Modo "Tudo Misturado" com Verso Oculto e Etiqueta de Categoria"
 Cohesion: 0.15
@@ -432,16 +439,16 @@ Cohesion: 0.14
 Nodes (13): Dependencies & Execution Order, Format: `[ID] [P?] [Story] Description`, Implementation Strategy, Incremental Delivery, MVP First (User Story 1 Only), Parallel Example: User Story 1, Parallel Opportunities, Phase 1: Setup (+5 more)
 
 ### Community 53 - "favorites.ts"
-Cohesion: 0.24
-Nodes (13): getQuestion(), Favorite, [casual], [futuro], FavoriteEntry, useFavoriteQuestions(), FAVORITES_STORAGE_KEY, FavoritesState (+5 more)
+Cohesion: 0.15
+Nodes (12): Favorite, [casual], [futuro], [p1, p2], [v1], FAVORITES_STORAGE_KEY, FavoritesState, isFavoriteRecord() (+4 more)
 
 ### Community 54 - "Tasks: Seleção de Categorias no Modo "Tudo Misturado""
-Cohesion: 0.20
-Nodes (9): Dependencies & Execution Order, Format: `[ID] [P?] [Story] Description`, Implementation Strategy, Parallel Examples, Phase 1: Setup, Phase 3: User Story 1 — Escolher quais categorias entram na mistura (P1) 🎯 MVP, Phase 5: User Story 3 — Lembrar o filtro entre aberturas (P2), Phase 6: Polish (+1 more)
+Cohesion: 0.13
+Nodes (14): Dependencies & Execution Order, Format: `[ID] [P?] [Story] Description`, Implementation Strategy, Parallel Examples, Phase 1: Setup, Phase 3: User Story 1 — Escolher quais categorias entram na mistura (P1) 🎯 MVP, Phase 4: User Story 2 — Garantir que a mistura sempre faça sentido (P1), Phase 5: User Story 3 — Lembrar o filtro entre aberturas (P2) (+6 more)
 
 ### Community 55 - "Contract: content for `primeiros-encontros`"
-Cohesion: 0.17
-Nodes (10): C1. Category object (index 1 of `categories`), C2. Order, C3. Questions, C4. Visual, C5. Backward compatibility, Contract: content for `primeiros-encontros`, Category entry, Data Model: Nova Categoria "Primeiros Encontros" (+2 more)
+Cohesion: 0.25
+Nodes (6): C1. Category object (index 1 of `categories`), C2. Order, C3. Questions, C4. Visual, C5. Backward compatibility, Contract: content for `primeiros-encontros`
 
 ### Community 56 - "speckit-plan/SKILL.md"
 Cohesion: 0.18
@@ -455,6 +462,10 @@ Nodes (10): Completion Report, Done When, For AI Generation, Mandatory Post-Exec
 Cohesion: 0.18
 Nodes (10): Checklist Format (REQUIRED), Completion Report, Done When, Mandatory Post-Execution Hooks, Outline, Phase Structure, Pre-Execution Checks, Task Generation Rules (+2 more)
 
+### Community 59 - "Research: Nova Categoria "Família""
+Cohesion: 0.22
+Nodes (8): R1. Icon for 🏡, R2. Colors: keep the `#27AE60` back, hand-pick the front ink `#007A15`, R3. Content: what a "family" question is, R4. Enforcing the family-safe rules automatically, R6. Persisted data and migration, R7. Grid with 10 tiles, R8. Description length, Research: Nova Categoria "Família"
+
 ### Community 60 - "compilerOptions"
 Cohesion: 0.18
 Nodes (10): expo/tsconfig.base, compilerOptions, allowImportingTsExtensions, noImplicitAny, paths, resolveJsonModule, strict, types (+2 more)
@@ -467,9 +478,9 @@ Nodes (10): Conteúdo e Experiência de Jogo, Core Principles, Fluxo de Desenvol
 Cohesion: 0.18
 Nodes (10): Core Principles, Governance, [PRINCIPLE_1_NAME], [PRINCIPLE_2_NAME], [PRINCIPLE_3_NAME], [PRINCIPLE_4_NAME], [PRINCIPLE_5_NAME], [PROJECT_NAME] Constitution (+2 more)
 
-### Community 63 - "CardBack.tsx"
-Cohesion: 0.31
-Nodes (8): Implementation for User Story 1, CardBack, styles, titleLines(), Vignette, VignetteProps, VignetteShape(), VignetteShapeProps
+### Community 63 - "react-native"
+Cohesion: 0.17
+Nodes (16): react, react-native, react-native-svg, Implementation for User Story 1, BrandCardBack, BrandCardBackProps, styles, BrandSymbol (+8 more)
 
 ### Community 64 - "Tasks: Navegação Direcional por Gestos e Tutorial Atualizado"
 Cohesion: 0.18
@@ -479,17 +490,17 @@ Nodes (10): Dependencies & Execution Order, Format: `[ID] [P?] [Story] Descripti
 Cohesion: 0.22
 Nodes (4): asset(), Png, readPng(), ROOT
 
-### Community 66 - "MixFilterSheet.tsx"
-Cohesion: 0.19
-Nodes (11): DeckComplete (changed), R6 — End of deck and visuals without a category, CardBackProps, CategoryBadgeProps, DeckCompleteVisual, MixFilterOption, MixFilterSheetProps, ids (+3 more)
+### Community 66 - "DeckComplete.tsx"
+Cohesion: 0.50
+Nodes (4): DeckComplete (changed), DeckCompleteSuggestion, DeckCompleteVisual, FAN_SIDES
 
 ### Community 67 - "Tasks: Modo "Tudo Misturado" com Verso Oculto e Etiqueta de Categoria"
 Cohesion: 0.20
 Nodes (9): Dependencies & Execution Order, Format: `[ID] [P?] [Story] Description`, Implementation Strategy, Parallel Examples, Phase 1: Setup, Phase 3: User Story 1 — Jogar misturado sem saber o tom antes de virar (P1) 🎯 MVP, Phase 4: User Story 2 — Saber de onde veio a pergunta (P2), Phase 5: Polish & Cross-Cutting (+1 more)
 
 ### Community 68 - "014-happy-hour-toast-icon/spec.md"
-Cohesion: 0.07
-Nodes (24): Content Quality, Feature Readiness, Notes, Requirement Completeness, Specification Quality Checklist: Ícone de Brinde de Chope para o Happy Hour, Complexity Tracking, Documentation (this feature), Implementation Plan: Ícone de Brinde de Chope para o Happy Hour (+16 more)
+Cohesion: 0.08
+Nodes (23): Content Quality, Feature Readiness, Notes, Requirement Completeness, Specification Quality Checklist: Ícone de Brinde de Chope para o Happy Hour, Complexity Tracking, Documentation (this feature), Implementation Plan: Ícone de Brinde de Chope para o Happy Hour (+15 more)
 
 ### Community 69 - "Research: Navegação direcional e tutorial atualizado (009)"
 Cohesion: 0.25
@@ -516,8 +527,8 @@ Cohesion: 0.22
 Nodes (8): Complexity Tracking, Constitution Check, Documentation (this feature), Implementation Plan: [FEATURE], Project Structure, Source Code (repository root), Summary, Technical Context
 
 ### Community 75 - "CardFront.tsx"
-Cohesion: 0.17
-Nodes (15): react-native-svg, Constitution Check, CardFront, styles, CategoryBadge, styles, CategoryIcon, CategoryIconProps (+7 more)
+Cohesion: 0.19
+Nodes (14): Constitution Check, CardFront, styles, CategoryBadge, styles, CategoryIcon, CategoryIconProps, IconName (+6 more)
 
 ### Community 76 - "Tasks: Início em Grade de 3 Colunas"
 Cohesion: 0.22
@@ -532,16 +543,16 @@ Cohesion: 0.22
 Nodes (9): Complexity Tracking, Constitution Check, Documentation (this feature), Implementation Notes, Implementation Plan: Novo Ícone do App e Verso das Cartas Sem Padrões, Project Structure, Source Code (repository root), Summary (+1 more)
 
 ### Community 79 - "Implementation Plan: Nova Categoria "Primeiros Encontros""
-Cohesion: 0.25
+Cohesion: 0.22
 Nodes (8): Complexity Tracking, Constitution Check, Documentation (this feature), Implementation Plan: Nova Categoria "Primeiros Encontros", Project Structure, Source Code (repository root), Summary, Technical Context
 
 ### Community 80 - "Tasks: "Mudar o Clima" no Modo Misturado"
 Cohesion: 0.15
 Nodes (12): Dependencies & Execution Order, Format: `[ID] [P?] [Story] Description`, Implementation Strategy, Incremental Delivery, MVP, Parallel Example: User Story 1, Parallel Opportunities, Phase 1: Setup (+4 more)
 
-### Community 81 - "createDeck"
-Cohesion: 0.25
-Nodes (7): R1. Why the 008 reshuffle has no perceivable effect, R2. Where the new card goes (history and no-repeat), R3. Choosing the card (odds), R4. Availability, R5. Category lookup without impurity, R7. Removing 008, Research: "Mudar o Clima" no Modo Misturado
+### Community 81 - "Research: "Mudar o Clima" no Modo Misturado"
+Cohesion: 0.12
+Nodes (14): C2. Hook (`useDeck`), C3. `ChangeMoodButton` props, C4. Screen (`DeckScreen`), C5. Strings (`strings.deck`), Contract: "Mudar o clima", R1. Why the 008 reshuffle has no perceivable effect, R2. Where the new card goes (history and no-repeat), R3. Choosing the card (odds) (+6 more)
 
 ### Community 82 - "Data Model: Testes Automatizados e Prevenção de Regressão (012)"
 Cohesion: 0.22
@@ -564,7 +575,7 @@ Cohesion: 0.25
 Nodes (8): R1. Card back without the pattern (**Amends 002 R2**), R2. Category distinguishability without the pattern, R3. Icon symbol geometry, R4. Icon colors (clarification Q1), R5. Rendering pipeline: one generator script, no new dependencies, R6. Variant specs (Expo SDK 58 config), R7. Sketch file and generated files in git, Research: Novo Ícone do App e Verso das Cartas Sem Padrões
 
 ### Community 87 - "Implementation Plan: Seleção de Categorias no Modo "Tudo Misturado""
-Cohesion: 0.33
+Cohesion: 0.29
 Nodes (6): Complexity Tracking, Constitution Check, Documentation (this feature), Implementation Plan: Seleção de Categorias no Modo "Tudo Misturado", Project Structure, Source Code
 
 ### Community 88 - "Research: Mixed-mode category filter (006)"
@@ -580,8 +591,8 @@ Cohesion: 0.25
 Nodes (7): R1. ID scheme and favorites compatibility, R2. Detecting closed (yes/no) questions automatically, R3. Variety without order, R4. Safety guards per category, R5. Writing guidelines applied (psychology framing), R6. Delivery format, Research: Expansão e Curadoria Psicológica do Baralho
 
 ### Community 91 - "store/mixFilter.ts"
-Cohesion: 0.29
-Nodes (13): Pure rules (`src/data/mixFilter.ts`), Summary, activeMixCategories(), isValidMixSelection(), MIN_MIX_CATEGORIES, sameSelection(), sanitizeExcluded(), CATEGORY_IDS (+5 more)
+Cohesion: 0.27
+Nodes (13): @react-native-async-storage/async-storage, Pure rules (`src/data/mixFilter.ts`), Summary, activeMixCategories(), isValidMixSelection(), MIN_MIX_CATEGORIES, sameSelection(), sanitizeExcluded() (+5 more)
 
 ### Community 92 - "speckit-clarify/SKILL.md"
 Cohesion: 0.29
@@ -591,25 +602,25 @@ Nodes (6): Completion Report, Done When, Mandatory Post-Execution Hooks, Outline
 Cohesion: 0.29
 Nodes (6): Completion Report, Done When, Mandatory Post-Execution Hooks, Outline, Pre-Execution Checks, User Input
 
-### Community 94 - "HomeScreen.tsx"
-Cohesion: 0.26
-Nodes (9): Technical Context, R7 — Home hero card, Technical Context, Phase 4: User Story 2 — Garantir que a mistura sempre faça sentido (P1), MixedHeroCard(), MixFilterSheet(), MIXED_DECK_ID, HomeScreen() (+1 more)
+### Community 94 - "018-deck-complete-suggestions/spec.md"
+Cohesion: 0.25
+Nodes (5): Content Quality, Feature Readiness, Notes, Requirement Completeness, Specification Quality Checklist: Fim do Baralho com Sugestões
 
 ### Community 95 - "Implementation Plan: Quebra-Gelo MVP — Baralho de Perguntas"
 Cohesion: 0.29
 Nodes (7): Complexity Tracking, Constitution Check, Deviations from the user's outline, Implementation phases (input for `/speckit-tasks`), Implementation Plan: Quebra-Gelo MVP — Baralho de Perguntas, Summary, Technical Context
 
-### Community 97 - "FavoritesScreen.test.tsx"
-Cohesion: 0.22
-Nodes (4): expo-router, DeckRoute(), [p1, p2], [v1]
+### Community 97 - "Tasks: Fim do Baralho com Sugestões"
+Cohesion: 0.25
+Nodes (7): Dependencies, Phase 1: Setup, Phase 2: Foundational, Phase 3: User Story 1 - Continuar com outro baralho (P1) 🎯 MVP, Phase 4: User Story 2 - Um fim que comemora (P2), Phase 5: Polish, Tasks: Fim do Baralho com Sugestões
 
 ### Community 98 - "Constitution Check"
-Cohesion: 0.25
-Nodes (7): Complexity Tracking, Constitution Check, Documentation (this feature), Implementation Plan: Modo "Tudo Misturado" com Verso Oculto e Etiqueta de Categoria, Project Structure, Source Code (repository root), Summary
+Cohesion: 0.22
+Nodes (8): Complexity Tracking, Constitution Check, Documentation (this feature), Implementation Plan: Modo "Tudo Misturado" com Verso Oculto e Etiqueta de Categoria, Project Structure, Source Code (repository root), Summary, Technical Context
 
-### Community 99 - "CardBack.test.tsx"
-Cohesion: 0.21
-Nodes (10): countByType(), JsonNode, load(), category, [question], visual, category, visual (+2 more)
+### Community 99 - "@testing-library/react-native"
+Cohesion: 0.10
+Nodes (21): react-native-gesture-handler, @testing-library/react-native, countByType(), JsonNode, load(), category, [question], visual (+13 more)
 
 ### Community 100 - "Data Model: "Mudar o Clima" no Modo Misturado"
 Cohesion: 0.29
@@ -652,8 +663,8 @@ Cohesion: 0.33
 Nodes (5): Content Quality, Feature Readiness, Notes, Requirement Completeness, Specification Quality Checklist: Seleção de Categorias no Modo "Tudo Misturado"
 
 ### Community 110 - "007-first-dates-category/spec.md"
-Cohesion: 0.14
-Nodes (11): Content Quality, Feature Readiness, Notes, Requirement Completeness, Specification Quality Checklist: Nova Categoria "Primeiros Encontros", Assumptions, Functional Requirements, Key Entities (+3 more)
+Cohesion: 0.25
+Nodes (6): Assumptions, Functional Requirements, Key Entities, Measurable Outcomes, Requirements *(mandatory)*, Success Criteria *(mandatory)*
 
 ### Community 111 - "Quickstart: validating "Primeiros Encontros""
 Cohesion: 0.33
@@ -679,9 +690,9 @@ Nodes (5): Content Quality, Feature Readiness, Notes, Requirement Completeness, 
 Cohesion: 0.33
 Nodes (5): Content Quality, Feature Readiness, Notes, Requirement Completeness, Specification Quality Checklist: "Mudar o Clima" no Modo Misturado
 
-### Community 117 - "Contract: "Mudar o clima""
-Cohesion: 0.33
-Nodes (5): C2. Hook (`useDeck`), C3. `ChangeMoodButton` props, C4. Screen (`DeckScreen`), C5. Strings (`strings.deck`), Contract: "Mudar o clima"
+### Community 117 - "eslint.config.js"
+Cohesion: 0.29
+Nodes (6): { defineConfig }, expoConfig, eslint@^9.39.5, eslint-config-expo@~58.0.4, eslint, eslint-config-expo
 
 ### Community 118 - "Specification Quality Checklist: Testes Automatizados e Prevenção de Regressão (QA)"
 Cohesion: 0.33
@@ -723,13 +734,13 @@ Nodes (4): 1. Automated gates, 2. In the app, Prerequisites, Quickstart: validat
 Cohesion: 0.40
 Nodes (4): C1. Counts and IDs, C2. Text rules (enforced by `content.test.ts`), C3. Backward compatibility, Contract: bundled questions after 010
 
-### Community 128 - "DeckScreen"
-Cohesion: 0.23
-Nodes (15): Content for User Story 1, Implementation for User Story 1, Phase 3: User Story 1 - Jogar um baralho de perguntas (Priority: P1) 🎯 MVP, Tests for User Story 1 ⚠️, Phase 2: Foundational (DeckId across data, store, hook and route), R6. Button look and feedback, R8 — Haptics "exactly once", Phase 5: User Story 4 - Interações da carta testadas como o jogador as faz (Priority: P2) (+7 more)
+### Community 128 - "Implementation for User Story 1"
+Cohesion: 0.15
+Nodes (13): Content for User Story 1, Implementation for User Story 1, Phase 3: User Story 1 - Jogar um baralho de perguntas (Priority: P1) 🎯 MVP, Tests for User Story 1 ⚠️, Data Model: Modo "Tudo Misturado" (004), Deck question list (pure, `src/data/content.ts`), DeckId (new), DeckProgress (existing) — now keyed by DeckId (+5 more)
 
 ### Community 129 - "getCategories"
-Cohesion: 0.10
-Nodes (19): R3. Content storage: `mockData.ts` vs `data.json`, R1. Icon for 🥂, R2. Color: coral `#FF8A80` instead of `#FF9F43`, R3. Content: what a "first date" question is, R4. Enforcing the tone rules automatically, R5. Order on Home and in the filter, R6. Persisted data and migration, R7. Grid with 9 tiles (+11 more)
+Cohesion: 0.18
+Nodes (10): R1. Icon for 🥂, R2. Color: coral `#FF8A80` instead of `#FF9F43`, R3. Content: what a "first date" question is, R4. Enforcing the tone rules automatically, R5. Order on Home and in the filter, R6. Persisted data and migration, R7. Grid with 9 tiles, Research: Nova Categoria "Primeiros Encontros" (+2 more)
 
 ### Community 130 - "Quickstart: validating 004"
 Cohesion: 0.50
@@ -755,9 +766,9 @@ Nodes (3): 1. Automated gates, 2. In the app, Quickstart: validating directional
 Cohesion: 0.50
 Nodes (3): Automated, In the app, Quickstart: validating 011
 
-### Community 137 - "useDeck.ts"
-Cohesion: 0.20
-Nodes (15): R1 — How to model the mixed deck, Implementation for User Story 1, Summary, Implementation for User Story 1, Phase 3: User Story 1 - Avançar pela esquerda, voltar pela direita (Priority: P1) 🎯 MVP, Tests for User Story 1, 4. Mutation checks (SC-002), R1. Triggering the card exit from a button (+7 more)
+### Community 137 - "progress.ts"
+Cohesion: 0.14
+Nodes (26): R1 — How to model the mixed deck, Technical Context, Constitution Check, Summary, Implementation for User Story 1, Phase 3: User Story 1 - Avançar pela esquerda, voltar pela direita (Priority: P1) 🎯 MVP, Tests for User Story 1, 4. Mutation checks (SC-002) (+18 more)
 
 ### Community 139 - "Feature Specification: Tela de Jogo com Barra de Ações"
 Cohesion: 0.15
@@ -800,12 +811,12 @@ Cohesion: 0.40
 Nodes (4): HomeScreen, MixedHeroCard (changed), MixFilterSheet (new, NativeWind), UI Contracts (006)
 
 ### Community 151 - "CardFace"
-Cohesion: 0.15
-Nodes (17): Documentation (this feature), Project Structure, Source Code (repository root), Implementation for User Story 2, Phase 4: User Story 2 - Escolher o contexto na tela inicial (Priority: P2), Tests for User Story 2 ⚠️, Components (`src/components/`), Contract: Visual components and theme helpers (+9 more)
+Cohesion: 0.16
+Nodes (16): Documentation (this feature), Project Structure, Source Code (repository root), Implementation for User Story 2, Phase 4: User Story 2 - Escolher o contexto na tela inicial (Priority: P2), Tests for User Story 2 ⚠️, Contract: Visual components and theme helpers, Guarantees (+8 more)
 
 ### Community 152 - "Data Model: Mixed-mode category filter (006)"
-Cohesion: 0.22
-Nodes (8): Content, Data Model: Mixed-mode category filter (006), MixFilterState (`src/store/mixFilter.ts`), Progress store changes, Phase 2: Foundational (pure rules, store, deck composition), RootLayout(), useFavoritesHydrated(), useMixFilterHydrated()
+Cohesion: 0.29
+Nodes (6): Content, Data Model: Mixed-mode category filter (006), MixFilterState (`src/store/mixFilter.ts`), Progress store changes, Phase 2: Foundational (pure rules, store, deck composition), useMixFilterHydrated()
 
 ### Community 153 - "Tasks: Favoritos com Filtro e Baralho de Favoritas"
 Cohesion: 0.25
@@ -816,8 +827,8 @@ Cohesion: 0.50
 Nodes (4): `app.json` changes, Contract: App icon assets, Files, Invariants (asserted by tests)
 
 ### Community 155 - "Implementation Plan: Tela de Jogo com Barra de Ações"
-Cohesion: 0.12
-Nodes (14): Complexity Tracking, Constitution Check, Implementation Plan: Tela de Jogo com Barra de Ações, Project Structure, Summary, Technical Context, Dependencies, Phase 1: Setup (+6 more)
+Cohesion: 0.11
+Nodes (18): Complexity Tracking, Constitution Check, Implementation Plan: Tela de Jogo com Barra de Ações, Project Structure, Summary, Technical Context, Dependencies, Phase 1: Setup (+10 more)
 
 ### Community 156 - "Quickstart: Ícone de Brinde de Chope para o Happy Hour"
 Cohesion: 0.50
@@ -831,13 +842,13 @@ Nodes (6): R1 — Where the "seen" flag lives, R2 — Never flash, never block, 
 Cohesion: 0.29
 Nodes (6): Category (unchanged), Data Model: Expansão e Curadoria Psicológica do Baralho, Lifecycle of an existing question (001–020), Question (unchanged shape), Review record (documentation only, `content-review.md`), Volumes
 
-### Community 161 - "Data Model: Identidade Visual das Cartas"
-Cohesion: 0.33
-Nodes (6): CardGeometry (derived per screen size), CategoryVisual (derived, `src/theme/categoryVisual.ts`), Data Model: Identidade Visual das Cartas, Question text size (derived per question), Theme tokens (`src/theme/tokens.ts`), Validation rules
+### Community 161 - "017-favorites-filter-play/spec.md"
+Cohesion: 0.29
+Nodes (4): Complexity Tracking, Implementation Plan: Favoritos com Filtro e Baralho de Favoritas, Project Structure, Technical Context
 
-### Community 162 - "Contract: "Família" content in `src/data/data.json`"
+### Community 162 - "Implementation Plan: Fim do Baralho com Sugestões"
 Cohesion: 0.33
-Nodes (6): Category object (exact), Contract: "Família" content in `src/data/data.json`, New test rules, Order, Palette rows, Questions (per item)
+Nodes (6): Complexity Tracking, Constitution Check, Implementation Plan: Fim do Baralho com Sugestões, Project Structure, Summary, Technical Context
 
 ### Community 163 - "Specification Quality Checklist: Tela de Jogo com Barra de Ações"
 Cohesion: 0.33
@@ -852,24 +863,24 @@ Cohesion: 0.40
 Nodes (5): Edge Cases, User Scenarios & Testing *(mandatory)*, User Story 1 - Reconhecer a categoria pela cor e pelo verso da carta (Priority: P1), User Story 2 - Ler a pergunta com conforto na face revelada (Priority: P1), User Story 3 - Cor da categoria consistente em todo o app (Priority: P2)
 
 ### Community 166 - "Specification Quality Checklist: Favoritos com Filtro e Baralho de Favoritas"
-Cohesion: 0.33
+Cohesion: 0.40
 Nodes (5): Content Quality, Feature Readiness, Notes, Requirement Completeness, Specification Quality Checklist: Favoritos com Filtro e Baralho de Favoritas
 
 ### Community 167 - "Research: Favoritos com Filtro e Baralho de Favoritas"
 Cohesion: 0.33
 Nodes (5): R1. Where the favorites deck gets its questions, R2. Fresh deck on each start, R3. Card mode, R4. Filter state, Research: Favoritos com Filtro e Baralho de Favoritas
 
-### Community 168 - "Device state"
+### Community 168 - "Specification Quality Checklist: Nova Categoria "Primeiros Encontros""
 Cohesion: 0.40
-Nodes (5): Card view state (ephemeral, not persisted), DeckProgress (in memory only; one per category played in the current app session), Device state, Favorite (persisted), State transitions — DeckProgress
+Nodes (5): Content Quality, Feature Readiness, Notes, Requirement Completeness, Specification Quality Checklist: Nova Categoria "Primeiros Encontros"
 
-### Community 169 - "Quickstart & Validation: Quebra-Gelo MVP"
-Cohesion: 0.40
-Nodes (5): Automated validation, Manual scenarios (physical phone, airplane mode ON before first launch), Prerequisites, Quickstart & Validation: Quebra-Gelo MVP, Setup and commands
+### Community 169 - "useHaptics"
+Cohesion: 0.70
+Nodes (4): R8 — Haptics "exactly once", fire(), success(), useHaptics()
 
 ### Community 170 - "Research: Modo "Tudo Misturado" (004)"
-Cohesion: 0.40
-Nodes (4): R2 — Route, R3 — Neutral brand back, R5 — No leaks while face down, Research: Modo "Tudo Misturado" (004)
+Cohesion: 0.33
+Nodes (5): R2 — Route, R3 — Neutral brand back, R5 — No leaks while face down, R7 — Home hero card, Research: Modo "Tudo Misturado" (004)
 
 ### Community 171 - "Project Structure"
 Cohesion: 0.67
@@ -879,37 +890,49 @@ Nodes (3): Documentation (this feature), Project Structure, Source Code (reposit
 Cohesion: 0.50
 Nodes (4): 1. Routes (Expo Router, typed routes), 2. Data layer (`src/data`, `src/store`, `src/hooks`), 3. UI components (`src/components`) — props only, no stores/navigation, Contract: Routes, data-layer API and UI component props
 
-### Community 173 - "Contract: Content file `src/data/data.json`"
-Cohesion: 0.50
-Nodes (4): Change policy, Contract: Content file `src/data/data.json`, Shape, Validation rules (each is one assertion in the content test)
+### Community 173 - "Data Model: Nova Categoria "Família""
+Cohesion: 0.40
+Nodes (4): Category entry, Data Model: Nova Categoria "Família", Persisted state (unchanged), Question entries
 
-### Community 176 - "Phase 3: User Story 1 - Reconhecer a categoria pela cor e pelo verso da carta (Priority: P1) 🎯 MVP"
-Cohesion: 0.67
-Nodes (3): Implementation for User Story 1, Phase 3: User Story 1 - Reconhecer a categoria pela cor e pelo verso da carta (Priority: P1) 🎯 MVP, Tests for User Story 1 ⚠️
+### Community 176 - "User Scenarios & Testing *(mandatory)*"
+Cohesion: 0.40
+Nodes (5): Edge Cases, User Scenarios & Testing *(mandatory)*, User Story 1 - Jogar com as perguntas favoritas (Priority: P1), User Story 2 - Filtrar a lista por categoria (Priority: P2), User Story 3 - Itens no estilo da carta (Priority: P3)
 
 ### Community 177 - "Project Structure"
 Cohesion: 0.67
 Nodes (3): Documentation (this feature), Project Structure, Source Code (repository root)
 
+### Community 178 - "Research: Fim do Baralho com Sugestões"
+Cohesion: 0.40
+Nodes (4): R1. Suggestion rule, R2. Fan, R3. Navigation, Research: Fim do Baralho com Sugestões
+
+### Community 181 - "Data Model: Nova Categoria "Primeiros Encontros""
+Cohesion: 0.50
+Nodes (4): Category entry, Data Model: Nova Categoria "Primeiros Encontros", Persisted state (unchanged), Question entries
+
+### Community 182 - "Project Structure"
+Cohesion: 0.67
+Nodes (3): Documentation (this feature), Project Structure, Source Code
+
 ## Knowledge Gaps
 - **1 isolated node(s):** `expo/tsconfig.base`
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 1067 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
-- **14 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 1097 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **17 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `SwipeCard()` connect `Implementation Plan: Testes Automatizados e Prevenção de Regressão (QA)` to `DeckScreen`, `DeckScreen.tsx`, `Tasks: Testes Automatizados e Prevenção de Regressão (QA)`, `useDeck.ts`, `index.ts`, `FavoritesScreen.tsx`, `CardFace`, `types.ts`, `Implementation Plan: Tela de Jogo com Barra de Ações`, `Constitution Check`, `Tasks: Identidade Visual das Cartas por Categoria`, `react`, `Research: Modo "Tudo Misturado" (004)`, `1. Routes (Expo Router, typed routes)`, `Phase 3: User Story 1 - Reconhecer a categoria pela cor e pelo verso da carta (Priority: P1) 🎯 MVP`, `CardBack.tsx`, `Tasks: Modo "Tudo Misturado" com Verso Oculto e Etiqueta de Categoria`, `Research: Navegação direcional e tutorial atualizado (009)`, `Research: Testes Automatizados e Prevenção de Regressão (012)`, `getCategoryVisual`, `CardFront.tsx`, `Implementation Plan: Identidade Visual das Cartas por Categoria`, `Implementation Plan: Novo Ícone do App e Verso das Cartas Sem Padrões`, `Implementation Plan: Nova Categoria "Primeiros Encontros"`, `Implementation Plan: [FEATURE]`, `skip`, `HomeScreen.tsx`, `Implementation Plan: Quebra-Gelo MVP — Baralho de Perguntas`, `Constitution Check`, `Contract: Card back components (**Amends 002** `contracts/visual-components.md`)`?**
-  _High betweenness centrality (0.095) - this node is a cross-community bridge._
+- **Why does `SwipeCard()` connect `Implementation Plan: Testes Automatizados e Prevenção de Regressão (QA)` to `Implementation for User Story 1`, `DeckScreen.tsx`, `progress.ts`, `content.ts`, `DeckComplete`, `FavoritesScreen`, `types.ts`, `Implementation Plan: Tela de Jogo com Barra de Ações`, `Tasks: Identidade Visual das Cartas por Categoria`, `CLAUDE.md`, `Research: Modo "Tudo Misturado" (004)`, `1. Routes (Expo Router, typed routes)`, `react-native`, `Tasks: Modo "Tudo Misturado" com Verso Oculto e Etiqueta de Categoria`, `Research: Navegação direcional e tutorial atualizado (009)`, `Research: Testes Automatizados e Prevenção de Regressão (012)`, `getCategoryVisual`, `CardFront.tsx`, `Implementation Plan: Identidade Visual das Cartas por Categoria`, `Implementation Plan: Novo Ícone do App e Verso das Cartas Sem Padrões`, `Implementation Plan: Nova Categoria "Primeiros Encontros"`, `Research: "Mudar o Clima" no Modo Misturado`, `Implementation Plan: [FEATURE]`, `skip`, `Implementation Plan: Quebra-Gelo MVP — Baralho de Perguntas`, `Constitution Check`, `@testing-library/react-native`, `Contract: Card back components (**Amends 002** `contracts/visual-components.md`)`?**
+  _High betweenness centrality (0.080) - this node is a cross-community bridge._
 - **Are the 33 inferred relationships involving `SwipeCard()` (e.g. with `Stack notes (versions matter)` and `3. UI components (`src/components`) — props only, no stores/navigation`) actually correct?**
   _`SwipeCard()` has 33 INFERRED edges - model-reasoned connections that need verification._
 - **What connects `expo/tsconfig.base` to the rest of the system?**
   _1 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `generate-icons.ts` be split into smaller, more focused modules?**
   _Cohesion score 0.08461538461538462 - nodes in this community are weakly interconnected._
-- **Why does `CategoryId` connect `CategoryId` to `Data Model: Expansão e Curadoria Psicológica do Baralho`, `Data Model: Identidade Visual das Cartas`, `Tasks: Nova Categoria "Primeiros Encontros"`, `Tasks: Novo Ícone do App e Verso das Cartas Sem Padrões`, `MixFilterSheet.tsx`, `CardBack.test.tsx`, `getCategoryVisual`, `useDeck.ts`, `createDeck`, `content.ts`, `Implementation Plan: Nova Categoria "Primeiros Encontros"`, `Implementation Plan: [FEATURE]`, `Tasks: Nova Categoria "Família"`, `progress.ts`, `types.ts`, `Data Model: Novo Ícone do App e Verso das Cartas Sem Padrões`, `store/mixFilter.ts`, `HomeScreen.tsx`?**
-  _High betweenness centrality (0.063) - this node is a cross-community bridge._
-- **Are the 21 inferred relationships involving `DeckScreen()` (e.g. with `1. Routes (Expo Router, typed routes)` and `Implementation`) actually correct?**
-  _`DeckScreen()` has 21 INFERRED edges - model-reasoned connections that need verification._
+- **Why does `CategoryId` connect `CategoryId` to `Implementation for User Story 1`, `DeckScreen.tsx`, `Data Model: Identidade Visual das Cartas`, `Tasks: Novo Ícone do App e Verso das Cartas Sem Padrões`, `progress.ts`, `createDeck`, `content.ts`, `HomeScreen.tsx`, `types.ts`, `Data Model: Expansão e Curadoria Psicológica do Baralho`, `Tasks: Nova Categoria "Primeiros Encontros"`, `Tasks: Nova Categoria "Família"`, `DeckComplete.tsx`, `getCategoryVisual`, `Implementation Plan: Nova Categoria "Primeiros Encontros"`, `Implementation Plan: [FEATURE]`, `store/mixFilter.ts`, `@testing-library/react-native`, `Data Model: Novo Ícone do App e Verso das Cartas Sem Padrões`?**
+  _High betweenness centrality (0.076) - this node is a cross-community bridge._
+- **Are the 22 inferred relationships involving `DeckScreen()` (e.g. with `1. Routes (Expo Router, typed routes)` and `Implementation`) actually correct?**
+  _`DeckScreen()` has 22 INFERRED edges - model-reasoned connections that need verification._
 - **Should `DeckScreen.tsx` be split into smaller, more focused modules?**
-  _Cohesion score 0.11290322580645161 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.09365079365079365 - nodes in this community are weakly interconnected._
