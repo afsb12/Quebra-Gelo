@@ -2,16 +2,16 @@ import { useCallback, useEffect, useMemo } from 'react';
 
 import { getCategory, getQuestion } from '../data/content';
 import { canChangeMood, canGoBack, createDeck, currentQuestionId } from '../data/deck';
-import { MIXED_DECK_ID, type Category, type DeckId, type DeckProgress, type Question } from '../data/types';
+import { FAVORITES_DECK_ID, MIXED_DECK_ID, type Category, type DeckId, type DeckProgress, type Question } from '../data/types';
 import { strings } from '../i18n/strings';
 import { useMixCategories } from '../store/mixFilter';
 import { useProgressStore } from '../store/progress';
 
 export interface UseDeckResult {
   deckId: DeckId;
-  /** Header title: the category name, or "Tudo Misturado". */
+  /** Header title: the category name, "Tudo Misturado" or "Favoritas" (017). */
   title: string;
-  /** The deck's category; `undefined` for the mixed deck. */
+  /** The deck's category; `undefined` for the mixed and favorites decks. */
   deckCategory: Category | undefined;
   /** `undefined` once every card was shown → show the "Fim do Baralho" screen. */
   current: Question | undefined;
@@ -56,8 +56,10 @@ export const useDeck = (deckId: DeckId): UseDeckResult => {
     if (missing) ensureDeck(deckId, mixCategories);
   }, [deckId, ensureDeck, missing, mixCategories]);
 
-  const deckCategory = mixed ? undefined : getCategory(deckId);
-  if (!mixed && !deckCategory) throw new Error(`Unknown category: ${deckId}`);
+  const favorites = deckId === FAVORITES_DECK_ID;
+  const categoryDeck = !mixed && !favorites;
+  const deckCategory = categoryDeck ? getCategory(deckId) : undefined;
+  if (categoryDeck && !deckCategory) throw new Error(`Unknown category: ${deckId}`);
 
   const active = deck ?? EMPTY_DECK;
   const id = currentQuestionId(active);
@@ -78,7 +80,7 @@ export const useDeck = (deckId: DeckId): UseDeckResult => {
 
   return {
     deckId,
-    title: deckCategory?.title ?? strings.mixed.title,
+    title: deckCategory?.title ?? (favorites ? strings.favorites.deckTitle : strings.mixed.title),
     deckCategory,
     current,
     currentCategory,

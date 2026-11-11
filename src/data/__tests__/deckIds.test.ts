@@ -2,9 +2,10 @@ import { getAllQuestions, getDeckQuestionIds, getQuestionsByCategory, isDeckId }
 import { CATEGORY_IDS } from '../types';
 
 describe('deck IDs (004)', () => {
-  it('isDeckId accepts every category and "mixed" only', () => {
+  it('isDeckId accepts every category, "mixed" and "favorites" only', () => {
     for (const id of CATEGORY_IDS) expect(isDeckId(id)).toBe(true);
     expect(isDeckId('mixed')).toBe(true);
+    expect(isDeckId('favorites')).toBe(true); // 017
     expect(isDeckId('trabalho')).toBe(false);
     expect(isDeckId('')).toBe(false);
   });
@@ -28,5 +29,11 @@ describe('deck IDs (004)', () => {
 
   it('category decks ignore the mix filter (006 FR-011)', () => {
     expect(getDeckQuestionIds('dilemas', ['casais', 'futuro'])).toEqual(getQuestionsByCategory('dilemas').map((q) => q.id));
+  });
+
+  it('the favorites deck lists the existing favorite IDs once each (017)', () => {
+    const [a, b] = getQuestionsByCategory('casual');
+    expect(getDeckQuestionIds('favorites', undefined, [a.id, 'nao-existe', b.id, a.id])).toEqual([a.id, b.id]);
+    expect(getDeckQuestionIds('favorites')).toEqual([]);
   });
 });

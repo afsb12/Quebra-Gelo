@@ -1,4 +1,5 @@
 import { getQuestionsByCategory } from '../../data/content';
+import { useFavoritesStore } from '../favorites';
 import { useProgressStore } from '../progress';
 
 jest.mock('../../data/content', () => {
@@ -7,8 +8,10 @@ jest.mock('../../data/content', () => {
   const questions = [...ids('casual', 3), ...ids('profundo', 5), ...ids('casais', 4), ...ids('futuro', 6)];
   return {
     getQuestionsByCategory: (cat: string) => questions.filter((q) => q.categoryId === cat),
-    getDeckQuestionIds: (deck: string, mix?: readonly string[]) =>
-      (deck === 'mixed'
+    getDeckQuestionIds: (deck: string, mix?: readonly string[], favorites: readonly string[] = []) =>
+      deck === 'favorites'
+        ? favorites.filter((id) => questions.some((q) => q.id === id))
+        : (deck === 'mixed'
         ? questions.filter((q) => !mix || mix.includes(q.categoryId))
         : questions.filter((q) => q.categoryId === deck)
       ).map((q) => q.id),
@@ -118,5 +121,32 @@ describe('useProgressStore (in memory)', () => {
     expect(useProgressStore.getState().decks.mixed?.order).toHaveLength(11);
     useProgressStore.getState().reshuffle('mixed', ['casual', 'futuro']);
     expect(useProgressStore.getState().decks.mixed?.order).toHaveLength(9);
+  });
+});
+
+describe('useProgressStore — favorites deck (017)', () => {
+  const favorite = (questionId: string) => ({ questionId, savedAt: 1 });
+
+  beforeEach(() => {
+    useProgressStore.setState({ decks: {} });
+    useFavoritesStore.setState({ favorites: [favorite('casual-001'), favorite('futuro-002'), favorite('profundo-003')] });
+  });
+
+  it('builds the deck from the favorites saved at that moment', () => {
+    useProgressStore.getState().ensureDeck('favorites');
+    const deck = useProgressStore.getState().decks.favorites;
+    expect([...(deck?.order ?? [])].sort()).toEqual(['casual-001', 'futuro-002', 'profundo-003']);
+  });
+
+  it('reshuffle and resetDeck + ensureDeck use the current favorites', () => {
+    useProgressStore.getState().ensureDeck('favorites');
+    useFavoritesStore.setState({ favorites: [favorite('casais-004')] });
+    useProgressStore.getState().reshuffle('favorites');
+    expect(useProgressStore.getState().decks.favorites?.order).toEqual(['casais-004']);
+
+    useFavoritesStore.setState({ favorites: [favorite('casual-002'), favorite('casual-003')] });
+    useProgressStore.getState().resetDeck('favorites');
+    useProgressStore.getState().ensureDeck('favorites');
+    expect([...(useProgressStore.getState().decks.favorites?.order ?? [])].sort()).toEqual(['casual-002', 'casual-003']);
   });
 });

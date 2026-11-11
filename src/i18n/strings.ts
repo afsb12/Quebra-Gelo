@@ -75,5 +75,12 @@ export const strings = {
     emptyMessage: 'Durante o jogo, vire uma carta e toque na estrela abaixo dela para guardar a pergunta aqui.',
     remove: 'Remover',
     removeLabel: (question: string) => `Remover dos favoritos: ${question}`,
+    /** Header count (017). */
+    count: (n: number) => (n === 1 ? '1 pergunta' : `${n} perguntas`),
+    all: 'Todas',
+    filterLabel: 'Filtrar por categoria',
+    play: 'Jogar com as favoritas',
+    /** Title of the favorites deck (017). */
+    deckTitle: 'Favoritas',
   },
 } as const;
