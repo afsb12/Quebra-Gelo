@@ -50,6 +50,21 @@ export const getCategories = (): readonly Category[] => content.categories;
 
 export const getCategory = (id: string): Category | undefined => content.categories.find((c) => c.id === id);
 
+/**
+ * Next-deck suggestions for the end screen (018): the `count` categories after `id` in content
+ * order, wrapping around, never `id` itself.
+ */
+export const getNextCategories = (id: CategoryId, count = 2): Category[] => {
+  const all = content.categories;
+  const start = all.findIndex((c) => c.id === id);
+  if (start < 0) return [];
+  const picks: Category[] = [];
+  for (let step = 1; step < all.length && picks.length < count; step += 1) {
+    picks.push(all[(start + step) % all.length]);
+  }
+  return picks;
+};
+
 export const getQuestionsByCategory = (id: CategoryId): readonly Question[] => questionsByCategory.get(id) ?? [];
 
 export const getQuestion = (id: string): Question | undefined => questionsById.get(id);

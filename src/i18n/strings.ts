@@ -67,7 +67,10 @@ export const strings = {
     title: 'Fim do Baralho',
     message: (category: string) => `Vocês viram todas as perguntas de ${category}.`,
     reshuffle: 'Embaralhar de novo',
-    chooseAnother: 'Escolher outra categoria',
+    chooseAnother: 'Ver todos os baralhos',
+    /** Caption above the next-deck suggestions (018). */
+    suggestions: 'Que tal continuar com',
+    suggestionLabel: (title: string) => `Jogar ${title}`,
   },
   favorites: {
     title: 'Favoritos',
