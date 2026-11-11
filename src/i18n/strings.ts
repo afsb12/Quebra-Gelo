@@ -3,7 +3,8 @@ export const strings = {
   appName: 'Quebra-Gelo',
   home: {
     title: 'Quebra-Gelo',
-    subtitle: 'Escolha um baralho para começar a conversa',
+    question: 'Sobre o que vamos conversar?',
+    decksLabel: 'Ou escolha um baralho',
     favorites: 'Favoritos',
     openFavoritesHint: 'Abre a lista de perguntas favoritas',
   },
@@ -21,10 +22,12 @@ export const strings = {
     open: 'Escolher categorias da mistura',
     save: 'Salvar',
     minimum: 'Escolha pelo menos 2 categorias',
-    summary: (active: number, total: number) => `${active} de ${total} categorias`,
+    /** Text of the filter chip on the mix card (015): always shows how many categories are in. */
+    chip: (active: number, total: number) => (active < total ? `${active} de ${total} categorias` : `${total} categorias`),
   },
   mixed: {
     title: 'Tudo Misturado',
+    play: 'Jogar',
     description: 'Todas as categorias num só baralho.',
     heroLabel: 'Tudo Misturado. Todas as categorias num só baralho.',
   },

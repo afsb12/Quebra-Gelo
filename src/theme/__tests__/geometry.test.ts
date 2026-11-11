@@ -16,11 +16,11 @@ describe('getCardGeometry', () => {
     expect(g.width / g.height).toBeCloseTo(tokens.card.ratio, 5);
   });
 
-  it('radius is 6% of width and mini cards fit 2 columns at 320pt', () => {
+  it('radius is 6% of width and mini cards fit 3 columns at 320pt (015)', () => {
     const g = getCardGeometry({ width: 320, height: 800 }, 0);
     expect(g.radius).toBeCloseTo(0.06 * g.width, 5);
-    expect(g.miniWidth).toBe((320 - 48 - 16) / 2);
-    expect(g.miniWidth * 2 + 16 + 48).toBeLessThanOrEqual(320);
+    expect(g.miniWidth).toBe((320 - 48 - 24) / 3);
+    expect(g.miniWidth * 3 + 2 * 12 + 48).toBeLessThanOrEqual(320);
   });
 });
 

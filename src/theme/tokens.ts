@@ -21,6 +21,9 @@ export const tokens = {
   layout: {
     screenPadding: 24,
     gridGap: 16,
+    /** Home category grid (015): columns and gap between the card backs. */
+    homeColumns: 3,
+    homeGridGap: 12,
   },
   type: {
     minQuestionSize: 20,

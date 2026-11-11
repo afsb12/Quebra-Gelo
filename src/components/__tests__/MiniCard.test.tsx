@@ -9,11 +9,11 @@ if (!category) throw new Error('happy-hour');
 const visual = getCategoryVisual(category);
 
 describe('MiniCard', () => {
-  it('renders the mini card back with title and description below', async () => {
-    await render(<MiniCard category={category} visual={visual} width={128} onPress={jest.fn()} />);
+  it('renders only the mini card back, whose face prints the name (015)', async () => {
+    await render(<MiniCard category={category} visual={visual} width={106} onPress={jest.fn()} />);
     expect(screen.getByTestId('card-back-title', { includeHiddenElements: true })).toHaveTextContent('HAPPY\nHOUR');
-    expect(screen.getByText('Happy Hour')).toBeTruthy();
-    expect(screen.getByText(category.description)).toBeTruthy();
+    expect(screen.queryByText('Happy Hour')).toBeNull();
+    expect(screen.queryByText(category.description)).toBeNull();
   });
 
   it('is one pressable labelled "<title>. <description>" that reports the category id', async () => {
