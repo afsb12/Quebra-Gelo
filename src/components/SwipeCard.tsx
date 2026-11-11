@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useImperativeHandle, useState, type Ref } from 'react';
 import { StyleSheet, View, type AccessibilityActionEvent } from 'react-native';
 import { GestureDetector, useExclusiveGestures, usePanGesture, useTapGesture } from 'react-native-gesture-handler';
 import Animated, {
@@ -24,7 +24,14 @@ export type SwipeDirection = 'left' | 'right';
 /** `mixed`: neutral brand back, no category in the face-down label, origin badge on the front (004). */
 export type SwipeCardMode = 'category' | 'mixed';
 
+/** Imperative handle for the deck's "Anterior"/"Próxima" buttons (016). */
+export interface SwipeCardHandle {
+  /** Same exit as a released swipe (haptic, animation, then `onDiscard`); ignored while animating. */
+  swipe: (direction: SwipeDirection) => void;
+}
+
 export interface SwipeCardProps {
+  ref?: Ref<SwipeCardHandle>;
   mode?: SwipeCardMode;
   question: Question;
   category: Category;
@@ -86,6 +93,7 @@ export const resolveSwipeRelease = ({ translationX, velocityX, screenWidth, canG
 };
 
 export function SwipeCard({
+  ref,
   mode = 'category',
   question,
   category,
@@ -178,6 +186,30 @@ export function SwipeCard({
       }
     },
     [isAnimating, onDiscard, onSwipeConfirmed, opacity, reducedMotion, screenWidth, translateX],
+  );
+
+  // Buttons (016): the JS-thread twin of `discard`; the exit itself still runs on the UI thread.
+  useImperativeHandle(
+    ref,
+    () => ({
+      swipe: (direction: SwipeDirection) => {
+        if (isAnimating.get()) return;
+        if (direction === 'right' && !canGoBack) return;
+        isAnimating.set(true);
+        onSwipeConfirmed?.(direction);
+        const done = (finished?: boolean) => {
+          'worklet';
+          if (finished) scheduleOnRN(onDiscard, direction);
+        };
+        if (reducedMotion) {
+          opacity.set(withTiming(0, { duration: FADE_MS }, done));
+        } else {
+          const target = (direction === 'left' ? -1 : 1) * screenWidth * 1.5;
+          translateX.set(withTiming(target, { duration: EXIT_MS }, done));
+        }
+      },
+    }),
+    [canGoBack, isAnimating, onDiscard, onSwipeConfirmed, opacity, reducedMotion, screenWidth, translateX],
   );
 
   const pan = usePanGesture({
