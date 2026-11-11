@@ -25,7 +25,7 @@
 
 ## R4. Reserved height
 
-- **Decision**: `DECK_RESERVED_HEIGHT` 170 → 214 (header + 4 pt bar ≈ 76, action bar 64 + hint row
+- **Decision**: `DECK_RESERVED_HEIGHT` 170 → 190 (the largest value that keeps the 320×568 text-fit rule; side buttons 56 pt tall, tight paddings; header + 4 pt bar ≈ 68, action bar 56 + hint row
   44 + paddings ≈ 124, stack offset 14). The 320×568 text-fit test is the guard (SC-003).
 
 ## R5. Hint visibility

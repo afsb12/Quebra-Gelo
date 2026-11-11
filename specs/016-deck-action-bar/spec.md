@@ -131,7 +131,7 @@ carta"; depois a linha fica vazia (e continua mostrando o aviso "Clima trocado" 
 
 ## Assumptions
 
-- Medidas do canvas: botões laterais 76×64 pt, Favoritar ocupando o meio; barra de progresso de
+- Medidas do canvas: botões laterais 76×56 pt, Favoritar ocupando o meio; barra de progresso de
   4 pt; cartas de trás deslocadas e giradas de leve (−2,5° e 4°).
 - A dica conta as cartas mostradas na tela atual; reabrir o baralho mostra a dica de novo.
 - Sem mudança de versão nesta feature.
