@@ -1,14 +1,13 @@
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-import { memo, type ComponentProps } from 'react';
+import { memo } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 import type { Category, Question } from '../data/types';
 import { strings } from '../i18n/strings';
 import { FRONT_LAYOUT, faceTextBox, questionFit, tokens, type CategoryVisual } from '../theme';
 import { CategoryBadge } from './CategoryBadge';
+import { CategoryIcon } from './CategoryIcon';
 import { Vignette } from './Vignette';
-
-type IconName = ComponentProps<typeof MaterialCommunityIcons>['name'];
 
 export interface CardFrontProps {
   category: Category;
@@ -61,7 +60,7 @@ export const CardFront = memo(function CardFront({
       <View style={[styles.content, { padding: frame + innerInset + FRONT_LAYOUT.padding }]}>
         <View style={styles.topRow}>
           <View style={styles.slot}>
-            <MaterialCommunityIcons name={visual.icon as IconName} size={28} color={visual.ink} />
+            <CategoryIcon name={visual.icon} size={28} color={visual.ink} />
           </View>
           {showOriginBadge ? (
             <View style={styles.badgeArea}>

@@ -22,7 +22,7 @@ export type DeckId = CategoryId | typeof MIXED_DECK_ID;
 export interface Category {
   id: CategoryId;
   title: string;
-  /** Icon name from the MaterialCommunityIcons set bundled with @expo/vector-icons. */
+  /** MaterialCommunityIcons glyph name (bundled with @expo/vector-icons) or a `CUSTOM_ICONS` key (theme/customIcons.ts, 014). */
   icon: string;
   /** Hex `#RRGGBB`; background of the card back. */
   color: string;

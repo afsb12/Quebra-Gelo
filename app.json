@@ -3,7 +3,7 @@
     "name": "Quebra-Gelo",
     "slug": "quebra-gelo",
     "scheme": "quebragelo",
-    "version": "1.6.0",
+    "version": "1.7.0",
     "orientation": "portrait",
     "icon": "./Assets/app/icon.png",
     "userInterfaceStyle": "dark",
@@ -18,7 +18,7 @@
         "monochromeImage": "./Assets/app/android-icon-monochrome.png"
       },
       "predictiveBackGestureEnabled": false,
-      "versionCode": 7,
+      "versionCode": 8,
       "package": "com.anonymous.quebragelo"
     },
     "web": {

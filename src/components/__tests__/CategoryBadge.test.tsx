@@ -13,7 +13,7 @@ describe('CategoryBadge (004)', () => {
     expect(StyleSheet.flatten(screen.getByTestId('category-badge').props.style).backgroundColor).toBe(
       category.color.toUpperCase(),
     );
-    expect(screen.getByTestId(`icon-${category.icon}`)).toBeTruthy();
+    expect(screen.getByTestId(`icon-${category.icon}`, { includeHiddenElements: true })).toBeTruthy();
     const title = screen.getByTestId('category-badge-title');
     expect(title).toHaveTextContent(category.title);
     expect(StyleSheet.flatten(title.props.style).color).toBe(visual.onColor);
@@ -30,7 +30,7 @@ describe('CardFront showOriginBadge (004)', () => {
   it('adds the badge while keeping the corner icon, footer, star and question', async () => {
     await render(<CardFront category={category} visual={visual} question={question} isFavorite width={300} showOriginBadge />);
     expect(screen.getByTestId('category-badge')).toBeTruthy();
-    expect(screen.getAllByTestId(`icon-${category.icon}`)).toHaveLength(2);
+    expect(screen.getAllByTestId(`icon-${category.icon}`, { includeHiddenElements: true })).toHaveLength(2);
     expect(screen.getByTestId('card-front-footer')).toHaveTextContent(category.title.toUpperCase());
     expect(screen.getByTestId('card-front-question')).toHaveTextContent(question.text);
     expect(screen.getByTestId('favorite-indicator')).toBeTruthy();

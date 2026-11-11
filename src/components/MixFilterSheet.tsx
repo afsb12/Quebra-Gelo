@@ -1,13 +1,10 @@
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-import type { ComponentProps } from 'react';
 import { Modal, Pressable, ScrollView, Switch, Text, View } from 'react-native';
 import { useReducedMotion } from 'react-native-reanimated';
 
 import type { Category, CategoryId } from '../data/types';
 import { strings } from '../i18n/strings';
 import { tokens, type CategoryVisual } from '../theme';
-
-type IconName = ComponentProps<typeof MaterialCommunityIcons>['name'];
+import { CategoryIcon } from './CategoryIcon';
 
 export interface MixFilterOption {
   category: Category;
@@ -62,7 +59,7 @@ export function MixFilterSheet({ visible, options, selected, canSave, onToggle, 
               return (
                 <View key={category.id} testID={`mix-filter-row-${category.id}`} className="flex-row items-center gap-3 py-2">
                   <View className="h-9 w-9 items-center justify-center rounded-full" style={{ backgroundColor: visual.color }}>
-                    <MaterialCommunityIcons name={visual.icon as IconName} size={20} color={visual.onColor} />
+                    <CategoryIcon name={visual.icon} size={20} color={visual.onColor} />
                   </View>
                   <Text className="flex-1 font-body text-base text-primary">{category.title}</Text>
                   <Switch

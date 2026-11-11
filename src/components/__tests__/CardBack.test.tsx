@@ -35,14 +35,18 @@ describe('CardBack', () => {
   });
 });
 
-type JsonNode = { type: string; children: (JsonNode | string)[] | null };
+type JsonNode = { type: string; props?: { testID?: unknown }; children: (JsonNode | string)[] | null };
 
-/** Counts host elements by type in the rendered tree (svg primitives are mocked as hosts). */
+/**
+ * Counts host elements by type in the rendered tree (svg primitives are mocked as hosts), skipping
+ * the category icon itself (`icon-*`): an app-drawn icon like Happy Hour's (014) is not a pattern.
+ */
 const countByType = (node: unknown, counts: Record<string, number> = {}): Record<string, number> => {
   if (Array.isArray(node)) {
     for (const child of node) countByType(child, counts);
   } else if (node && typeof node === 'object' && 'type' in node) {
-    const { type, children } = node as JsonNode;
+    const { type, props, children } = node as JsonNode;
+    if (typeof props?.testID === 'string' && props.testID.startsWith('icon-')) return counts;
     counts[type] = (counts[type] ?? 0) + 1;
     for (const child of children ?? []) countByType(child, counts);
   }
