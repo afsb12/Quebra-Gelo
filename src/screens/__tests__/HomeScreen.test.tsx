@@ -81,8 +81,11 @@ describe('HomeScreen', () => {
     expect(ids.slice(0, 2)).toEqual(['casual', 'primeiros-encontros']);
     expect(ids.slice(7)).toEqual(['nostalgia', 'familia', 'futuro']);
     for (const category of getCategories()) {
-      expect(screen.getByTestId(`mini-card-${category.id}`)).toBeTruthy();
-      expect(screen.getByText(category.description)).toBeTruthy();
+      // 015: the description left the screen but stays in the tile's label.
+      expect(screen.getByTestId(`mini-card-${category.id}`).props.accessibilityLabel).toBe(
+        `${category.title}. ${category.description}`,
+      );
+      expect(screen.queryByText(category.description)).toBeNull();
     }
     const rendered = screen.getAllByTestId(/^mini-card-/).map((el) => String(el.props.testID).replace('mini-card-', ''));
     expect(rendered).toEqual(ids);
@@ -101,6 +104,19 @@ describe('HomeScreen', () => {
     expect(all[0]).toBe('mixed-hero-card');
     await fireEvent.press(hero);
     expect(router.push).toHaveBeenCalledWith({ pathname: '/deck/[deckId]', params: { deckId: 'mixed' } });
+  });
+
+  it('shows the brand row, the invitation header and the decks label (015)', async () => {
+    await render(<HomeScreen />);
+    expect(screen.getByText('Quebra-Gelo')).toBeTruthy();
+    expect(screen.getAllByTestId('brand-symbol')).toHaveLength(2); // brand row + mix card
+    expect(screen.getByRole('header')).toHaveTextContent('Sobre o que vamos conversar?');
+    expect(screen.getByText('Ou escolha um baralho')).toBeTruthy();
+  });
+
+  it('the mix chip always shows the count: "10 categorias" with every category in (015)', async () => {
+    await render(<HomeScreen />);
+    expect(screen.getByTestId('mix-filter-summary')).toHaveTextContent('10 categorias');
   });
 
   it('has a Favoritos entry', async () => {
@@ -130,7 +146,7 @@ describe('HomeScreen — mix filter (006)', () => {
 
   it('switching off 2 categories and saving filters the mix and shows "8 de 10 categorias"', async () => {
     await render(<HomeScreen />);
-    expect(screen.queryByTestId('mix-filter-summary')).toBeNull();
+    expect(screen.getByTestId('mix-filter-summary')).toHaveTextContent('10 categorias');
     await open();
     expect(router.push).not.toHaveBeenCalled();
     await toggle('happy-hour');

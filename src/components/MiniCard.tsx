@@ -1,4 +1,4 @@
-import { Pressable, Text, View } from 'react-native';
+import { Pressable, View } from 'react-native';
 
 import type { Category, CategoryId } from '../data/types';
 import type { CategoryVisual } from '../theme';
@@ -11,7 +11,10 @@ export interface MiniCardProps {
   onPress: (id: CategoryId) => void;
 }
 
-/** Home grid item: a miniature of the category's card back with name and description below. */
+/**
+ * Home grid tile (015): just the category's mini card back, whose face already prints the name.
+ * The description is not shown but stays in the accessibility label.
+ */
 export function MiniCard({ category, visual, width, onPress }: MiniCardProps) {
   return (
     <Pressable
@@ -19,18 +22,12 @@ export function MiniCard({ category, visual, width, onPress }: MiniCardProps) {
       accessibilityRole="button"
       accessibilityLabel={`${category.title}. ${category.description}`}
       onPress={() => onPress(category.id)}
-      className="gap-2 active:opacity-80"
+      className="active:opacity-80"
       style={{ width }}
     >
       <View accessibilityElementsHidden importantForAccessibility="no-hide-descendants">
         <CardBack category={category} visual={visual} width={width} variant="mini" />
       </View>
-      <Text className="font-display text-base text-primary" numberOfLines={2}>
-        {category.title}
-      </Text>
-      <Text className="font-body text-sm text-secondary" numberOfLines={3}>
-        {category.description}
-      </Text>
     </Pressable>
   );
 }
