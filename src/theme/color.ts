@@ -59,6 +59,20 @@ const hslToRgb = ([h, s, l]: Rgb): Rgb => {
 };
 
 /**
+ * A variant of `color` visible as a non-text element (progress bar, 016) on the dark app background:
+ * returns `color` when it reaches 3:1 against `background`, otherwise lightens it in HSL steps.
+ */
+export const progressColor = (color: string, background: string = tokens.colors.appBackground): string => {
+  if (contrastRatio(color, background) >= 3) return color.toUpperCase();
+  const [h, s, l] = rgbToHsl(parseHex(color));
+  for (let lightness = l; lightness <= 1; lightness += 0.01) {
+    const candidate = toHex(hslToRgb([h, s, lightness]));
+    if (contrastRatio(candidate, background) >= 3) return candidate;
+  }
+  return tokens.colors.iceBlue;
+};
+
+/**
  * A variant of `color` usable on the cream card front: returns `color` when it already reaches
  * 4.5:1 against cream, otherwise darkens it in HSL lightness steps until it does.
  */

@@ -17,8 +17,11 @@ export const FRONT_LAYOUT = {
   padding: 8,
 } as const;
 
-/** Vertical space DeckScreen reserves for header, favorite button and safe areas (pt). */
-export const DECK_RESERVED_HEIGHT = 170;
+/**
+ * Vertical space DeckScreen reserves for header + progress bar, action bar, hint row, the stack
+ * offset and safe areas (pt, 016).
+ */
+export const DECK_RESERVED_HEIGHT = 190;
 
 /** Area available for the question text on a front face of the given size. */
 export const faceTextBox = (width: number, height: number = width / tokens.card.ratio) => {

@@ -37,9 +37,9 @@ describe('DeckScreen', () => {
 
   it('pular advances to the next question', async () => {
     await render(<DeckScreen deckId="dilemas" />, { wrapper });
-    expect(screen.getByText(`Carta 1 de ${total}`)).toBeTruthy();
+    expect(screen.getByLabelText(`Carta 1 de ${total}`)).toBeTruthy();
     await skip();
-    expect(screen.getByText(`Carta 2 de ${total}`)).toBeTruthy();
+    expect(screen.getByLabelText(`Carta 2 de ${total}`)).toBeTruthy();
   });
 
   it('favorite button is disabled face down, toggles the favorite once revealed, never discards', async () => {
@@ -57,7 +57,7 @@ describe('DeckScreen', () => {
     });
     expect(useFavoritesStore.getState().favorites).toHaveLength(1);
     expect(screen.getByLabelText('Remover dos favoritos')).toBeTruthy();
-    expect(screen.getByText(`Carta 1 de ${total}`)).toBeTruthy();
+    expect(screen.getByLabelText(`Carta 1 de ${total}`)).toBeTruthy();
   });
 
   it('shows "Fim do Baralho" after the last card, with reshuffle and choose-another', async () => {
@@ -76,7 +76,7 @@ describe('DeckScreen', () => {
       fireEvent.press(screen.getByText('Embaralhar de novo'));
     });
     expect(screen.getByTestId('swipe-card')).toBeTruthy();
-    expect(screen.getByText(`Carta 1 de ${total}`)).toBeTruthy();
+    expect(screen.getByLabelText(`Carta 1 de ${total}`)).toBeTruthy();
   });
 });
 
@@ -162,7 +162,7 @@ describe('DeckScreen — filtered mix (006)', () => {
   it('a category left out of the mix still has its full deck (FR-011)', async () => {
     useMixFilterStore.getState().save(['casais', 'futuro']);
     await render(<DeckScreen deckId="dilemas" />, { wrapper });
-    expect(screen.getByText(`Carta 1 de ${total}`)).toBeTruthy();
+    expect(screen.getByLabelText(`Carta 1 de ${total}`)).toBeTruthy();
   });
 });
 
@@ -193,7 +193,7 @@ describe('DeckScreen — directional navigation (009)', () => {
     await action('previous');
     expect(Haptics.impactAsync).toHaveBeenCalledWith(Haptics.ImpactFeedbackStyle.Medium);
     await action('previous');
-    expect(screen.getByText(`Carta 2 de ${total}`)).toBeTruthy();
+    expect(screen.getByLabelText(`Carta 2 de ${total}`)).toBeTruthy();
     expect(screen.getByTestId('swipe-card').props.accessibilityLabel).toBe(getQuestion(order[1])?.text);
     expect(screen.getByTestId('favorite-button')).toBeEnabled();
 
@@ -201,7 +201,7 @@ describe('DeckScreen — directional navigation (009)', () => {
     expect(deck()?.order[deck()?.cursor ?? 0]).toBe(order[2]);
     await skip();
     expect(deck()?.order[deck()?.cursor ?? 0]).toBe(order[3]);
-    expect(screen.getByText(`Carta 4 de ${total}`)).toBeTruthy();
+    expect(screen.getByLabelText(`Carta 4 de ${total}`)).toBeTruthy();
     expect(screen.getByTestId('favorite-button')).toBeDisabled();
   });
 });
@@ -241,7 +241,7 @@ describe('DeckScreen — change the mood (011)', () => {
       await press();
       const after = currentQuestion();
       expect(after?.categoryId).not.toBe(before?.categoryId);
-      expect(screen.getByText(`Carta ${i + 2} de ${totalCards}`)).toBeTruthy();
+      expect(screen.getByLabelText(`Carta ${i + 2} de ${totalCards}`)).toBeTruthy();
       expect(screen.getByTestId('favorite-button')).toBeDisabled();
       // Face down: nothing names the new card's category before it is flipped (004, FR-008).
       expect(screen.getByTestId('swipe-card').props.accessibilityLabel).toBe('Carta do Quebra-Gelo, virada para baixo');
@@ -315,7 +315,7 @@ describe('DeckScreen — change the mood (011)', () => {
       jest.advanceTimersByTime(2100);
     });
     expect(screen.queryByTestId('deck-toast')).toBeNull();
-    expect(screen.getByText('Toque para virar · ← próxima · anterior →')).toBeTruthy();
+    expect(screen.getByText('Dica: você também pode deslizar a carta')).toBeTruthy();
   });
 });
 
@@ -355,7 +355,7 @@ describe('DeckScreen — real gestures (012)', () => {
     await swipeCard(-1000);
     expect(deck()?.cursor).toBe(1);
     expect(deck()?.order[1]).not.toBe(first);
-    expect(screen.getByText(`Carta 2 de ${total}`)).toBeTruthy();
+    expect(screen.getByLabelText(`Carta 2 de ${total}`)).toBeTruthy();
   });
 
   it('a right swipe brings the previous card back face up', async () => {
@@ -363,10 +363,10 @@ describe('DeckScreen — real gestures (012)', () => {
     const order = deck()?.order ?? [];
     await swipeCard(-1000);
     await swipeCard(-1000);
-    expect(screen.getByText(`Carta 3 de ${total}`)).toBeTruthy();
+    expect(screen.getByLabelText(`Carta 3 de ${total}`)).toBeTruthy();
     await swipeCard(1000);
     expect(deck()?.cursor).toBe(1);
-    expect(screen.getByText(`Carta 2 de ${total}`)).toBeTruthy();
+    expect(screen.getByLabelText(`Carta 2 de ${total}`)).toBeTruthy();
     expect(label()).toBe(getQuestion(order[1])?.text);
   });
 
@@ -376,7 +376,7 @@ describe('DeckScreen — real gestures (012)', () => {
     await swipeCard(-10);
     await swipeCard(10);
     expect(deck()?.cursor).toBe(0);
-    expect(screen.getByText(`Carta 1 de ${total}`)).toBeTruthy();
+    expect(screen.getByLabelText(`Carta 1 de ${total}`)).toBeTruthy();
   });
 });
 
@@ -444,5 +444,66 @@ describe('DeckScreen — haptics fire exactly once per interaction (012)', () =>
     expect(Haptics.notificationAsync).toHaveBeenCalledTimes(1);
     expect(Haptics.notificationAsync).toHaveBeenCalledWith(Haptics.NotificationFeedbackType.Success);
     expect(Haptics.impactAsync).not.toHaveBeenCalled();
+  });
+});
+
+describe('DeckScreen — action bar, progress and stack (016)', () => {
+  const press = async (testID: string) => {
+    await act(async () => {
+      fireEvent.press(screen.getByTestId(testID));
+    });
+  };
+
+  beforeEach(() => {
+    useProgressStore.setState({ decks: {} });
+    useFavoritesStore.setState({ favorites: [] });
+    useMixFilterStore.setState({ excluded: [] });
+    jest.clearAllMocks();
+  });
+
+  it('Próxima and Anterior move through the deck like the gestures, with the same haptic', async () => {
+    await render(<DeckScreen deckId="dilemas" />, { wrapper });
+    expect(screen.getByTestId('deck-previous-button')).toBeDisabled();
+    await press('deck-next-button');
+    await press('deck-next-button');
+    expect(screen.getByLabelText(`Carta 3 de ${total}`)).toBeTruthy();
+    expect(Haptics.impactAsync).toHaveBeenCalledTimes(2);
+    expect(Haptics.impactAsync).toHaveBeenLastCalledWith(Haptics.ImpactFeedbackStyle.Medium);
+    await press('deck-previous-button');
+    expect(screen.getByLabelText(`Carta 2 de ${total}`)).toBeTruthy();
+    // Back face up, so it can be favorited right away (009).
+    expect(screen.getByTestId('favorite-button')).toBeEnabled();
+  });
+
+  it('shows the short counter, a progress bar at index/total and the stacked cards', async () => {
+    await render(<DeckScreen deckId="dilemas" />, { wrapper });
+    expect(screen.getByTestId('deck-counter')).toHaveTextContent(`1 / ${total}`);
+    expect(screen.getByTestId('deck-progress').props.accessibilityValue).toEqual({ min: 0, max: total, now: 1 });
+    expect(screen.getAllByTestId('deck-stack-card', { includeHiddenElements: true })).toHaveLength(2);
+    for (let i = 1; i < total - 1; i += 1) await skip();
+    expect(screen.getByLabelText(`Carta ${total - 1} de ${total}`)).toBeTruthy();
+    expect(screen.getAllByTestId('deck-stack-card', { includeHiddenElements: true })).toHaveLength(1);
+    await skip();
+    expect(screen.queryByTestId('deck-stack', { includeHiddenElements: true })).toBeNull();
+  });
+
+  it('the mixed deck keeps the bar and the stack neutral (004)', async () => {
+    await render(<DeckScreen deckId="mixed" />, { wrapper });
+    expect(screen.getByTestId('deck-progress-fill')).toHaveStyle({ backgroundColor: '#9ED8F0' });
+    for (const card of screen.getAllByTestId('deck-stack-card', { includeHiddenElements: true })) {
+      expect(card.children[0]).toHaveStyle({ backgroundColor: '#221E2B' }); // surface, never a category color
+    }
+    expect(screen.getByTestId('change-mood-button')).toBeTruthy();
+  });
+
+  it('shows the swipe hint on the first 3 cards only', async () => {
+    await render(<DeckScreen deckId="dilemas" />, { wrapper });
+    const hint = 'Dica: você também pode deslizar a carta';
+    expect(screen.getByText(hint)).toBeTruthy();
+    await skip();
+    await skip();
+    expect(screen.getByText(hint)).toBeTruthy();
+    await skip();
+    expect(screen.queryByText(hint)).toBeNull();
   });
 });

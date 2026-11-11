@@ -1,12 +1,12 @@
-import { fireEvent, render, screen } from '@testing-library/react-native';
-import type { ReactNode } from 'react';
+import { act, fireEvent, render, screen } from '@testing-library/react-native';
+import { createRef, type ReactNode } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import { getCategory, getQuestionsByCategory } from '../../data/content';
 import type { Category } from '../../data/types';
 import { getCategoryVisual } from '../../theme';
 import { swipeCard, tapCard } from '../../test-utils/gestures';
-import { resistX, resolveSwipeRelease, SwipeCard, type SwipeCardProps } from '../SwipeCard';
+import { resistX, resolveSwipeRelease, SwipeCard, type SwipeCardHandle, type SwipeCardProps } from '../SwipeCard';
 
 const wrapper = ({ children }: { children: ReactNode }) => (
   <GestureHandlerRootView style={{ flex: 1 }}>{children}</GestureHandlerRootView>
@@ -150,6 +150,28 @@ describe('SwipeCard real gestures (012)', () => {
     expect(props.onFlip).toHaveBeenCalledTimes(1);
     expect(props.onFlip).toHaveBeenCalledWith('up');
     expect(screen.getByTestId('swipe-card').props.accessibilityLabel).toBe(question.text);
+    expect(props.onDiscard).not.toHaveBeenCalled();
+  });
+});
+
+describe('SwipeCard buttons handle (016)', () => {
+  it('swipe("left") runs the same exit as a swipe: haptic callback, then onDiscard', async () => {
+    const ref = createRef<SwipeCardHandle>();
+    const props = await setup({ ref });
+    await act(async () => {
+      ref.current?.swipe('left');
+    });
+    expect(props.onSwipeConfirmed).toHaveBeenCalledWith('left');
+    expect(props.onDiscard).toHaveBeenCalledWith('left');
+  });
+
+  it('swipe("right") is ignored on the first card', async () => {
+    const ref = createRef<SwipeCardHandle>();
+    const props = await setup({ ref, canGoBack: false });
+    await act(async () => {
+      ref.current?.swipe('right');
+    });
+    expect(props.onSwipeConfirmed).not.toHaveBeenCalled();
     expect(props.onDiscard).not.toHaveBeenCalled();
   });
 });
