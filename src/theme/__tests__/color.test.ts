@@ -1,4 +1,4 @@
-import { contrastRatio, inkOnCream, pickOnColor } from '../color';
+import { contrastRatio, inkOnCream, pickOnColor, progressColor } from '../color';
 import { tokens } from '../tokens';
 
 describe('contrastRatio (WCAG 2.1)', () => {
@@ -32,5 +32,20 @@ describe('inkOnCream', () => {
       const ink = inkOnCream(color);
       expect(contrastRatio(ink, tokens.colors.cream)).toBeGreaterThanOrEqual(4.5);
     }
+  });
+});
+
+describe('progressColor (016)', () => {
+  const bg = tokens.colors.appBackground;
+
+  it('keeps a color that already reaches 3:1 on the app background', () => {
+    expect(progressColor('#F5C230')).toBe('#F5C230');
+  });
+
+  it('lightens a dark category color until it reaches 3:1', () => {
+    expect(contrastRatio('#3D3FA6', bg)).toBeLessThan(3);
+    const tint = progressColor('#3D3FA6');
+    expect(tint).not.toBe('#3D3FA6');
+    expect(contrastRatio(tint, bg)).toBeGreaterThanOrEqual(3);
   });
 });

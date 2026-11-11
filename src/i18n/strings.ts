@@ -35,6 +35,15 @@ export const strings = {
     backHint: 'Volta para a escolha de baralho',
     position: (index: number, total: number) => `Carta ${index} de ${total}`,
     tapHint: 'Toque para virar · ← próxima · anterior →',
+    /** Short visual counter in the header (016); `position` stays its accessibility label. */
+    counter: (index: number, total: number) => `${index} / ${total}`,
+    /** Reminder under the action bar on the first cards of a game (016). */
+    swipeHint: 'Dica: você também pode deslizar a carta',
+    previous: 'Anterior',
+    next: 'Próxima',
+    previousLabel: 'Carta anterior',
+    nextLabel: 'Próxima carta',
+    progressLabel: 'Progresso do baralho',
     changeMoodLabel: 'Mudar o clima: próxima carta de outra categoria',
     moodChanged: 'Clima trocado',
   },
