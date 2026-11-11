@@ -11,7 +11,7 @@ import { DeckProgress } from '../components/DeckProgress';
 import { DeckStack } from '../components/DeckStack';
 import { HintLine } from '../components/HintLine';
 import { SwipeCard, type CardFace, type SwipeCardHandle, type SwipeDirection } from '../components/SwipeCard';
-import { MIXED_DECK_ID, type DeckId } from '../data/types';
+import { FAVORITES_DECK_ID, MIXED_DECK_ID, type DeckId } from '../data/types';
 import { useDeck } from '../hooks/useDeck';
 import { useHaptics } from '../hooks/useHaptics';
 import { strings } from '../i18n/strings';
@@ -49,6 +49,8 @@ export function DeckScreen({ deckId }: DeckScreenProps) {
     changeMood,
   } = useDeck(deckId);
   const mixed = deckId === MIXED_DECK_ID;
+  // Favorites deck (017): neutral backs + origin badge like the mix, but no "Mudar o clima".
+  const neutralBacks = mixed || deckId === FAVORITES_DECK_ID;
   const haptics = useHaptics();
   const window = useWindowDimensions();
   const geometry = getCardGeometry(window, DECK_RESERVED_HEIGHT, window.fontScale);
@@ -106,7 +108,11 @@ export function DeckScreen({ deckId }: DeckScreenProps) {
     AccessibilityInfo.announceForAccessibility(strings.deck.moodChanged);
   }, [changeMood, haptics, moodEnabled]);
 
-  const completeVisual = deckCategory ? getCategoryVisual(deckCategory) : MIXED_VISUAL;
+  const completeVisual = deckCategory
+    ? getCategoryVisual(deckCategory)
+    : deckId === FAVORITES_DECK_ID
+      ? { ...MIXED_VISUAL, icon: 'star' }
+      : MIXED_VISUAL;
   // Mixed deck: neutral colors, so neither the bar nor the stack hints at the next card (004).
   const barColor = deckCategory ? progressColor(getCategoryVisual(deckCategory).color) : tokens.colors.iceBlue;
   const stackColor = deckCategory ? getCategoryVisual(deckCategory).color : tokens.colors.surface;
@@ -149,7 +155,7 @@ export function DeckScreen({ deckId }: DeckScreenProps) {
             <SwipeCard
               ref={cardRef}
               key={current.id}
-              mode={mixed ? 'mixed' : 'category'}
+              mode={neutralBacks ? 'mixed' : 'category'}
               question={current}
               category={currentCategory}
               visual={getCategoryVisual(currentCategory)}

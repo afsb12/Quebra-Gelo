@@ -17,7 +17,9 @@ describe('category identity is consistent across the app', () => {
     expect(screen.getByText(question.text)).toBeTruthy();
     expect(screen.getByTestId(`icon-${visual.icon}`)).toBeTruthy();
     expect(StyleSheet.flatten(screen.getByTestId('favorite-category').props.style).color).toBe(visual.ink);
-    expect(StyleSheet.flatten(screen.getByTestId('favorite-accent').props.style).backgroundColor).toBe(visual.color);
+    // 017: the side stripe is gone; the header carries the identity, like the card front.
+    expect(screen.queryByTestId('favorite-accent')).toBeNull();
+    expect(screen.getByLabelText(`Remover dos favoritos: ${question.text}`)).toBeTruthy();
   });
 
   it('DeckComplete uses the category color', async () => {
