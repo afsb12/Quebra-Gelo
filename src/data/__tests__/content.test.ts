@@ -1,6 +1,7 @@
 import glyphMap from '@expo/vector-icons/build/vendor/react-native-vector-icons/glyphmaps/MaterialCommunityIcons.json';
 
 import rawData from '../data.json';
+import { CUSTOM_ICONS, isCustomIcon } from '../../theme/customIcons';
 import { CATEGORY_IDS } from '../types';
 
 /**
@@ -139,15 +140,32 @@ describe('data.json content', () => {
     }
   });
 
-  it('4. every icon exists in the MaterialCommunityIcons glyph map', () => {
+  it('4. every icon is a MaterialCommunityIcons glyph or an app-drawn custom icon (014)', () => {
     const glyphs: Record<string, number> = glyphMap;
     for (const c of categories) {
-      expect({ id: c.id, icon: c.icon, exists: String(c.icon) in glyphs }).toEqual({
-        id: c.id,
-        icon: c.icon,
-        exists: true,
-      });
+      const icon = String(c.icon);
+      expect({ id: c.id, icon, exists: icon in glyphs || isCustomIcon(icon) }).toEqual({ id: c.id, icon, exists: true });
     }
+  });
+
+  it('4b. custom icon names never collide with a glyph name (014)', () => {
+    const glyphs: Record<string, number> = glyphMap;
+    for (const name of Object.keys(CUSTOM_ICONS)) expect({ name, collides: name in glyphs }).toEqual({ name, collides: false });
+  });
+
+  it('4c. category icons are pinned: only Happy Hour changed, to the beer toast (014)', () => {
+    expect(Object.fromEntries(categories.map((c) => [c.id, c.icon]))).toEqual({
+      casual: 'emoticon-happy-outline',
+      'primeiros-encontros': 'glass-flute',
+      profundo: 'lightbulb-on-outline',
+      casais: 'heart-outline',
+      'happy-hour': 'beer-toast',
+      dilemas: 'scale-balance',
+      viagens: 'airplane',
+      nostalgia: 'teddy-bear',
+      familia: 'home-heart',
+      futuro: 'rocket-launch-outline',
+    });
   });
 
   it('5. every question has exactly id, categoryId and text as strings', () => {

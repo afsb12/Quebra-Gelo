@@ -1,12 +1,10 @@
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-import { memo, type ComponentProps } from 'react';
+import { memo } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 import type { Category } from '../data/types';
 import { tokens, type CategoryVisual } from '../theme';
+import { CategoryIcon } from './CategoryIcon';
 import { Vignette } from './Vignette';
-
-type IconName = ComponentProps<typeof MaterialCommunityIcons>['name'];
 
 export interface CardBackProps {
   category: Category;
@@ -45,7 +43,7 @@ export const CardBack = memo(function CardBack({ category, visual, width, varian
       <View testID="card-back-face" style={[styles.face, { borderRadius: radius - frame, backgroundColor: visual.color }]}>
         <Vignette width={innerWidth} height={innerHeight} tint="#000000" strength={0.16} />
         <View style={styles.iconArea}>
-          <MaterialCommunityIcons name={visual.icon as IconName} size={Math.round(width * 0.3)} color={visual.onColor} />
+          <CategoryIcon name={visual.icon} size={Math.round(width * 0.3)} color={visual.onColor} />
         </View>
         <View style={styles.titleArea}>
           <Text
