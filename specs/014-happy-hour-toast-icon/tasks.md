@@ -29,7 +29,7 @@ No setup: `react-native-svg` is already installed and mocked in `jest.setup.ts`.
 
 - [ ] T004 [US1] In `src/data/data.json` set the `happy-hour` category `icon` from `"glass-cocktail"` to `"beer-toast"` (no other change)
 - [ ] T005 [US1] Update the `icon` doc comment in `src/data/types.ts`: "MaterialCommunityIcons glyph name or a `CUSTOM_ICONS` key (theme/customIcons.ts)"
-- [ ] T006 [US1] Update test 4 in `src/data/__tests__/content.test.ts`: every category icon is in the glyph map **or** `isCustomIcon(icon)`; add a check that no `CUSTOM_ICONS` key is also a glyph name ("A custom icon name MUST NOT also be a MaterialCommunityIcons glyph name"), and that `happy-hour` uses `beer-toast`
+- [ ] T006 [US1] Update test 4 in `src/data/__tests__/content.test.ts`: every category icon is in the glyph map **or** `isCustomIcon(icon)`; add a check that no `CUSTOM_ICONS` key is also a glyph name ("A custom icon name MUST NOT also be a MaterialCommunityIcons glyph name"), and pin every category's icon name (`happy-hour` → `beer-toast`, the other 9 exactly as in 1.6.0) so SC-002/FR-006 are guarded
 - [ ] T007 [US1] Replace `MaterialCommunityIcons` with `CategoryIcon` (same size/color) in `src/components/CardBack.tsx` and drop its unused `IconName` type/import
 
 **Checkpoint**: US1 works: the Home grid and the full back show the toast.
