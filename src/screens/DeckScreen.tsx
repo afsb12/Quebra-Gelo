@@ -11,7 +11,8 @@ import { DeckProgress } from '../components/DeckProgress';
 import { DeckStack } from '../components/DeckStack';
 import { HintLine } from '../components/HintLine';
 import { SwipeCard, type CardFace, type SwipeCardHandle, type SwipeDirection } from '../components/SwipeCard';
-import { FAVORITES_DECK_ID, MIXED_DECK_ID, type DeckId } from '../data/types';
+import { getNextCategories } from '../data/content';
+import { FAVORITES_DECK_ID, MIXED_DECK_ID, type CategoryId, type DeckId } from '../data/types';
 import { useDeck } from '../hooks/useDeck';
 import { useHaptics } from '../hooks/useHaptics';
 import { strings } from '../i18n/strings';
@@ -27,6 +28,8 @@ const TOAST_MS = 2000;
 
 /** The short swipe hint shows on the first cards of a game only (016). */
 const HINT_CARDS = 3;
+
+const openSuggestion = (deckId: CategoryId) => router.replace({ pathname: '/deck/[deckId]', params: { deckId } });
 
 const goHome = () => {
   if (router.canGoBack()) router.back();
@@ -116,6 +119,10 @@ export function DeckScreen({ deckId }: DeckScreenProps) {
   // Mixed deck: neutral colors, so neither the bar nor the stack hints at the next card (004).
   const barColor = deckCategory ? progressColor(getCategoryVisual(deckCategory).color) : tokens.colors.iceBlue;
   const stackColor = deckCategory ? getCategoryVisual(deckCategory).color : tokens.colors.surface;
+  // End screen (018): category decks suggest the next two decks; the mix and favorites do not.
+  const suggestions = deckCategory
+    ? getNextCategories(deckCategory.id).map((c) => ({ ...getCategoryVisual(c), id: c.id, title: c.title }))
+    : [];
   const stackCount = Math.min(2, Math.max(0, position.total - position.index)) as 0 | 1 | 2;
 
   return (
@@ -173,7 +180,14 @@ export function DeckScreen({ deckId }: DeckScreenProps) {
             />
           </View>
         ) : (
-          <DeckComplete deckTitle={title} visual={completeVisual} onReshuffle={reshuffle} onChooseAnother={() => router.replace('/')} />
+          <DeckComplete
+            deckTitle={title}
+            visual={completeVisual}
+            suggestions={suggestions}
+            onReshuffle={reshuffle}
+            onChooseAnother={() => router.replace('/')}
+            onSuggest={openSuggestion}
+          />
         )}
       </View>
 

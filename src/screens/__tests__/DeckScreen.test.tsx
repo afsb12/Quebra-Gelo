@@ -68,7 +68,7 @@ describe('DeckScreen', () => {
     expect(screen.getByText('Fim do Baralho')).toBeTruthy();
 
     await act(async () => {
-      fireEvent.press(screen.getByText('Escolher outra categoria'));
+      fireEvent.press(screen.getByText('Ver todos os baralhos'));
     });
     expect(router.replace).toHaveBeenCalledWith('/');
 
@@ -505,5 +505,37 @@ describe('DeckScreen — action bar, progress and stack (016)', () => {
     expect(screen.getByText(hint)).toBeTruthy();
     await skip();
     expect(screen.queryByText(hint)).toBeNull();
+  });
+});
+
+describe('DeckScreen — end screen suggestions (018)', () => {
+  beforeEach(() => {
+    useProgressStore.setState({ decks: {} });
+    useMixFilterStore.setState({ excluded: [] });
+    jest.clearAllMocks();
+  });
+
+  it('suggests the next two decks and opens one in place of the end screen', async () => {
+    await render(<DeckScreen deckId="dilemas" />, { wrapper });
+    for (let i = 0; i < total; i += 1) await skip();
+    expect(screen.getByText('Que tal continuar com')).toBeTruthy();
+    expect(screen.getByLabelText('Jogar Viagens e Aventuras')).toBeTruthy();
+    expect(screen.getByLabelText('Jogar Nostalgia e Infância')).toBeTruthy();
+    await act(async () => {
+      fireEvent.press(screen.getByTestId('deck-suggestion-viagens'));
+    });
+    expect(router.replace).toHaveBeenCalledWith({ pathname: '/deck/[deckId]', params: { deckId: 'viagens' } });
+  });
+
+  it('the mixed deck ends without suggestions', async () => {
+    useMixFilterStore.setState({ excluded: getCategories().slice(2).map((c) => c.id) });
+    await render(<DeckScreen deckId="mixed" />, { wrapper });
+    const count = getCategories()
+      .slice(0, 2)
+      .reduce((n, c) => n + getQuestionsByCategory(c.id).length, 0);
+    for (let i = 0; i < count; i += 1) await skip();
+    expect(screen.getByTestId('deck-complete')).toBeTruthy();
+    expect(screen.queryByTestId('deck-suggestions')).toBeNull();
+    expect(screen.getByText('Ver todos os baralhos')).toBeTruthy();
   });
 });
