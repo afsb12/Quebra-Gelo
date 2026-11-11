@@ -4,7 +4,7 @@ export interface CardGeometry {
   width: number;
   height: number;
   radius: number;
-  /** Width of a Home mini card (2 columns). */
+  /** Width of a Home mini card (3 columns, 015). */
   miniWidth: number;
   /** Area available for the question text on the front face. */
   textBox: { width: number; height: number };
@@ -40,7 +40,7 @@ export const getCardGeometry = (
   fontScale = 1,
 ): CardGeometry => {
   const { ratio, maxWidth, radiusRatio } = tokens.card;
-  const { screenPadding, gridGap } = tokens.layout;
+  const { screenPadding, homeColumns, homeGridGap } = tokens.layout;
   const growth = Math.min(Math.max(fontScale, 1), 1.25);
   let width = Math.min(screen.width - screenPadding * 2, maxWidth * growth);
   let height = width / ratio;
@@ -53,7 +53,7 @@ export const getCardGeometry = (
     width,
     height,
     radius: radiusRatio * width,
-    miniWidth: (screen.width - screenPadding * 2 - gridGap) / 2,
+    miniWidth: (screen.width - screenPadding * 2 - (homeColumns - 1) * homeGridGap) / homeColumns,
     textBox: faceTextBox(width, height),
   };
 };
