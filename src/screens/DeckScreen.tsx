@@ -1,20 +1,22 @@
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { router } from 'expo-router';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { AccessibilityInfo, Pressable, Text, useWindowDimensions, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { ChangeMoodButton } from '../components/ChangeMoodButton';
 import { DeckComplete } from '../components/DeckComplete';
-import { FavoriteButton } from '../components/FavoriteButton';
+import { DeckActionBar } from '../components/DeckActionBar';
+import { DeckProgress } from '../components/DeckProgress';
+import { DeckStack } from '../components/DeckStack';
 import { HintLine } from '../components/HintLine';
-import { SwipeCard, type CardFace, type SwipeDirection } from '../components/SwipeCard';
+import { SwipeCard, type CardFace, type SwipeCardHandle, type SwipeDirection } from '../components/SwipeCard';
 import { MIXED_DECK_ID, type DeckId } from '../data/types';
 import { useDeck } from '../hooks/useDeck';
 import { useHaptics } from '../hooks/useHaptics';
 import { strings } from '../i18n/strings';
 import { useFavoritesStore } from '../store/favorites';
-import { DECK_RESERVED_HEIGHT, MIXED_VISUAL, getCardGeometry, getCategoryVisual, tokens } from '../theme';
+import { DECK_RESERVED_HEIGHT, MIXED_VISUAL, getCardGeometry, getCategoryVisual, progressColor, tokens } from '../theme';
 
 export interface DeckScreenProps {
   deckId: DeckId;
@@ -22,6 +24,9 @@ export interface DeckScreenProps {
 
 /** How long the "Clima trocado" toast stays on screen (011 FR-007). */
 const TOAST_MS = 2000;
+
+/** The short swipe hint shows on the first cards of a game only (016). */
+const HINT_CARDS = 3;
 
 const goHome = () => {
   if (router.canGoBack()) router.back();
@@ -48,6 +53,9 @@ export function DeckScreen({ deckId }: DeckScreenProps) {
   const window = useWindowDimensions();
   const geometry = getCardGeometry(window, DECK_RESERVED_HEIGHT, window.fontScale);
   const [face, setFace] = useState<CardFace>('down');
+  const cardRef = useRef<SwipeCardHandle>(null);
+  // Cards shown in this screen so far (016): the swipe hint only shows on the first ones.
+  const [shownCount, setShownCount] = useState(1);
   const toggleFavorite = useFavoritesStore((state) => state.toggle);
   const isFavorite = useFavoritesStore((state) => (current ? state.favorites.some((f) => f.questionId === current.id) : false));
 
@@ -66,6 +74,7 @@ export function DeckScreen({ deckId }: DeckScreenProps) {
   // Left = next card (face down); right = previous card, back face up to re-read it (009).
   const handleDiscard = useCallback(
     (direction: SwipeDirection) => {
+      setShownCount((n) => n + 1);
       if (direction === 'right') {
         setFace('up');
         goBack();
@@ -98,66 +107,93 @@ export function DeckScreen({ deckId }: DeckScreenProps) {
   }, [changeMood, haptics, moodEnabled]);
 
   const completeVisual = deckCategory ? getCategoryVisual(deckCategory) : MIXED_VISUAL;
+  // Mixed deck: neutral colors, so neither the bar nor the stack hints at the next card (004).
+  const barColor = deckCategory ? progressColor(getCategoryVisual(deckCategory).color) : tokens.colors.iceBlue;
+  const stackColor = deckCategory ? getCategoryVisual(deckCategory).color : tokens.colors.surface;
+  const stackCount = Math.min(2, Math.max(0, position.total - position.index)) as 0 | 1 | 2;
 
   return (
     <SafeAreaView className="flex-1 bg-app">
-      <View className="flex-row items-center gap-3 px-4 py-2">
-        <Pressable
-          accessibilityRole="button"
-          accessibilityLabel={strings.deck.backHint}
-          onPress={goHome}
-          hitSlop={12}
-          className="h-11 w-11 items-center justify-center rounded-full bg-surface"
-        >
-          <MaterialCommunityIcons name="arrow-left" size={24} color={tokens.colors.textPrimary} />
-        </Pressable>
-        <View className="flex-1">
+      <View className="gap-2 px-4 pb-1 pt-2">
+        <View className="flex-row items-center gap-3">
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel={strings.deck.backHint}
+            onPress={goHome}
+            hitSlop={12}
+            className="h-11 w-11 items-center justify-center rounded-full bg-surface"
+          >
+            <MaterialCommunityIcons name="arrow-left" size={24} color={tokens.colors.textPrimary} />
+          </Pressable>
           {/* In the mixed deck the header stays "Tudo Misturado": it never hints at the next card. */}
-          <Text accessibilityRole="header" className="font-display text-xl text-primary" numberOfLines={1}>
+          <Text accessibilityRole="header" className="flex-1 font-display text-xl text-primary" numberOfLines={1}>
             {title}
           </Text>
           {current ? (
-            <Text className="font-body text-sm text-secondary">{strings.deck.position(position.index, position.total)}</Text>
+            <Text
+              testID="deck-counter"
+              accessibilityLabel={strings.deck.position(position.index, position.total)}
+              className="font-question text-base text-secondary"
+            >
+              {strings.deck.counter(position.index, position.total)}
+            </Text>
           ) : null}
         </View>
+        {current ? <DeckProgress index={position.index} total={position.total} color={barColor} /> : null}
       </View>
 
       <View className="flex-1 items-center justify-center">
         {!ready ? null : current && currentCategory ? (
-          <SwipeCard
-            key={current.id}
-            mode={mixed ? 'mixed' : 'category'}
-            question={current}
-            category={currentCategory}
-            visual={getCategoryVisual(currentCategory)}
-            isFavorite={isFavorite}
-            canGoBack={canGoBack}
-            initialFace={face}
-            width={geometry.width}
-            height={geometry.height}
-            screenWidth={window.width}
-            fontScale={window.fontScale}
-            onFlip={handleFlip}
-            onSwipeConfirmed={haptics.discard}
-            onDiscard={handleDiscard}
-            onToggleFavorite={handleToggleFavorite}
-          />
+          <View style={{ width: geometry.width, height: geometry.height }}>
+            <DeckStack width={geometry.width} height={geometry.height} count={stackCount} color={stackColor} />
+            <SwipeCard
+              ref={cardRef}
+              key={current.id}
+              mode={mixed ? 'mixed' : 'category'}
+              question={current}
+              category={currentCategory}
+              visual={getCategoryVisual(currentCategory)}
+              isFavorite={isFavorite}
+              canGoBack={canGoBack}
+              initialFace={face}
+              width={geometry.width}
+              height={geometry.height}
+              screenWidth={window.width}
+              fontScale={window.fontScale}
+              onFlip={handleFlip}
+              onSwipeConfirmed={haptics.discard}
+              onDiscard={handleDiscard}
+              onToggleFavorite={handleToggleFavorite}
+            />
+          </View>
         ) : (
           <DeckComplete deckTitle={title} visual={completeVisual} onReshuffle={reshuffle} onChooseAnother={() => router.replace('/')} />
         )}
       </View>
 
       {current ? (
-        <View className="items-center gap-3 pb-6 pt-2">
-          {/* Outside the gesture area: pressing these never flips or discards the card. */}
-          <View className="w-full flex-row items-center px-3">
-            <View className="flex-1" />
-            <FavoriteButton active={isFavorite} disabled={face === 'down'} onPress={handleToggleFavorite} />
-            <View className="min-w-11 flex-1 items-end">
+        <View className="gap-1 pb-3 pt-2">
+          {/* Outside the gesture area: pressing these never flips the card. */}
+          <DeckActionBar
+            canGoBack={canGoBack}
+            favoriteActive={isFavorite}
+            favoriteDisabled={face === 'down'}
+            onPrevious={() => cardRef.current?.swipe('right')}
+            onToggleFavorite={handleToggleFavorite}
+            onNext={() => cardRef.current?.swipe('left')}
+          />
+          <View className="flex-row items-center px-4">
+            <View className="w-11" />
+            <View className="flex-1">
+              <HintLine
+                hint={shownCount <= HINT_CARDS ? strings.deck.swipeHint : ''}
+                toast={toastNonce > 0 ? strings.deck.moodChanged : undefined}
+              />
+            </View>
+            <View className="w-11 items-end">
               {mixed ? <ChangeMoodButton disabled={!moodEnabled} onPress={handleChangeMood} /> : null}
             </View>
           </View>
-          <HintLine hint={strings.deck.tapHint} toast={toastNonce > 0 ? strings.deck.moodChanged : undefined} />
         </View>
       ) : null}
     </SafeAreaView>
