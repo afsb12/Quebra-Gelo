@@ -13,33 +13,34 @@ export interface FavoriteListItemProps {
   onRemove: () => void;
 }
 
-/** A saved question with its category identity (color accent, icon, name) and a remove action. */
+/**
+ * A saved question as a small cream card (017): a header with the category icon and name in its
+ * front-face color plus the remove star, then the question.
+ */
 export function FavoriteListItem({ question, category, visual, onRemove }: FavoriteListItemProps) {
   return (
-    <View
-      testID={`favorite-item-${question.id}`}
-      className="flex-row overflow-hidden rounded-2xl bg-cream"
-      style={{ borderRadius: 16 }}
-    >
-      <View testID="favorite-accent" className="w-2" style={{ backgroundColor: visual.color }} />
-      <View className="flex-1 gap-2 p-4">
-        <View className="flex-row items-center gap-2">
-          <CategoryIcon name={visual.icon} size={18} color={visual.ink} />
-          <Text testID="favorite-category" className="font-body text-xs uppercase tracking-widest" style={{ color: visual.ink }}>
-            {category.title}
-          </Text>
-        </View>
-        <Text className="font-question text-lg text-ink">{question.text}</Text>
+    <View testID={`favorite-item-${question.id}`} className="gap-2 rounded-2xl bg-cream pb-4 pl-4 pr-2 pt-2">
+      <View className="flex-row items-center gap-2">
+        <CategoryIcon name={visual.icon} size={18} color={visual.ink} />
+        <Text
+          testID="favorite-category"
+          className="flex-1 font-body text-xs uppercase tracking-widest"
+          style={{ color: visual.ink }}
+          numberOfLines={1}
+        >
+          {category.title}
+        </Text>
+        <Pressable
+          testID="favorite-remove"
+          accessibilityRole="button"
+          accessibilityLabel={strings.favorites.removeLabel(question.text)}
+          onPress={onRemove}
+          className="h-11 w-11 items-center justify-center"
+        >
+          <MaterialCommunityIcons name="star" size={22} color={tokens.colors.questionInk} />
+        </Pressable>
       </View>
-      <Pressable
-        accessibilityRole="button"
-        accessibilityLabel={strings.favorites.removeLabel(question.text)}
-        onPress={onRemove}
-        hitSlop={8}
-        className="items-center justify-center px-4"
-      >
-        <MaterialCommunityIcons name="star" size={24} color={tokens.colors.questionInk} />
-      </Pressable>
+      <Text className="pr-2 font-question text-lg text-ink">{question.text}</Text>
     </View>
   );
 }

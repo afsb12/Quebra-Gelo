@@ -2,7 +2,8 @@ import { create } from 'zustand';
 
 import { getDeckQuestionIds, getQuestion } from '../data/content';
 import { advance, changeMood, createDeck, goBack } from '../data/deck';
-import type { CategoryId, DeckId, DeckProgress } from '../data/types';
+import { FAVORITES_DECK_ID, type CategoryId, type DeckId, type DeckProgress } from '../data/types';
+import { useFavoritesStore } from './favorites';
 
 /**
  * Per-deck progress (each category and the mixed deck, 004). In memory only (no persist):
@@ -25,8 +26,12 @@ interface ProgressState {
 
 const categoryOfQuestion = (id: string): string | undefined => getQuestion(id)?.categoryId;
 
+/** The favorites deck (017) is built from the favorites saved at that moment. */
+const favoriteIds = (deckId: DeckId): string[] =>
+  deckId === FAVORITES_DECK_ID ? useFavoritesStore.getState().favorites.map((f) => f.questionId) : [];
+
 const newDeck = (deckId: DeckId, mixCategories?: readonly CategoryId[]): DeckProgress =>
-  createDeck(getDeckQuestionIds(deckId, mixCategories));
+  createDeck(getDeckQuestionIds(deckId, mixCategories, favoriteIds(deckId)));
 
 export const useProgressStore = create<ProgressState>()((set, get) => ({
   decks: {},

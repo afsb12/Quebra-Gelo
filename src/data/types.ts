@@ -16,8 +16,11 @@ export type CategoryId = (typeof CATEGORY_IDS)[number];
 /** The "Tudo Misturado" deck: questions of every category shuffled together (004). */
 export const MIXED_DECK_ID = 'mixed' as const;
 
-/** Key of a playable deck: one category, or the mixed deck. */
-export type DeckId = CategoryId | typeof MIXED_DECK_ID;
+/** The deck built from the saved favorites (017). */
+export const FAVORITES_DECK_ID = 'favorites' as const;
+
+/** Key of a playable deck: one category, the mixed deck, or the favorites deck. */
+export type DeckId = CategoryId | typeof MIXED_DECK_ID | typeof FAVORITES_DECK_ID;
 
 export interface Category {
   id: CategoryId;

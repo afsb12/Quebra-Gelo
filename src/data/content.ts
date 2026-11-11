@@ -1,12 +1,13 @@
 import rawData from './data.json';
 import type { Category, CategoryId, Content, DeckId, Question } from './types';
-import { CATEGORY_IDS, MIXED_DECK_ID } from './types';
+import { CATEGORY_IDS, FAVORITES_DECK_ID, MIXED_DECK_ID } from './types';
 
 const CATEGORY_ID_SET: ReadonlySet<string> = new Set(CATEGORY_IDS);
 
 export const isCategoryId = (value: string): value is CategoryId => CATEGORY_ID_SET.has(value);
 
-export const isDeckId = (value: string): value is DeckId => value === MIXED_DECK_ID || isCategoryId(value);
+export const isDeckId = (value: string): value is DeckId =>
+  value === MIXED_DECK_ID || value === FAVORITES_DECK_ID || isCategoryId(value);
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   typeof value === 'object' && value !== null && !Array.isArray(value);
@@ -56,10 +57,16 @@ export const getQuestion = (id: string): Question | undefined => questionsById.g
 export const getAllQuestions = (): readonly Question[] => content.questions;
 
 /**
- * Question IDs that make up a deck: one category's, or — for the mixed deck — those of
- * `mixCategories` (every category when omitted, 006). Category decks ignore `mixCategories`.
+ * Question IDs that make up a deck: one category's; for the mixed deck those of `mixCategories`
+ * (every category when omitted, 006); for the favorites deck the `favoriteIds` whose question still
+ * exists, once each (017). Category decks ignore both lists.
  */
-export const getDeckQuestionIds = (deckId: DeckId, mixCategories?: readonly CategoryId[]): string[] => {
+export const getDeckQuestionIds = (
+  deckId: DeckId,
+  mixCategories?: readonly CategoryId[],
+  favoriteIds: readonly string[] = [],
+): string[] => {
+  if (deckId === FAVORITES_DECK_ID) return [...new Set(favoriteIds)].filter((id) => questionsById.has(id));
   if (deckId !== MIXED_DECK_ID) return getQuestionsByCategory(deckId).map((q) => q.id);
   const allowed = mixCategories ? new Set(mixCategories) : undefined;
   return getAllQuestions()
