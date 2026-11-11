@@ -1,11 +1,9 @@
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-import { memo, type ComponentProps } from 'react';
+import { memo } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 import type { Category } from '../data/types';
 import { tokens, type CategoryVisual } from '../theme';
-
-type IconName = ComponentProps<typeof MaterialCommunityIcons>['name'];
+import { CategoryIcon } from './CategoryIcon';
 
 export interface CategoryBadgeProps {
   category: Category;
@@ -21,7 +19,7 @@ export const CategoryBadge = memo(function CategoryBadge({ category, visual }: C
       accessibilityLabel={category.title}
       style={[styles.pill, { backgroundColor: visual.color }]}
     >
-      <MaterialCommunityIcons name={visual.icon as IconName} size={14} color={visual.onColor} />
+      <CategoryIcon name={visual.icon} size={14} color={visual.onColor} />
       <Text
         testID="category-badge-title"
         style={[styles.title, { color: visual.onColor, fontFamily: tokens.fonts.body }]}

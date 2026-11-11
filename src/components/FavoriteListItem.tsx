@@ -1,12 +1,10 @@
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-import type { ComponentProps } from 'react';
 import { Pressable, Text, View } from 'react-native';
 
 import type { Category, Question } from '../data/types';
 import { strings } from '../i18n/strings';
 import { tokens, type CategoryVisual } from '../theme';
-
-type IconName = ComponentProps<typeof MaterialCommunityIcons>['name'];
+import { CategoryIcon } from './CategoryIcon';
 
 export interface FavoriteListItemProps {
   question: Question;
@@ -26,7 +24,7 @@ export function FavoriteListItem({ question, category, visual, onRemove }: Favor
       <View testID="favorite-accent" className="w-2" style={{ backgroundColor: visual.color }} />
       <View className="flex-1 gap-2 p-4">
         <View className="flex-row items-center gap-2">
-          <MaterialCommunityIcons name={visual.icon as IconName} size={18} color={visual.ink} />
+          <CategoryIcon name={visual.icon} size={18} color={visual.ink} />
           <Text testID="favorite-category" className="font-body text-xs uppercase tracking-widest" style={{ color: visual.ink }}>
             {category.title}
           </Text>

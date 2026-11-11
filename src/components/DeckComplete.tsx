@@ -1,10 +1,7 @@
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-import type { ComponentProps } from 'react';
 import { Pressable, Text, View } from 'react-native';
 
 import { strings } from '../i18n/strings';
-
-type IconName = ComponentProps<typeof MaterialCommunityIcons>['name'];
+import { CategoryIcon } from './CategoryIcon';
 
 /** Colors and icon of the end screen; a `CategoryVisual` satisfies it, the mixed deck passes `MIXED_VISUAL`. */
 export interface DeckCompleteVisual {
@@ -29,7 +26,7 @@ export function DeckComplete({ deckTitle, visual, onReshuffle, onChooseAnother }
       className="mx-6 items-center gap-4 rounded-3xl p-8"
       style={{ backgroundColor: visual.color }}
     >
-      <MaterialCommunityIcons name={visual.icon as IconName} size={56} color={visual.onColor} />
+      <CategoryIcon name={visual.icon} size={56} color={visual.onColor} />
       <Text accessibilityRole="header" className="text-center font-display text-3xl" style={{ color: visual.onColor }}>
         {strings.deckComplete.title}
       </Text>
