@@ -16,6 +16,8 @@ const TABLE: Record<CategoryId, { color: string; onColor: 'dark' | 'white'; ink:
   nostalgia: { color: '#F28CB4', onColor: 'dark', ink: '#A6316B' },
   familia: { color: '#27AE60', onColor: 'dark', ink: '#007A15' },
   futuro: { color: '#167A4C', onColor: 'white', ink: '#167A4C' },
+  'cultura-pop': { color: '#E84393', onColor: 'dark', ink: '#CF1972' },
+  autoconhecimento: { color: '#00A8FF', onColor: 'dark', ink: '#0072AD' },
 };
 
 // CIE76 ΔE between two `#RRGGBB` colors (sRGB → linear → XYZ D65 → Lab).
@@ -73,6 +75,14 @@ describe('category visuals (palette)', () => {
       const back = Math.round(deltaE(TABLE.familia.color, TABLE[id].color) * 10) / 10;
       const ink = Math.round(deltaE(CATEGORY_INK.familia, CATEGORY_INK[id]) * 10) / 10;
       expect({ id, back: back >= 25, ink: ink >= 25 }).toEqual({ id, back: true, ink: true });
+    }
+  });
+
+  // 020 research R2: the new backs must not be confused with any other deck on the Home grid.
+  it.each(['cultura-pop', 'autoconhecimento'] as const)('%s has a back distinct from every other category (ΔE ≥ 25, 020)', (newId) => {
+    for (const id of CATEGORY_IDS.filter((other) => other !== newId)) {
+      const back = Math.round(deltaE(TABLE[newId].color, TABLE[id].color) * 10) / 10;
+      expect({ id, back: back >= 25 }).toEqual({ id, back: true });
     }
   });
 });

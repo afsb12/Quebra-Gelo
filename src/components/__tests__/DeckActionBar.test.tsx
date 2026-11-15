@@ -2,7 +2,6 @@ import { fireEvent, render, screen } from '@testing-library/react-native';
 
 import { DeckActionBar, type DeckActionBarProps } from '../DeckActionBar';
 import { DeckProgress } from '../DeckProgress';
-import { DeckStack } from '../DeckStack';
 
 const setup = async (overrides: Partial<DeckActionBarProps> = {}) => {
   const props: DeckActionBarProps = {
@@ -54,19 +53,5 @@ describe('DeckProgress (016)', () => {
     const bar = screen.getByTestId('deck-progress');
     expect(bar.props.accessibilityValue).toEqual({ min: 0, max: 30, now: 3 });
     expect(screen.getByTestId('deck-progress-fill')).toHaveStyle({ width: '10%', backgroundColor: '#8F91F0' });
-  });
-});
-
-describe('DeckStack (016)', () => {
-  it('draws one card per remaining card, at most 2, hidden from screen readers', async () => {
-    const view = await render(<DeckStack width={200} height={280} count={2} color="#3D3FA6" />);
-    expect(screen.getAllByTestId('deck-stack-card', { includeHiddenElements: true })).toHaveLength(2);
-    expect(screen.getByTestId('deck-stack', { includeHiddenElements: true }).props.importantForAccessibility).toBe(
-      'no-hide-descendants',
-    );
-    await view.rerender(<DeckStack width={200} height={280} count={1} color="#3D3FA6" />);
-    expect(screen.getAllByTestId('deck-stack-card', { includeHiddenElements: true })).toHaveLength(1);
-    await view.rerender(<DeckStack width={200} height={280} count={0} color="#3D3FA6" />);
-    expect(screen.queryByTestId('deck-stack', { includeHiddenElements: true })).toBeNull();
   });
 });

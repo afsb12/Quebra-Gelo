@@ -33,6 +33,8 @@ const PALETTE: Record<string, string> = {
   nostalgia: '#F28CB4',
   familia: '#27AE60',
   futuro: '#167A4C',
+  'cultura-pop': '#E84393',
+  autoconhecimento: '#00A8FF',
 };
 
 const normalize = (text: string) =>
@@ -100,6 +102,13 @@ const FAMILY_UNSAFE: RegExp[] = [
   /(preferid| mais chat| pior | aqui da mesa | nesta mesa | olhe para )/,
 ];
 
+// 020 research R5: Autoconhecimento reflects on habits and values, never on clinical or private
+// matters (traumas, health, religion, money, love life).
+const SELF_UNSAFE: RegExp[] = [
+  / (trauma|terapi|terapeut|diagnost|ansiedade|ansios|depress|doenc|doente|remedio|medicament|hospital|religi|igreja|deus|fe |dinheiro|salari|divida|namor|casament|casad|sexo|sexual|morte|morre|luto|corpo|peso|aparencia)/,
+  / ex /,
+];
+
 const deckIds = (categoryId: string) =>
   Array.from({ length: 30 }, (_, i) => `${categoryId}-${String(i + 1).padStart(3, '0')}`);
 
@@ -165,6 +174,8 @@ describe('data.json content', () => {
       nostalgia: 'teddy-bear',
       familia: 'home-heart',
       futuro: 'rocket-launch-outline',
+      'cultura-pop': 'movie-open-outline',
+      autoconhecimento: 'mirror',
     });
   });
 
@@ -261,6 +272,16 @@ describe('data.json content', () => {
     for (const q of deck) {
       const words = ` ${normalize(String(q.text))} `;
       const term = FAMILY_UNSAFE.map((pattern) => words.match(pattern)?.[0]).find(Boolean);
+      expect({ id: q.id, term }).toEqual({ id: q.id, term: undefined });
+    }
+  });
+
+  it('16. autoconhecimento questions avoid clinical and private topics (020)', () => {
+    const deck = questions.filter((q) => q.categoryId === 'autoconhecimento');
+    expect(deck.map((q) => q.id)).toEqual(deckIds('autoconhecimento'));
+    for (const q of deck) {
+      const words = ` ${normalize(String(q.text))} `;
+      const term = SELF_UNSAFE.map((pattern) => words.match(pattern)?.[0]).find(Boolean);
       expect({ id: q.id, term }).toEqual({ id: q.id, term: undefined });
     }
   });

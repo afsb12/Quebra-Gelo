@@ -9,6 +9,7 @@ import Animated, {
   useSharedValue,
   withSpring,
   withTiming,
+  type SharedValue,
 } from 'react-native-reanimated';
 import { scheduleOnRN } from 'react-native-worklets';
 
@@ -52,6 +53,13 @@ export interface SwipeCardProps {
   onSwipeConfirmed?: (direction: SwipeDirection) => void;
   /** Called exactly once per card, after the exit animation: 'left' = next card, 'right' = previous (009). */
   onDiscard: (direction: SwipeDirection) => void;
+  /**
+   * Progress of the stacked cards behind this one (021): 0 = rest, 1 = one layer up. Written on the
+   * UI thread: it follows left drags, reaches 1 with a left exit and springs back to 0 on mount.
+   */
+  stackProgress?: SharedValue<number>;
+  /** `left`: the card brought back by "voltar" slides in from the left while the stack recedes (021). */
+  enterFrom?: 'left';
   /** Only used by the "favoritar" accessibility action; the star button lives outside the card. */
   onToggleFavorite: () => void;
 }
@@ -64,6 +72,19 @@ const EXIT_MS = 220;
 const FADE_MS = 150;
 const RESIST_FACTOR = 0.2;
 const RESIST_MAX = 40;
+const SPRING = { damping: 18, stiffness: 220 } as const;
+/** Where a card brought back by "voltar" starts, as a fraction of the screen width (021). */
+const ENTRY_RATIO = 0.6;
+
+/**
+ * Stack progress for a drag (021): 0 at rest, 1 at the discard threshold of a left drag. Right drags
+ * (going back, or the first card's resistance) never move the stack.
+ */
+export const stackDragProgress = (translationX: number, screenWidth: number): number => {
+  'worklet';
+  if (screenWidth <= 0) return 0;
+  return Math.min(Math.max(-translationX / (screenWidth * DISCARD_RATIO), 0), 1);
+};
 
 /** Elastic resistance for a blocked right drag: follows the finger a little, never past 40 pt (009). */
 export const resistX = (translationX: number): number => {
@@ -109,9 +130,13 @@ export function SwipeCard({
   onSwipeConfirmed,
   onDiscard,
   onToggleFavorite,
+  stackProgress,
+  enterFrom,
 }: SwipeCardProps) {
   const reducedMotion = useReducedMotion();
-  const translateX = useSharedValue(0);
+  // A card brought back by "voltar" starts off to the left and springs in (021).
+  const entering = enterFrom === 'left' && !reducedMotion;
+  const translateX = useSharedValue(entering ? -screenWidth * ENTRY_RATIO : 0);
   const rotation = useSharedValue(initialFace === 'up' ? 180 : 0); // 0 = face down, 180 = face up
   const opacity = useSharedValue(1);
   const isAnimating = useSharedValue(false);
@@ -131,6 +156,30 @@ export function SwipeCard({
       opacity.set(withTiming(1, { duration: FADE_MS }));
     }
   }, [opacity, reducedMotion]);
+
+  // The stack behind settles under the new card (021): after an advance it springs back from "one
+  // layer up"; a card brought back starts the stack one layer up, so the old top recedes to the middle.
+  useEffect(() => {
+    if (!stackProgress) return;
+    if (reducedMotion) {
+      stackProgress.set(0);
+      return;
+    }
+    if (entering) {
+      stackProgress.set(1);
+      translateX.set(withSpring(0, SPRING));
+    }
+    stackProgress.set(withSpring(0, SPRING));
+  }, [entering, reducedMotion, stackProgress, translateX]);
+
+  /** A left exit lifts the stack one layer with the same timing as the card (021). */
+  const promoteStack = useCallback(
+    (direction: SwipeDirection) => {
+      'worklet';
+      if (stackProgress && !reducedMotion && direction === 'left') stackProgress.set(withTiming(1, { duration: EXIT_MS }));
+    },
+    [reducedMotion, stackProgress],
+  );
 
   const handleFlipped = useCallback(
     (up: boolean) => {
@@ -183,9 +232,10 @@ export function SwipeCard({
       } else {
         const target = (direction === 'left' ? -1 : 1) * screenWidth * 1.5;
         translateX.set(withTiming(target, { duration: EXIT_MS }, done));
+        promoteStack(direction);
       }
     },
-    [isAnimating, onDiscard, onSwipeConfirmed, opacity, reducedMotion, screenWidth, translateX],
+    [isAnimating, onDiscard, onSwipeConfirmed, opacity, promoteStack, reducedMotion, screenWidth, translateX],
   );
 
   // Buttons (016): the JS-thread twin of `discard`; the exit itself still runs on the UI thread.
@@ -206,10 +256,11 @@ export function SwipeCard({
         } else {
           const target = (direction === 'left' ? -1 : 1) * screenWidth * 1.5;
           translateX.set(withTiming(target, { duration: EXIT_MS }, done));
+          promoteStack(direction);
         }
       },
     }),
-    [canGoBack, isAnimating, onDiscard, onSwipeConfirmed, opacity, reducedMotion, screenWidth, translateX],
+    [canGoBack, isAnimating, onDiscard, onSwipeConfirmed, opacity, promoteStack, reducedMotion, screenWidth, translateX],
   );
 
   const pan = usePanGesture({
@@ -220,6 +271,8 @@ export function SwipeCard({
       if (isAnimating.get()) return;
       const blocked = !canGoBackSV.get() && event.translationX > 0;
       translateX.set(blocked ? resistX(event.translationX) : event.translationX);
+      // The stack anticipates an advance; right drags (incl. the first card's resistance) leave it still.
+      if (stackProgress && !reducedMotion) stackProgress.set(stackDragProgress(event.translationX, screenWidth));
     },
     onDeactivate: (event) => {
       'worklet';
@@ -233,7 +286,8 @@ export function SwipeCard({
       if (direction) {
         discard(direction);
       } else {
-        translateX.set(withSpring(0, { damping: 18, stiffness: 220 }));
+        translateX.set(withSpring(0, SPRING));
+        if (stackProgress && !reducedMotion) stackProgress.set(withSpring(0, SPRING));
       }
     },
   });

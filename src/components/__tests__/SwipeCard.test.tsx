@@ -6,7 +6,10 @@ import { getCategory, getQuestionsByCategory } from '../../data/content';
 import type { Category } from '../../data/types';
 import { getCategoryVisual } from '../../theme';
 import { swipeCard, tapCard } from '../../test-utils/gestures';
-import { resistX, resolveSwipeRelease, SwipeCard, type SwipeCardHandle, type SwipeCardProps } from '../SwipeCard';
+import * as Reanimated from 'react-native-reanimated';
+import type { SharedValue } from 'react-native-reanimated';
+
+import { resistX, resolveSwipeRelease, stackDragProgress, SwipeCard, type SwipeCardHandle, type SwipeCardProps } from '../SwipeCard';
 
 const wrapper = ({ children }: { children: ReactNode }) => (
   <GestureHandlerRootView style={{ flex: 1 }}>{children}</GestureHandlerRootView>
@@ -173,5 +176,88 @@ describe('SwipeCard buttons handle (016)', () => {
     });
     expect(props.onSwipeConfirmed).not.toHaveBeenCalled();
     expect(props.onDiscard).not.toHaveBeenCalled();
+  });
+});
+
+/** A stack progress that records every value written to it (the mock animations resolve at once). */
+const recordingProgress = () => {
+  const writes: number[] = [];
+  let value = 0;
+  const progress = {
+    get: () => value,
+    set: (next: number) => {
+      value = next;
+      writes.push(Math.round(next * 1000) / 1000);
+    },
+  } as SharedValue<number>;
+  return { progress, writes };
+};
+
+describe('SwipeCard stack physics (021)', () => {
+  it('stackDragProgress grows with a left drag up to the threshold and ignores right drags', () => {
+    expect(stackDragProgress(0, 400)).toBe(0);
+    expect(stackDragProgress(-60, 400)).toBe(0.5);
+    expect(stackDragProgress(-120, 400)).toBe(1);
+    expect(stackDragProgress(-400, 400)).toBe(1);
+    expect(stackDragProgress(200, 400)).toBe(0);
+  });
+
+  it('a new card settles the stack back to rest', async () => {
+    const { progress, writes } = recordingProgress();
+    await setup({ stackProgress: progress });
+    expect(writes).toEqual([0]);
+  });
+
+  it('follows a left drag and ends one layer up when the card leaves', async () => {
+    const { progress, writes } = recordingProgress();
+    const props = await setup({ stackProgress: progress });
+    await swipeCard(-200);
+    expect(writes[writes.length - 1]).toBe(1);
+    expect(props.onDiscard).toHaveBeenCalledWith('left');
+  });
+
+  it('a short drag moves the stack in proportion, then springs it back to rest', async () => {
+    const { progress, writes } = recordingProgress();
+    await setup({ stackProgress: progress });
+    await swipeCard(-40);
+    expect(writes).toContain(0.333); // −40 of a 120 pt threshold
+    expect(Math.max(...writes)).toBeLessThan(1);
+    expect(writes[writes.length - 1]).toBe(0);
+  });
+
+  it('the "Próxima" button lifts the stack like the gesture', async () => {
+    const { progress, writes } = recordingProgress();
+    const ref = createRef<SwipeCardHandle>();
+    await setup({ ref, stackProgress: progress });
+    await act(async () => {
+      ref.current?.swipe('left');
+    });
+    expect(writes[writes.length - 1]).toBe(1);
+  });
+
+  it('on the first card a right drag only resists: the stack never moves', async () => {
+    const { progress, writes } = recordingProgress();
+    const props = await setup({ canGoBack: false, stackProgress: progress });
+    await swipeCard(200);
+    expect(writes.every((w) => w === 0)).toBe(true);
+    expect(props.onDiscard).not.toHaveBeenCalled();
+  });
+
+  it('a card brought back enters from the left while the stack recedes one layer', async () => {
+    const { progress, writes } = recordingProgress();
+    await setup({ enterFrom: 'left', initialFace: 'up', stackProgress: progress });
+    expect(writes).toEqual([1, 0]);
+  });
+
+  it('with reduced motion the stack stays at rest', async () => {
+    const spy = jest.spyOn(Reanimated, 'useReducedMotion').mockReturnValue(true);
+    try {
+      const { progress, writes } = recordingProgress();
+      await setup({ enterFrom: 'left', stackProgress: progress });
+      await swipeCard(-60);
+      expect(writes.every((w) => w === 0)).toBe(true);
+    } finally {
+      spy.mockRestore();
+    }
   });
 });

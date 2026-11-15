@@ -9,6 +9,8 @@ export const CATEGORY_IDS = [
   'nostalgia',
   'familia',
   'futuro',
+  'cultura-pop',
+  'autoconhecimento',
 ] as const;
 
 export type CategoryId = (typeof CATEGORY_IDS)[number];

@@ -7,7 +7,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { BrandSymbol } from '../components/BrandSymbol';
 import { MiniCard } from '../components/MiniCard';
 import { MixFilterSheet } from '../components/MixFilterSheet';
-import { MixedHeroCard } from '../components/MixedHeroCard';
+import { HERO_LAYOUT, MixedHeroCard } from '../components/MixedHeroCard';
 import { TutorialOverlay } from '../components/TutorialOverlay';
 import { getCategories } from '../data/content';
 import { isValidMixSelection } from '../data/mixFilter';
@@ -21,7 +21,7 @@ const openDeck = (deckId: DeckId) => router.push({ pathname: '/deck/[deckId]', p
 
 /**
  * Home: brand row, the "Sobre o que vamos conversar?" header, the "Tudo Misturado" hero card (with
- * its category filter chip, 006/015) above the categories as mini card backs in a 3-column grid
+ * its corner filter button, 006/019) above the categories as mini card backs in a 3-column grid
  * (015; ≤ 2 taps to the first card), with the first-launch tutorial on top (005).
  */
 export function HomeScreen() {
@@ -69,13 +69,15 @@ export function HomeScreen() {
             <Text className="font-body text-sm text-primary">{strings.home.favorites}</Text>
           </Pressable>
         </View>
-        <Text testID="home-question" accessibilityRole="header" className="pb-5 font-display text-3xl text-primary">
+        <Text testID="home-question" accessibilityRole="header" className="font-display text-3xl text-primary">
           {strings.home.question}
         </Text>
 
-        <View style={{ marginBottom: tokens.layout.gridGap + 8 }}>
+        {/* Same horizontal padding as the grid: the card's edges match the grid's (019). */}
+        <View testID="mixed-hero-wrapper" style={{ marginTop: HERO_LAYOUT.marginTop, marginBottom: HERO_LAYOUT.marginBottom }}>
           <MixedHeroCard
             width={contentWidth}
+            fontScale={window.fontScale}
             onPress={() => openDeck(MIXED_DECK_ID)}
             onOpenFilter={openFilter}
             filterLabel={filterLabel}

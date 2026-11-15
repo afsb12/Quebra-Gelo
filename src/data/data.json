@@ -69,6 +69,20 @@
       "icon": "rocket-launch-outline",
       "color": "#167A4C",
       "description": "Planos, desejos e o que ainda está por vir."
+    },
+    {
+      "id": "cultura-pop",
+      "title": "Cultura Pop",
+      "icon": "movie-open-outline",
+      "color": "#E84393",
+      "description": "Filmes, séries, músicas e opiniões polêmicas sobre entretenimento."
+    },
+    {
+      "id": "autoconhecimento",
+      "title": "Autoconhecimento",
+      "icon": "mirror",
+      "color": "#00A8FF",
+      "description": "Reflexões sobre hábitos, valores, gatilhos e descobertas pessoais."
     }
   ],
   "questions": [
@@ -1571,6 +1585,306 @@
       "id": "futuro-030",
       "categoryId": "futuro",
       "text": "Qual boa notícia você adoraria ler no jornal de amanhã?"
+    },
+    {
+      "id": "cultura-pop-001",
+      "categoryId": "cultura-pop",
+      "text": "Qual filme você consegue assistir de novo e de novo sem nunca cansar?"
+    },
+    {
+      "id": "cultura-pop-002",
+      "categoryId": "cultura-pop",
+      "text": "Que série você indicaria para alguém que diz nunca ter tempo de ver nada?"
+    },
+    {
+      "id": "cultura-pop-003",
+      "categoryId": "cultura-pop",
+      "text": "Qual música te leva direto para uma época específica da sua vida?"
+    },
+    {
+      "id": "cultura-pop-004",
+      "categoryId": "cultura-pop",
+      "text": "Se a sua vida virasse um filme, qual seria o gênero e quem faria o seu papel?"
+    },
+    {
+      "id": "cultura-pop-005",
+      "categoryId": "cultura-pop",
+      "text": "Qual opinião sobre um filme ou série famoso faria todo mundo aqui discordar de você?"
+    },
+    {
+      "id": "cultura-pop-006",
+      "categoryId": "cultura-pop",
+      "text": "Qual personagem de ficção você gostaria de ter como amizade na vida real, e por quê?"
+    },
+    {
+      "id": "cultura-pop-007",
+      "categoryId": "cultura-pop",
+      "text": "Que final de série ou filme você reescreveria, e como ele seria?"
+    },
+    {
+      "id": "cultura-pop-008",
+      "categoryId": "cultura-pop",
+      "text": "Qual artista ou banda você defende mesmo quando ninguém mais defende?"
+    },
+    {
+      "id": "cultura-pop-009",
+      "categoryId": "cultura-pop",
+      "text": "Qual desenho, programa ou novela marcou a sua infância, e o que ele tinha de especial?"
+    },
+    {
+      "id": "cultura-pop-010",
+      "categoryId": "cultura-pop",
+      "text": "Se pudesse passar um dia dentro do mundo de um filme, livro ou jogo, qual escolheria?"
+    },
+    {
+      "id": "cultura-pop-011",
+      "categoryId": "cultura-pop",
+      "text": "Qual música você colocaria para tocar para transformar um dia comum num dia épico?"
+    },
+    {
+      "id": "cultura-pop-012",
+      "categoryId": "cultura-pop",
+      "text": "Que obra todo mundo ama e você simplesmente não entende o motivo de tanto sucesso?"
+    },
+    {
+      "id": "cultura-pop-013",
+      "categoryId": "cultura-pop",
+      "text": "Qual foi o último filme ou série que te fez rir alto ou se emocionar de verdade?"
+    },
+    {
+      "id": "cultura-pop-014",
+      "categoryId": "cultura-pop",
+      "text": "Que livro, filme ou série mudou um pouquinho a forma como você vê o mundo?"
+    },
+    {
+      "id": "cultura-pop-015",
+      "categoryId": "cultura-pop",
+      "text": "Qual vilão você acha que, no fundo, tinha um pouco de razão?"
+    },
+    {
+      "id": "cultura-pop-016",
+      "categoryId": "cultura-pop",
+      "text": "Se você apresentasse um programa de TV ou um podcast, sobre o que ele seria?"
+    },
+    {
+      "id": "cultura-pop-017",
+      "categoryId": "cultura-pop",
+      "text": "Qual música você sabe cantar inteira, de cor, sem errar uma palavra?"
+    },
+    {
+      "id": "cultura-pop-018",
+      "categoryId": "cultura-pop",
+      "text": "Que jogo, de tabuleiro ou de videogame, desperta o seu lado mais competitivo?"
+    },
+    {
+      "id": "cultura-pop-019",
+      "categoryId": "cultura-pop",
+      "text": "Qual continuação, remake ou adaptação você acha que nunca deveria ter saído do papel?"
+    },
+    {
+      "id": "cultura-pop-020",
+      "categoryId": "cultura-pop",
+      "text": "Que gênero de filme você evita, e o que te convenceria a dar uma chance para ele?"
+    },
+    {
+      "id": "cultura-pop-021",
+      "categoryId": "cultura-pop",
+      "text": "Qual frase de personagem você acaba repetindo na vida real?"
+    },
+    {
+      "id": "cultura-pop-022",
+      "categoryId": "cultura-pop",
+      "text": "Se pudesse ver ao vivo o show de qualquer artista, de qualquer época, qual seria?"
+    },
+    {
+      "id": "cultura-pop-023",
+      "categoryId": "cultura-pop",
+      "text": "Qual foi a sua fase de fã mais intensa, e o que você fazia por ela?"
+    },
+    {
+      "id": "cultura-pop-024",
+      "categoryId": "cultura-pop",
+      "text": "Que série você abandonou no meio do caminho, e o que te fez desistir?"
+    },
+    {
+      "id": "cultura-pop-025",
+      "categoryId": "cultura-pop",
+      "text": "Qual moda ou tendência das redes você adorou, e qual você não aguentava mais ver?"
+    },
+    {
+      "id": "cultura-pop-026",
+      "categoryId": "cultura-pop",
+      "text": "Que filme, música ou série merecia muito mais reconhecimento do que recebeu?"
+    },
+    {
+      "id": "cultura-pop-027",
+      "categoryId": "cultura-pop",
+      "text": "Se fizessem um filme sobre a sua turma de amizades, quem interpretaria você?"
+    },
+    {
+      "id": "cultura-pop-028",
+      "categoryId": "cultura-pop",
+      "text": "Qual música seria o seu tema de entrada sempre que você chegasse num lugar?"
+    },
+    {
+      "id": "cultura-pop-029",
+      "categoryId": "cultura-pop",
+      "text": "Que cena de filme ou série você lembra até hoje com todos os detalhes?"
+    },
+    {
+      "id": "cultura-pop-030",
+      "categoryId": "cultura-pop",
+      "text": "Qual personagem se parece mais com você, e em quê?"
+    },
+    {
+      "id": "autoconhecimento-001",
+      "categoryId": "autoconhecimento",
+      "text": "Qual pequeno hábito do seu dia a dia mais te faz bem?"
+    },
+    {
+      "id": "autoconhecimento-002",
+      "categoryId": "autoconhecimento",
+      "text": "Em que tipo de situação você percebe que está dando o seu melhor?"
+    },
+    {
+      "id": "autoconhecimento-003",
+      "categoryId": "autoconhecimento",
+      "text": "Qual valor você não negocia, mesmo quando seria mais fácil abrir mão dele?"
+    },
+    {
+      "id": "autoconhecimento-004",
+      "categoryId": "autoconhecimento",
+      "text": "O que costuma tirar a sua paciência mais rápido do que deveria?"
+    },
+    {
+      "id": "autoconhecimento-005",
+      "categoryId": "autoconhecimento",
+      "text": "Que conselho você daria para quem você era cinco anos atrás?"
+    },
+    {
+      "id": "autoconhecimento-006",
+      "categoryId": "autoconhecimento",
+      "text": "Qual qualidade sua as pessoas costumam demorar para perceber?"
+    },
+    {
+      "id": "autoconhecimento-007",
+      "categoryId": "autoconhecimento",
+      "text": "Em que momento do dia você se sente mais você?"
+    },
+    {
+      "id": "autoconhecimento-008",
+      "categoryId": "autoconhecimento",
+      "text": "Que mudança recente em você te deixou com orgulho?"
+    },
+    {
+      "id": "autoconhecimento-009",
+      "categoryId": "autoconhecimento",
+      "text": "Como você recarrega as energias depois de uma semana cheia?"
+    },
+    {
+      "id": "autoconhecimento-010",
+      "categoryId": "autoconhecimento",
+      "text": "Qual ideia antiga sobre quem você é já não faz mais sentido hoje?"
+    },
+    {
+      "id": "autoconhecimento-011",
+      "categoryId": "autoconhecimento",
+      "text": "O que você faz quando precisa tomar uma decisão difícil?"
+    },
+    {
+      "id": "autoconhecimento-012",
+      "categoryId": "autoconhecimento",
+      "text": "Qual elogio você recebeu que ficou com você por muito tempo?"
+    },
+    {
+      "id": "autoconhecimento-013",
+      "categoryId": "autoconhecimento",
+      "text": "Que tipo de desafio te tira da zona de conforto de um jeito bom?"
+    },
+    {
+      "id": "autoconhecimento-014",
+      "categoryId": "autoconhecimento",
+      "text": "Qual hábito você quer construir nos próximos meses, e o que tem te atrapalhado?"
+    },
+    {
+      "id": "autoconhecimento-015",
+      "categoryId": "autoconhecimento",
+      "text": "Como você reage quando algo sai completamente do planejado?"
+    },
+    {
+      "id": "autoconhecimento-016",
+      "categoryId": "autoconhecimento",
+      "text": "O que faz você sentir que um dia valeu a pena?"
+    },
+    {
+      "id": "autoconhecimento-017",
+      "categoryId": "autoconhecimento",
+      "text": "Qual lição você aprendeu do jeito mais difícil?"
+    },
+    {
+      "id": "autoconhecimento-018",
+      "categoryId": "autoconhecimento",
+      "text": "Sobre o que você mudou de opinião nos últimos anos?"
+    },
+    {
+      "id": "autoconhecimento-019",
+      "categoryId": "autoconhecimento",
+      "text": "Que tipo de pessoa te inspira, e o que isso diz sobre você?"
+    },
+    {
+      "id": "autoconhecimento-020",
+      "categoryId": "autoconhecimento",
+      "text": "Qual foi a última vez que você fez algo que não esperava de si?"
+    },
+    {
+      "id": "autoconhecimento-021",
+      "categoryId": "autoconhecimento",
+      "text": "O que você precisa ouvir quando está num dia ruim?"
+    },
+    {
+      "id": "autoconhecimento-022",
+      "categoryId": "autoconhecimento",
+      "text": "Qual parte da sua rotina você protegeria a todo custo?"
+    },
+    {
+      "id": "autoconhecimento-023",
+      "categoryId": "autoconhecimento",
+      "text": "Quais sinais te mostram que está na hora de fazer uma pausa?"
+    },
+    {
+      "id": "autoconhecimento-024",
+      "categoryId": "autoconhecimento",
+      "text": "O que você faz bem e que ninguém te ensinou?"
+    },
+    {
+      "id": "autoconhecimento-025",
+      "categoryId": "autoconhecimento",
+      "text": "Qual receio pequeno você já superou, e como foi?"
+    },
+    {
+      "id": "autoconhecimento-026",
+      "categoryId": "autoconhecimento",
+      "text": "Se pudesse trocar um hábito seu num estalar de dedos, qual seria?"
+    },
+    {
+      "id": "autoconhecimento-027",
+      "categoryId": "autoconhecimento",
+      "text": "Em que situações você prefere ouvir em vez de falar?"
+    },
+    {
+      "id": "autoconhecimento-028",
+      "categoryId": "autoconhecimento",
+      "text": "O que desperta a sua curiosidade de verdade?"
+    },
+    {
+      "id": "autoconhecimento-029",
+      "categoryId": "autoconhecimento",
+      "text": "Qual descoberta pessoal dos últimos tempos mais te surpreendeu?"
+    },
+    {
+      "id": "autoconhecimento-030",
+      "categoryId": "autoconhecimento",
+      "text": "Que palavra resume o momento que você está vivendo agora, e por quê?"
     }
   ]
 }
