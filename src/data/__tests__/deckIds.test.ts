@@ -39,7 +39,9 @@ describe('deck IDs (004)', () => {
 
   it('suggests the next 2 categories in content order, wrapping, never the same one (018)', () => {
     expect(getNextCategories('dilemas').map((c) => c.id)).toEqual(['viagens', 'nostalgia']);
-    expect(getNextCategories('futuro').map((c) => c.id)).toEqual(['casual', 'primeiros-encontros']);
+    expect(getNextCategories('futuro').map((c) => c.id)).toEqual(['cultura-pop', 'autoconhecimento']);
+    expect(getNextCategories('cultura-pop').map((c) => c.id)).toEqual(['autoconhecimento', 'casual']);
+    expect(getNextCategories('autoconhecimento').map((c) => c.id)).toEqual(['casual', 'primeiros-encontros']);
     for (const id of CATEGORY_IDS) {
       const picks = getNextCategories(id).map((c) => c.id);
       expect(picks).toHaveLength(2);

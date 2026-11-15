@@ -17,6 +17,8 @@ export const CATEGORY_INK: Record<CategoryId, string> = {
   // Hand-picked (013 research R2): inkOnCream('#27AE60') = #1C7C44 is ΔE 5.7 from Futuro's ink.
   familia: '#007A15',
   futuro: '#167A4C',
+  'cultura-pop': '#CF1972',
+  autoconhecimento: '#0072AD',
 };
 
 export interface CategoryVisual {
