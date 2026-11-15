@@ -270,9 +270,9 @@
     "semantic_hash": ""
   },
   "src/components/SwipeCard.tsx": {
-    "mtime": 1794367759.8961506,
-    "seen": 1794368099.401667,
-    "ast_hash": "a6bc8b0fc33147c4d2725bfec8e00c3e",
+    "mtime": 1794755286.0852196,
+    "seen": 1794755477.8817897,
+    "ast_hash": "5ac7744be804add6ff5b2241e83ac8f6",
     "semantic_hash": ""
   },
   "src/components/TutorialHintIcon.tsx": {
@@ -360,9 +360,9 @@
     "semantic_hash": ""
   },
   "src/components/__tests__/SwipeCard.test.tsx": {
-    "mtime": 1794367759.8973594,
-    "seen": 1794368099.4016898,
-    "ast_hash": "83c01b74156926510c1551b091715a0a",
+    "mtime": 1794755397.0438633,
+    "seen": 1794755477.881841,
+    "ast_hash": "866ba03fe71927837a49369e216e0340",
     "semantic_hash": ""
   },
   "src/components/__tests__/TutorialOverlay.test.tsx": {
@@ -468,9 +468,9 @@
     "semantic_hash": ""
   },
   "src/screens/DeckScreen.tsx": {
-    "mtime": 1794368383.548219,
-    "seen": 1794754304.757233,
-    "ast_hash": "c8b78fa5d425ade7f0d24ee0ee14d017",
+    "mtime": 1794755308.2576473,
+    "seen": 1794755477.8818855,
+    "ast_hash": "a75e9ac0a8f978e3c2e2887393126ee4",
     "semantic_hash": ""
   },
   "src/screens/FavoritesScreen.tsx": {
@@ -486,9 +486,9 @@
     "semantic_hash": ""
   },
   "src/screens/__tests__/DeckScreen.test.tsx": {
-    "mtime": 1794368383.5492191,
-    "seen": 1794754304.757237,
-    "ast_hash": "9048ad06eee4b5a1644389fc09910646",
+    "mtime": 1794755439.2542908,
+    "seen": 1794755477.881893,
+    "ast_hash": "52fbd7d87aa7fa4f17106557601d6f15",
     "semantic_hash": ""
   },
   "src/screens/__tests__/HomeScreen.test.tsx": {
@@ -1578,15 +1578,15 @@
     "semantic_hash": ""
   },
   "src/components/DeckStack.tsx": {
-    "mtime": 1794367759.8946455,
-    "seen": 1794368099.401654,
-    "ast_hash": "7fed6823554f612356b28259de0c74ba",
+    "mtime": 1794755211.3276353,
+    "seen": 1794755477.8817587,
+    "ast_hash": "4467f4f9053e5c4402140e9db1521a11",
     "semantic_hash": ""
   },
   "src/components/__tests__/DeckActionBar.test.tsx": {
-    "mtime": 1794367759.8961506,
-    "seen": 1794368099.401682,
-    "ast_hash": "630be5490a789d414a25a73310f1bf8d",
+    "mtime": 1794755321.8697538,
+    "seen": 1794755477.8818223,
+    "ast_hash": "729be313f485b9a68f624c528d01c936",
     "semantic_hash": ""
   },
   "specs/016-deck-action-bar/checklists/requirements.md": {
@@ -1809,6 +1809,54 @@
     "mtime": 1794754956.96153,
     "seen": 1794754963.883341,
     "ast_hash": "a34f3083545fbd2922e16502e81c2994",
+    "semantic_hash": ""
+  },
+  "src/components/__tests__/DeckStack.test.tsx": {
+    "mtime": 1794755341.7507749,
+    "seen": 1794755477.8818254,
+    "ast_hash": "d0c3afdec053a6a2689837378a88f030",
+    "semantic_hash": ""
+  },
+  "specs/021-deck-stack-physics/checklists/requirements.md": {
+    "mtime": 1794755108.3488057,
+    "seen": 1794755477.8823345,
+    "ast_hash": "f1213623a2f5d46b0d5dbcddd814ca2c",
+    "semantic_hash": ""
+  },
+  "specs/021-deck-stack-physics/contracts/deck-stack.md": {
+    "mtime": 1794755162.7288122,
+    "seen": 1794755477.8823366,
+    "ast_hash": "8d92c6e063acafbe978936cdaebecb7f",
+    "semantic_hash": ""
+  },
+  "specs/021-deck-stack-physics/plan.md": {
+    "mtime": 1794755147.808488,
+    "seen": 1794755477.8823385,
+    "ast_hash": "41d4720b43d0c2c40c4be3509e3a91db",
+    "semantic_hash": ""
+  },
+  "specs/021-deck-stack-physics/quickstart.md": {
+    "mtime": 1794755150.938788,
+    "seen": 1794755477.8823407,
+    "ast_hash": "3fb126099ae9a23e105ef29b264c47b8",
+    "semantic_hash": ""
+  },
+  "specs/021-deck-stack-physics/research.md": {
+    "mtime": 1794755162.7621348,
+    "seen": 1794755477.882342,
+    "ast_hash": "bbc01d3721c1757b381e4cad5e103082",
+    "semantic_hash": ""
+  },
+  "specs/021-deck-stack-physics/spec.md": {
+    "mtime": 1794755106.5433488,
+    "seen": 1794755477.8823438,
+    "ast_hash": "c35142e8e59ce85c0736ea6d9013ca85",
+    "semantic_hash": ""
+  },
+  "specs/021-deck-stack-physics/tasks.md": {
+    "mtime": 1794755472.4508986,
+    "seen": 1794755477.8823452,
+    "ast_hash": "07a128b54b56de810f0373291c707384",
     "semantic_hash": ""
   },
   "package-lock.json": {

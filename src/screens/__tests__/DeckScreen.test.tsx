@@ -1,7 +1,7 @@
 import { act, fireEvent, render, screen } from '@testing-library/react-native';
 import { router } from 'expo-router';
 import type { ReactNode } from 'react';
-import { AccessibilityInfo } from 'react-native';
+import { AccessibilityInfo, StyleSheet, type ViewStyle } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import * as Haptics from 'expo-haptics';
@@ -11,6 +11,7 @@ import { useFavoritesStore } from '../../store/favorites';
 import { useMixFilterStore } from '../../store/mixFilter';
 import { useProgressStore } from '../../store/progress';
 import { swipeCard, tapCard } from '../../test-utils/gestures';
+import { STACK_SLOTS } from '../../components/DeckStack';
 import { DeckScreen } from '../DeckScreen';
 
 jest.mock('expo-router', () => ({
@@ -537,5 +538,51 @@ describe('DeckScreen — end screen suggestions (018)', () => {
     expect(screen.getByTestId('deck-complete')).toBeTruthy();
     expect(screen.queryByTestId('deck-suggestions')).toBeNull();
     expect(screen.getByText('Ver todos os baralhos')).toBeTruthy();
+  });
+});
+
+describe('DeckScreen — stack physics (021)', () => {
+  const press = async (testID: string) => {
+    await act(async () => {
+      fireEvent.press(screen.getByTestId(testID));
+    });
+  };
+  type Transform = Record<string, number | string>;
+  const transformOf = (testID: string, index = 0): Transform[] => {
+    const style: ViewStyle = StyleSheet.flatten(screen.getAllByTestId(testID, { includeHiddenElements: true })[index].props.style);
+    return (style.transform ?? []) as Transform[];
+  };
+  const value = (transform: Transform[], key: string) => transform.find((t) => key in t)?.[key];
+
+  beforeEach(() => {
+    useProgressStore.setState({ decks: {} });
+    useFavoritesStore.setState({ favorites: [] });
+    jest.clearAllMocks();
+  });
+
+  it('the stack rests with the middle tilted left and the base tilted right', async () => {
+    await render(<DeckScreen deckId="dilemas" />, { wrapper });
+    const [base, middle] = [transformOf('deck-stack-card', 0), transformOf('deck-stack-card', 1)];
+    expect(value(middle, 'rotate')).toBe(`${STACK_SLOTS[1].rotate}deg`);
+    expect(value(middle, 'scale')).toBe(0.95);
+    expect(value(base, 'rotate')).toBe(`${STACK_SLOTS[2].rotate}deg`);
+    expect(value(base, 'scale')).toBe(0.9);
+  });
+
+  it('on the first card a right drag leaves the stack at rest (no going back)', async () => {
+    await render(<DeckScreen deckId="dilemas" />, { wrapper });
+    await swipeCard(200);
+    expect(screen.getByLabelText(`Carta 1 de ${total}`)).toBeTruthy();
+    expect(value(transformOf('deck-stack-card', 1), 'translateX')).toBe(STACK_SLOTS[1].translateX);
+    expect(value(transformOf('deck-stack-card', 0), 'translateX')).toBe(STACK_SLOTS[2].translateX);
+  });
+
+  it('the card brought back by "Anterior" enters from the left; the next card does not', async () => {
+    await render(<DeckScreen deckId="dilemas" />, { wrapper });
+    await press('deck-next-button');
+    expect(value(transformOf('swipe-card'), 'translateX')).toBe(0);
+    await press('deck-previous-button');
+    expect(screen.getByLabelText(`Carta 1 de ${total}`)).toBeTruthy();
+    expect(Number(value(transformOf('swipe-card'), 'translateX'))).toBeLessThan(0);
   });
 });

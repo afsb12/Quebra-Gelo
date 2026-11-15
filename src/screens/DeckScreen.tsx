@@ -2,6 +2,7 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { router } from 'expo-router';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { AccessibilityInfo, Pressable, Text, useWindowDimensions, View } from 'react-native';
+import { useSharedValue } from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { ChangeMoodButton } from '../components/ChangeMoodButton';
@@ -58,6 +59,10 @@ export function DeckScreen({ deckId }: DeckScreenProps) {
   const window = useWindowDimensions();
   const geometry = getCardGeometry(window, DECK_RESERVED_HEIGHT, window.fontScale);
   const [face, setFace] = useState<CardFace>('down');
+  // Physics of the stacked cards (021): written by the card on the UI thread, read by the stack.
+  const stackProgress = useSharedValue(0);
+  // A card brought back by "voltar" slides in from the left (021).
+  const [enterFrom, setEnterFrom] = useState<'left' | undefined>(undefined);
   const cardRef = useRef<SwipeCardHandle>(null);
   // Cards shown in this screen so far (016): the swipe hint only shows on the first ones.
   const [shownCount, setShownCount] = useState(1);
@@ -82,9 +87,11 @@ export function DeckScreen({ deckId }: DeckScreenProps) {
       setShownCount((n) => n + 1);
       if (direction === 'right') {
         setFace('up');
+        setEnterFrom('left');
         goBack();
       } else {
         setFace('down');
+        setEnterFrom(undefined);
         discard();
       }
     },
@@ -105,6 +112,7 @@ export function DeckScreen({ deckId }: DeckScreenProps) {
   const handleChangeMood = useCallback(() => {
     if (!moodEnabled) return;
     setFace('down');
+    setEnterFrom(undefined);
     changeMood();
     haptics.changeMood();
     setToastNonce((n) => n + 1);
@@ -123,7 +131,7 @@ export function DeckScreen({ deckId }: DeckScreenProps) {
   const suggestions = deckCategory
     ? getNextCategories(deckCategory.id).map((c) => ({ ...getCategoryVisual(c), id: c.id, title: c.title }))
     : [];
-  const stackCount = Math.min(2, Math.max(0, position.total - position.index)) as 0 | 1 | 2;
+  const remaining = Math.max(0, position.total - position.index);
 
   return (
     <SafeAreaView className="flex-1 bg-app">
@@ -158,7 +166,13 @@ export function DeckScreen({ deckId }: DeckScreenProps) {
       <View className="flex-1 items-center justify-center">
         {!ready ? null : current && currentCategory ? (
           <View style={{ width: geometry.width, height: geometry.height }}>
-            <DeckStack width={geometry.width} height={geometry.height} count={stackCount} color={stackColor} />
+            <DeckStack
+              width={geometry.width}
+              height={geometry.height}
+              remaining={remaining}
+              color={stackColor}
+              progress={stackProgress}
+            />
             <SwipeCard
               ref={cardRef}
               key={current.id}
@@ -177,6 +191,8 @@ export function DeckScreen({ deckId }: DeckScreenProps) {
               onSwipeConfirmed={haptics.discard}
               onDiscard={handleDiscard}
               onToggleFavorite={handleToggleFavorite}
+              stackProgress={stackProgress}
+              enterFrom={enterFrom}
             />
           </View>
         ) : (
