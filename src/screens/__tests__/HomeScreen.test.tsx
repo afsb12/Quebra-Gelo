@@ -1,11 +1,13 @@
 import { act, fireEvent, render, screen } from '@testing-library/react-native';
 import { router } from 'expo-router';
+import { Dimensions, StyleSheet } from 'react-native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { getCategories } from '../../data/content';
 import { useMixFilterStore } from '../../store/mixFilter';
 import { ONBOARDING_STORAGE_KEY, useOnboardingStore } from '../../store/onboarding';
+import { getCardGeometry, tokens } from '../../theme';
 import { HomeScreen } from '../HomeScreen';
 
 jest.mock('expo-router', () => ({
@@ -112,6 +114,14 @@ describe('HomeScreen', () => {
     expect(screen.getAllByTestId('brand-symbol')).toHaveLength(2); // brand row + mix card
     expect(screen.getByRole('header')).toHaveTextContent('Sobre o que vamos conversar?');
     expect(screen.getByText('Ou escolha um baralho')).toBeTruthy();
+  });
+
+  it('spaces the hero card 16 pt from the header and 24 pt from the grid, edges matching the grid (019)', async () => {
+    await render(<HomeScreen />);
+    expect(StyleSheet.flatten(screen.getByTestId('mixed-hero-wrapper').props.style)).toEqual({ marginTop: 16, marginBottom: 24 });
+    const heroWidth = StyleSheet.flatten(screen.getByTestId('mixed-hero-card').props.style).width as number;
+    const { miniWidth } = getCardGeometry(Dimensions.get('window'), 0);
+    expect(heroWidth).toBeCloseTo(miniWidth * tokens.layout.homeColumns + tokens.layout.homeGridGap * (tokens.layout.homeColumns - 1));
   });
 
   it('the mix chip always shows the count: "10 categorias" with every category in (015)', async () => {
