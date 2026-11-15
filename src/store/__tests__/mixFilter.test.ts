@@ -51,6 +51,16 @@ describe('useMixFilterStore (006)', () => {
     expect(useMixFilterStore.getState().excluded).toEqual(['casais']);
   });
 
+  it('a filter saved before 020 keeps its choices and turns the new categories on', async () => {
+    await AsyncStorage.setItem(MIX_FILTER_STORAGE_KEY, JSON.stringify({ version: 1, state: { excluded: ['dilemas'] } }));
+    await useMixFilterStore.persist.rehydrate();
+    const { excluded } = useMixFilterStore.getState();
+    expect(excluded).toEqual(['dilemas']);
+    const active = CATEGORY_IDS.filter((id) => !excluded.includes(id));
+    expect(active).toHaveLength(11);
+    expect(active).toEqual(expect.arrayContaining(['cultura-pop', 'autoconhecimento']));
+  });
+
   it('drops unknown IDs and falls back to all on when stored data leaves fewer than 2', async () => {
     await AsyncStorage.setItem(MIX_FILTER_STORAGE_KEY, JSON.stringify({ version: 1, state: { excluded: ['casais', 'trabalho'] } }));
     await useMixFilterStore.persist.rehydrate();
